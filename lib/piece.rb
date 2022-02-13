@@ -2,6 +2,7 @@
 
 # lib/piece.rb
 
+
 # Parent class of all chess pieces.
 # As a basic piece it only knows where it can be moved to - possible_moves(from)
 # By default this piece moves as a queen.
@@ -38,14 +39,18 @@ class Piece
       adjacent_square = sum_coordinates(from, change)
 
       while within_board?(adjacent_square)
-        possible_moves << adjacent_square
-        adjacent_square = sum_coordinates(possible_moves.last, change)
+        possible_moves[move_name] << adjacent_square
+        adjacent_square = sum_coordinates(possible_moves[move_name].last, change)
       end
+
+      possible_moves.delete(move_name) if possible_moves[move_name].empty?
     end
+
+    possible_moves
   end
 
   def within_board?(coordinates)
-    coordinates[0].between(X_MIN, X_MAX) and coordinates.between(Y_MIN, Y_MAX)
+    coordinates[0].between?(X_MIN, X_MAX) and coordinates[1].between?(Y_MIN, Y_MAX)
   end
 
   def sum_coordinates(coord1, coord2)
