@@ -2,7 +2,6 @@
 
 # lib/piece.rb
 
-
 # Parent class of all chess pieces.
 # As a basic piece it only knows where it can be moved to - possible_moves(from)
 # By default this piece moves as a queen.
