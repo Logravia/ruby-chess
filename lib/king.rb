@@ -19,5 +19,3 @@ class King < Piece
     end
   end
 end
-
-pp King.new(:white).possible_moves([0, 0])

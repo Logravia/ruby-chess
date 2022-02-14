@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/rule_helper.rb
 
 module RuleHelper
@@ -14,5 +16,4 @@ module RuleHelper
   def self.within_board?(coordinates)
     coordinates[0].between?(X_MIN, X_MAX) and coordinates[1].between?(Y_MIN, Y_MAX)
   end
-
 end

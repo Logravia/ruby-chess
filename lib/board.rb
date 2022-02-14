@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'rook'
 require_relative 'knight'
 require_relative 'bishop'
@@ -23,8 +24,7 @@ class Board
        Array.new(RuleHelper.WIDTH),
        Array.new(RuleHelper.WIDTH),
        ranked_row(:black),
-       pawn_row(:black),
-      ]
+       pawn_row(:black)]
   end
 
   def move_piece(from, to)
@@ -43,20 +43,19 @@ class Board
   end
 
   def ranked_row(color)
-   [
-    Rook.new(color),
-    Knight.new(color),
-    Bishop.new(color),
-    Queen.new(color),
-    King.new(color),
-    Bishop.new(color),
-    Knight.new(color),
-    Rook.new(color)
-   ]
+    [
+      Rook.new(color),
+      Knight.new(color),
+      Bishop.new(color),
+      Queen.new(color),
+      King.new(color),
+      Bishop.new(color),
+      Knight.new(color),
+      Rook.new(color)
+    ]
   end
 
   def pawn_row(color)
     Array.new(RuleHelper.WIDTH) { Pawn.new(color) }
   end
-
 end
