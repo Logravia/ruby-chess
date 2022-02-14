@@ -19,10 +19,10 @@ class Board
     @state =
       [ranked_row(:white),
        pawn_row(:white),
-       Array.new(RuleHelper.WIDTH),
-       Array.new(RuleHelper.WIDTH),
-       Array.new(RuleHelper.WIDTH),
-       Array.new(RuleHelper.WIDTH),
+       Array.new(RuleHelper::WIDTH),
+       Array.new(RuleHelper::WIDTH),
+       Array.new(RuleHelper::WIDTH),
+       Array.new(RuleHelper::WIDTH),
        ranked_row(:black),
        pawn_row(:black)]
   end
@@ -56,6 +56,6 @@ class Board
   end
 
   def pawn_row(color)
-    Array.new(RuleHelper.WIDTH) { Pawn.new(color) }
+    Array.new(RuleHelper::WIDTH) { Pawn.new(color) }
   end
 end
