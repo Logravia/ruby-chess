@@ -35,4 +35,11 @@ class Arbiter
     false
   end
 
+  # Reduces movement to squares that do not go past a standing piece
+  def cut_move_line(line)
+    line.each_with_index do |point, distance|
+      return line[0..distance] if piece_at(point)
+    end
+  end
+
 end
