@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # lib/piece.rb
+require_relative 'rule_helper'
 
 # Parent class of all chess pieces.
 # As a basic piece it only knows where it can be moved to - possible_moves(from)
@@ -10,6 +11,7 @@
 # Implementation of child classes: Pawn, King and Knight require modifying possible_moves method.
 # The aforementioned pieces have a different movement pattern unlike Queen, Rook, Bishop.
 class Piece
+  extend RuleHelper
   ALL_MOVES = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0],
                 diagonal_l_up: [-1, 1], diagonal_r_up: [1, 1],
                 diagonal_l_down: [-1, -1], diagonal_r_down: [1, -1],
@@ -17,14 +19,7 @@ class Piece
 
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
 
-  X_MIN = 0
-  X_MAX = 7
-
-  Y_MIN = 0
-  Y_MAX = 7
-
-  private_constant :ALL_MOVES, :CUR_MOVES, :X_MIN, :X_MAX, :Y_MIN, :Y_MAX
-  attr_reader :color
+  attr_reader :color, :ALL_MOVES, :CUR_MOVES
 
   def initialize(color)
     @color = color
@@ -36,7 +31,7 @@ class Piece
       possible_moves[move_name] = []
       adjacent_square = sum_coordinates(from, change)
 
-      while within_board?(adjacent_square)
+      while RuleHelper.within_board?(adjacent_square)
         possible_moves[move_name] << adjacent_square
         adjacent_square = sum_coordinates(possible_moves[move_name].last, change)
       end
@@ -45,10 +40,6 @@ class Piece
     end
 
     possible_moves
-  end
-
-  def within_board?(coordinates)
-    coordinates[0].between?(X_MIN, X_MAX) and coordinates[1].between?(Y_MIN, Y_MAX)
   end
 
   def sum_coordinates(coord1, coord2)
