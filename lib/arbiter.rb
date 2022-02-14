@@ -42,4 +42,8 @@ class Arbiter
     end
   end
 
+  def piece_at(position)
+    column, row = position
+    state[row][column]
+  end
 end
