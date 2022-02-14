@@ -33,8 +33,7 @@ class Piece
 
   def possible_moves(from)
     possible_moves = {}
-
-    CUR_MOVES.each_pair do |move_name, change|
+    self.class::CUR_MOVES.each_pair do |move_name, change|
       possible_moves[move_name] = []
       adjacent_square = sum_coordinates(from, change)
 
