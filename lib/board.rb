@@ -27,24 +27,37 @@ class Board
        ranked_row(:black)
       ]
       give_pieces_location
+    @kings = {white: @state[4][0], black: @state[4][7]}
+    @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
   end
 
   def move_piece(from, to)
     from_col, from_row = from
     to_col, to_row = to
 
-    return if state[from_row][from_col].nil?
+    piece = piece_at(from)
 
-    piece = @state[from_row][from_col]
     @state[to_row][to_col] = piece
     @state[from_row][from_col] = nil
     piece.location = to
+  end
 
-    # Rooks, kings and pawns have :moved
-    # It is useful to track that because,
-    # it allows us to properly implement:
-    # castling, en passant and pawn double move
-    piece.moved = true if piece.class.method_defined? :moved
+  # Only used to help check whether a move is legal
+  # E.g. move prevents King from being checked
+  def temp_move(from, to)
+    @temp_move_holder[:from] = from
+    @temp_move_holder[:to] = to
+    @temp_move_holder[:destroyed_piece] = piece_at(to)
+    move_piece(from, to)
+  end
+
+  def reverse_temp_move
+    # TODO: Make squares objects to make this prettier.
+    # Passing references to squares would make this a bit easier to read.
+    move_piece(@temp_move_holder[:to], @temp_move_holder[:from])
+    destroyed_piece_col, destroyed_piece_row = @temp_move_holder[:to]
+    @state[destroyed_piece_row][destroyed_piece_col] = @temp_move_holder[:destroyed_piece]
+    @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
   end
 
   def ranked_row(color)
@@ -78,3 +91,8 @@ class Board
     @state[row][column]
   end
 end
+
+b = Board.new
+b.temp_move([0,1],[0,2])
+b.reverse_temp_move
+pp b
