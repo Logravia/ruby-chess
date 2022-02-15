@@ -20,9 +20,11 @@ class Piece
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
 
   attr_reader :color, :ALL_MOVES, :CUR_MOVES
+  attr_accessor :location
 
   def initialize(color)
     @color = color
+    @location = nil
   end
 
   def possible_moves(from)
