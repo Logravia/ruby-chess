@@ -46,6 +46,13 @@ class Piece
     possible_moves
   end
 
+  # Reduces movement to squares that do not go past a standing piece
+  def cut_move_line(line)
+    line.each_with_index do |point, distance|
+      return line[0..distance] if @board.piece_at(point)
+    end
+  end
+
   def sum_coordinates(coord1, coord2)
     [coord1, coord2].transpose.map(&:sum)
   end
