@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'rule_helper'
+require_relative 'board'
 # Answers whether a move is legal.
 # Does so by looking at the state of the board,
 # And asking the relevant piece being moved how it can move.
@@ -21,10 +22,20 @@ class Arbiter
     return legal_for_pawn?(from, to) if piece.class == Pawn
 
     # What makes a move legal for most pieces?
-    # TODO: Does not go past a piece
-    # TODO: Does not go on top of a friendly piece
-    # TODO: Follows all the rules set for the pieces movements
     # TODO: Move does not leave King in check (if after move king in check, illegal)
+    # TODO: Does not go on top of a friendly piece
+    # TODO: Does not go past a piece
+    # TODO: Follows all the rules set for the pieces movements
+  end
+
+  def square_under_attack?(by_color, square)
+    pieces = all_pieces(by_color)
+    pieces.each do |piece|
+      piece.possible_moves.each do |_move_name, move_group|
+        return true if move_group.include? square
+      end
+    end
+    false
   end
 
   def legal_for_pawn?(from,to)
