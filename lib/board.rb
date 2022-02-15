@@ -68,7 +68,7 @@ class Board
     state.each_with_index do |row, row_num|
       row.each_with_index do |piece, piece_num|
         next if piece.nil?
-        piece.location = [row_num, piece_num]
+        piece.location = [piece_num, row_num]
       end
     end
   end

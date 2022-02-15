@@ -1,7 +1,6 @@
 # rook_spec.rb
 require_relative '../lib/rook.rb'
-require_relative '../lib/board.rb'
-
+require_relative '../lib/board'
 describe Rook do
   describe '#possible_moves' do
     context "rook on a1 square with empty board" do
