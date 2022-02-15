@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
 require_relative '../lib/piece'
+require_relative '../lib/board'
 
 describe Piece do
   describe '#possible_moves' do
-    context 'square a1' do
-      subject(:piece) { described_class.new(:white, [0,0]) }
+    context 'square a1 with empty board' do
+      let(:board){instance_double(Board)}
+      subject(:piece) { described_class.new(:white, board, [0,0]) }
+
+      before do
+        allow(board).to receive(:piece_at).and_return(nil)
+      end
 
       it 'returns correct moves upwards' do
         correct_moves_up = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7]]
@@ -31,8 +37,13 @@ describe Piece do
       end
     end
 
-    context 'square h8' do
-      subject(:piece) { described_class.new(:white, [7,7]) }
+    context 'square h8 with empty board' do
+      let(:board){instance_double(Board)}
+      subject(:piece) { described_class.new(:white, board, [7,7]) }
+
+      before do
+        allow(board).to receive(:piece_at).and_return(nil)
+      end
 
       it 'returns correct moves downwards' do
         correct_moves_down = [[7, 6], [7, 5], [7, 4], [7, 3], [7, 2], [7, 1], [7, 0]]
