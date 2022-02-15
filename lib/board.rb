@@ -23,17 +23,22 @@ class Board
        Array.new(RuleHelper::WIDTH),
        Array.new(RuleHelper::WIDTH),
        Array.new(RuleHelper::WIDTH),
-       ranked_row(:black),
-       pawn_row(:black)]
+       pawn_row(:black),
+       ranked_row(:black)
+      ]
+      give_pieces_location
   end
 
   def move_piece(from, to)
     from_col, from_row = from
     to_col, to_row = to
 
+    return if state[from_row][from_col].nil?
+
     piece = @state[from_row][from_col]
     @state[to_row][to_col] = piece
     @state[from_row][from_col] = nil
+    piece.location = to
 
     # Rooks, kings and pawns have :moved
     # It is useful to track that because,
@@ -57,5 +62,14 @@ class Board
 
   def pawn_row(color)
     Array.new(RuleHelper::WIDTH) { Pawn.new(color) }
+  end
+
+  def give_pieces_location
+    state.each_with_index do |row, row_num|
+      row.each_with_index do |piece, piece_num|
+        next if piece.nil?
+        piece.location = [row_num, piece_num]
+      end
+    end
   end
 end
