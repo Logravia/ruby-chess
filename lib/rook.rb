@@ -9,7 +9,7 @@ class Rook < Piece
 
   attr_accessor :moved
 
-  def initialize(color, location)
+  def initialize(color, board, location = nil)
     super
     @moved = false
   end

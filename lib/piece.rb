@@ -22,9 +22,10 @@ class Piece
   attr_reader :color, :ALL_MOVES, :CUR_MOVES
   attr_accessor :location
 
-  def initialize(color, location = nil)
+  def initialize(color, board, location = nil)
     @color = color
     @location = location
+    @board = board
   end
 
   def possible_moves

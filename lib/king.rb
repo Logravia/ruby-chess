@@ -7,7 +7,7 @@ class King < Piece
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
   attr_accessor :moved
 
-  def initialize(color)
+  def initialize(color,board,location=nil)
     super
     @moved = false
   end
