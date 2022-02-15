@@ -49,19 +49,19 @@ class Board
 
   def ranked_row(color)
     [
-      Rook.new(color),
-      Knight.new(color),
-      Bishop.new(color),
-      Queen.new(color),
-      King.new(color),
-      Bishop.new(color),
-      Knight.new(color),
-      Rook.new(color)
+      Rook.new(color,self),
+      Knight.new(color,self),
+      Bishop.new(color,self),
+      Queen.new(color,self),
+      King.new(color,self),
+      Bishop.new(color,self),
+      Knight.new(color,self),
+      Rook.new(color,self)
     ]
   end
 
   def pawn_row(color)
-    Array.new(RuleHelper::WIDTH) { Pawn.new(color) }
+    Array.new(RuleHelper::WIDTH) { Pawn.new(color, self) }
   end
 
   def give_pieces_location
@@ -71,5 +71,10 @@ class Board
         piece.location = [row_num, piece_num]
       end
     end
+  end
+
+  def piece_at(position)
+    column, row = position
+    @state[row][column]
   end
 end
