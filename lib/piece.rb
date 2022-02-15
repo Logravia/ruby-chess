@@ -28,6 +28,7 @@ class Piece
   end
 
   def possible_moves
+  def possible_moves_in_vacuum
     possible_moves = {}
     self.class::CUR_MOVES.each_pair do |move_name, change|
       possible_moves[move_name] = []
