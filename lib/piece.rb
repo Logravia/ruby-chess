@@ -22,16 +22,16 @@ class Piece
   attr_reader :color, :ALL_MOVES, :CUR_MOVES
   attr_accessor :location
 
-  def initialize(color)
+  def initialize(color, location = nil)
     @color = color
-    @location = nil
+    @location = location
   end
 
-  def possible_moves(from)
+  def possible_moves
     possible_moves = {}
     self.class::CUR_MOVES.each_pair do |move_name, change|
       possible_moves[move_name] = []
-      adjacent_square = sum_coordinates(from, change)
+      adjacent_square = sum_coordinates(self.location, change)
 
       while RuleHelper.within_board?(adjacent_square)
         possible_moves[move_name] << adjacent_square
