@@ -13,7 +13,7 @@ require_relative 'rule_helper'
 class Board
   extend RuleHelper
 
-  attr_reader :state
+  attr_reader :state, :kings
 
   def initialize
     @state =
@@ -91,8 +91,3 @@ class Board
     @state[row][column]
   end
 end
-
-b = Board.new
-b.temp_move([0,1],[0,2])
-b.reverse_temp_move
-pp b
