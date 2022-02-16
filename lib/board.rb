@@ -15,7 +15,6 @@ class Board
     @state = make_board(RuleHelper::DEFAULT_BOARD)
     @kings = {white: @state[4][0], black: @state[4][7]}
     @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
-    pp make_fen(@state)
   end
 
   def move_piece(from, to)
@@ -24,13 +23,12 @@ class Board
 
     piece = piece_at(from)
 
-    @state[to_row][to_col] = piece
-    @state[from_row][from_col] = nil
+    state[to_row][to_col] = piece
+    state[from_row][from_col] = nil
     piece.location = to
   end
 
-  # Only used to help check whether a move is legal
-  # E.g. move prevents King from being checked
+  # Used to help check whether a move is legal
   def temp_move(from, to)
     @temp_move_holder[:from] = from
     @temp_move_holder[:to] = to
@@ -39,29 +37,11 @@ class Board
   end
 
   def reverse_temp_move
-    # TODO: Make squares objects to make this prettier.
-    # Passing references to squares would make this a bit easier to read.
+    # TODO: Ugly as hell, refactor
     move_piece(@temp_move_holder[:to], @temp_move_holder[:from])
     destroyed_piece_col, destroyed_piece_row = @temp_move_holder[:to]
     @state[destroyed_piece_row][destroyed_piece_col] = @temp_move_holder[:destroyed_piece]
     @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
-  end
-
-  def ranked_row(color)
-    [
-      Rook.new(color,self),
-      Knight.new(color,self),
-      Bishop.new(color,self),
-      Queen.new(color,self),
-      King.new(color,self),
-      Bishop.new(color,self),
-      Knight.new(color,self),
-      Rook.new(color,self)
-    ]
-  end
-
-  def pawn_row(color)
-    Array.new(RuleHelper::WIDTH) { Pawn.new(color, self) }
   end
 
   def give_pieces_location
@@ -78,5 +58,3 @@ class Board
     @state[row][column]
   end
 end
-
-Board.new
