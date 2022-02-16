@@ -9,7 +9,7 @@ require_relative 'board'
 class Arbiter
   extend RuleHelper
 
-  attr_reader :state, :kings
+  attr_reader :state, :kings, :board
 
   def initialize(board)
     @board = board

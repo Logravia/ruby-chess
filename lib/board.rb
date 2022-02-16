@@ -1,34 +1,21 @@
 # frozen_string_literal: true
 
-require_relative 'rook'
-require_relative 'knight'
-require_relative 'bishop'
-require_relative 'queen'
-require_relative 'king'
-require_relative 'pawn'
 require_relative 'rule_helper'
+require_relative 'fen_parser'
 
 # Board keeps track of pieces
 # Moves them without taking into account legality of the move
 class Board
   extend RuleHelper
+  include FenParser
 
   attr_reader :state, :kings
 
   def initialize
-    @state =
-      [ranked_row(:white),
-       pawn_row(:white),
-       Array.new(RuleHelper::WIDTH),
-       Array.new(RuleHelper::WIDTH),
-       Array.new(RuleHelper::WIDTH),
-       Array.new(RuleHelper::WIDTH),
-       pawn_row(:black),
-       ranked_row(:black)
-      ]
-      give_pieces_location
+    @state = make_board(RuleHelper::DEFAULT_BOARD)
     @kings = {white: @state[4][0], black: @state[4][7]}
     @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
+    pp make_fen(@state)
   end
 
   def move_piece(from, to)
@@ -91,3 +78,5 @@ class Board
     @state[row][column]
   end
 end
+
+Board.new
