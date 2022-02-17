@@ -41,6 +41,10 @@ class Board
   end
 
   def piece_at(position)
+    square_at(position).piece
+  end
+
+  def square_at(position)
     column, row = position
     @state[row][column]
   end
