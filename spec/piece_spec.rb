@@ -2,15 +2,19 @@
 
 require_relative '../lib/piece'
 require_relative '../lib/board'
+require_relative '../lib/square'
 
 describe Piece do
   describe '#possible_moves' do
     context 'square a1 with empty board' do
       let(:board){instance_double(Board)}
-      subject(:piece) { described_class.new(:white, board, [0,0]) }
+      let(:square){instance_double(Square)}
+      subject(:piece) { described_class.new(:white, square) }
 
       before do
         allow(board).to receive(:piece_at).and_return(nil)
+        allow(square).to receive(:location).and_return([0,0])
+        allow(square).to receive(:board).and_return(board)
       end
 
       it 'returns correct moves upwards' do
@@ -39,10 +43,13 @@ describe Piece do
 
     context 'square h8 with empty board' do
       let(:board){instance_double(Board)}
-      subject(:piece) { described_class.new(:white, board, [7,7]) }
+      let(:square){instance_double(Square)}
+      subject(:piece) { described_class.new(:white, square) }
 
       before do
         allow(board).to receive(:piece_at).and_return(nil)
+        allow(square).to receive(:location).and_return([7,7])
+        allow(square).to receive(:board).and_return(board)
       end
 
       it 'returns correct moves downwards' do

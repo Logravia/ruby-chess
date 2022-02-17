@@ -1,15 +1,19 @@
 # rook_spec.rb
-require_relative '../lib/rook.rb'
+require_relative '../lib/rook'
 require_relative '../lib/board'
+require_relative '../lib/square'
 describe Rook do
   describe '#possible_moves' do
     context "rook on a1 square with empty board" do
 
       let(:board){instance_double(Board)}
-      subject(:piece) { described_class.new(:white, board, [0,0]) }
+      let(:square){instance_double(Square)}
+      subject(:piece) { described_class.new(:white, square) }
 
       before do
         allow(board).to receive(:piece_at).and_return(nil)
+        allow(square).to receive(:location).and_return([0,0])
+        allow(square).to receive(:board).and_return(board)
       end
 
       it 'returns correct moves upwards' do
