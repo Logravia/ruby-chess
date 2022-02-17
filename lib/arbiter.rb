@@ -18,38 +18,10 @@ class Arbiter
   end
 
   def legal_move?(from, to, color)
-
-    @board.temp_move(from, to)
-
-    if check?(@kings[:color])
-      @board.reverse_temp_move
-      return false
-    end
-
-
-    piece = piece_at(from)
-    return legal_for_king?(from, to, piece) if piece.class == King
-    return legal_for_pawn?(from, to, piece) if piece.class == Pawn
-
     # What makes a move legal for most pieces?
     # TODO: Move does not leave King in check (if after move king in check, illegal)
     # TODO: Does not go on top of a friendly piece
     # TODO: Does not go past a piece
     # TODO: Follows all the rules set for the pieces movements
-    @board.reverse_temp_move
-  end
-
-
-  def check?(king)
-    enemy_color = king.color == :white ? :black : :white
-    square_under_attack?(king.color, king.location)
-  end
-
-  def legal_for_pawn?(from,to,pawn)
-    false
-  end
-
-  def legal_for_king?(from, to, king)
-    false
   end
 end
