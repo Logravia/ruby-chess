@@ -21,7 +21,8 @@ class Square
    @piece = piece_to_set
   end
 
-  private
-  attr_writer :piece
+  def remove_piece
+    @piece = nil
+  end
 
 end
