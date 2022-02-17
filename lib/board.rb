@@ -17,15 +17,11 @@ class Board
     @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
   end
 
-  def move_piece(from, to)
-    from_col, from_row = from
-    to_col, to_row = to
-
-    piece = piece_at(from)
-
-    state[to_row][to_col] = piece
-    state[from_row][from_col] = nil
-    piece.location = to
+  def move_piece(starting_point, destination)
+    piece_to_move = piece_at(starting_point)
+    square_at(starting_point).remove_piece
+    end_square = square_at(destination)
+    end_square.set_piece(piece_to_move)
   end
 
   # Used to help check whether a move is legal
