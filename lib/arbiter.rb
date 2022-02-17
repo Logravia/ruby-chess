@@ -39,15 +39,6 @@ class Arbiter
     @board.reverse_temp_move
   end
 
-  def square_under_attack?(by_color, square)
-    pieces = all_pieces(by_color)
-    pieces.each do |piece|
-      piece.possible_moves.each do |_move_name, move_group|
-        return true if move_group.include? square
-      end
-    end
-    false
-  end
 
   def check?(king)
     enemy_color = king.color == :white ? :black : :white
