@@ -17,14 +17,14 @@ class Board
     @kings = {white: @state[4][0], black: @state[4][7]}
     @move_holder = {start_square: nil, end_square: nil, destroyed_piece: nil}
   end
-
+  # TODO: Test move_piece
   def move_piece(starting_point, destination)
     piece_to_move = piece_at(starting_point)
     square_at(starting_point).remove_piece
     end_square = square_at(destination)
     end_square.set_piece(piece_to_move)
   end
-
+  # TODO: Test temp_move and revert_temp_move
   def save_square_state(starting_point, destination)
     @move_holder[:start_square] = square_at(starting_point)
     @move_holder[:end_square] = square_at(destination)
@@ -53,7 +53,7 @@ class Board
     column, row = position
     @state[row][column]
   end
-
+  # TODO: Consider having an array of all both colors
   def pieces_of_color(color)
     pieces = []
     state.each do |row|

@@ -8,7 +8,7 @@ require_relative 'king'
 require_relative 'pawn'
 require_relative 'square'
 
-#Takes in FEN notation, spits out chess board with Pieces
+#Takes in FEN notation, spits out chess board with Pieces set-up
 module FenParser
   ROW_SEPARATOR = '/'
   PIECE_LETTERS = {r: Rook, n: Knight, b: Bishop, q: Queen, k: King, p: Pawn}
@@ -74,5 +74,4 @@ module FenParser
     end
     fen_string.chomp(ROW_SEPARATOR)
   end
-
 end

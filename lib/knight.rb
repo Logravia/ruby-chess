@@ -3,6 +3,7 @@
 require_relative 'piece'
 require_relative 'rule_helper'
 
+# TODO: Write test cases, because Knight's movements differ from all the other pieces
 class Knight < Piece
   CUR_MOVES = ALL_MOVES.select { |move, _v| move == :jumps }
 

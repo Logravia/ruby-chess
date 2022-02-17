@@ -6,7 +6,7 @@ class Square
     @piece = piece
     @board = board
   end
-
+  # TODO: write test cases for under_attack?
   def under_attack?(by_color)
     pieces = board.pieces_of_color(by_color)
     pieces.each do |piece|

@@ -17,11 +17,13 @@ class Arbiter
     @kings = board.kings
   end
 
+  # TODO: Implement legal_move?
   def legal_move?(from, to, color)
     # What makes a move legal for most pieces?
-    # TODO: Move does not leave King in check (if after move king in check, illegal)
-    # TODO: Does not go on top of a friendly piece
-    # TODO: Does not go past a piece
-    # TODO: Follows all the rules set for the pieces movements
+    #   Move does not leave King in check (if after move king in check, illegal)
+    #   Does not go on top of a friendly piece
+    #   Does not go past a piece
+    #   Follows all the rules set for the pieces movements
   end
+
 end

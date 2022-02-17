@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-
+# TODO: Move all pieces into Piece folder, update requires
 # lib/piece.rb
 require_relative 'rule_helper'
 require 'pry-byebug'
 
 # Parent class of all chess pieces.
-# As a basic piece it only knows where it can be moved to - possible_moves(from)
+# As a it only knows where it can be moved to - possible_moves(from)
 # By default this piece moves as a queen.
 # Its child classes can easily move as rook, for example.
 # Simply modify child classes CUR_MOVES constant to be composed of :up, :down, :left, :right key:value pairs.
@@ -37,7 +37,7 @@ class Piece
   end
 
   private
-
+  # TODO: Consider implementing attack_on_friendly? and remove_friendly_fire in Piece class
   def location
     square.location
   end
