@@ -48,4 +48,16 @@ class Board
     column, row = position
     @state[row][column]
   end
+
+  def pieces_of_color(color)
+    pieces = []
+    state.each do |row|
+      row.each do |square|
+        next if square.empty?
+        piece = square.piece
+        pieces << piece if piece.color == color
+      end
+    end
+    pieces
+  end
 end
