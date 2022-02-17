@@ -52,16 +52,4 @@ class Arbiter
   def legal_for_king?(from, to, king)
     false
   end
-
-  def all_pieces(color)
-    pieces = []
-    state.each do |row|
-      row.each do |piece|
-        next if piece.nil?
-        pieces << piece if piece.color == color
-      end
-    end
-    pieces
-  end
-
 end
