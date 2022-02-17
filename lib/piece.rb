@@ -2,6 +2,7 @@
 
 # lib/piece.rb
 require_relative 'rule_helper'
+require 'pry-byebug'
 
 # Parent class of all chess pieces.
 # As a basic piece it only knows where it can be moved to - possible_moves(from)
@@ -19,13 +20,12 @@ class Piece
 
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
 
-  attr_reader :color, :ALL_MOVES, :CUR_MOVES
+  attr_reader :color, :square, :ALL_MOVES, :CUR_MOVES
   attr_accessor :location
 
-  def initialize(color, board, location = nil)
+  def initialize(color, square)
     @color = color
-    @location = location
-    @board = board
+    @square = square
   end
 
   def possible_moves
@@ -34,6 +34,16 @@ class Piece
       possible_moves[move_name] = cut_move_line(move_line)
     end
     possible_moves
+  end
+
+  private
+
+  def location
+    square.location
+  end
+
+  def board
+    square.board
   end
 
   def possible_moves_in_vacuum
@@ -56,7 +66,7 @@ class Piece
   # Reduces movement to squares that do not go past a standing piece
   def cut_move_line(line)
     line.each_with_index do |point, distance|
-      return line[0..distance] if @board.piece_at(point)
+      return line[0..distance] if board.piece_at(point)
     end
   end
 

@@ -7,7 +7,7 @@ class Pawn < Piece
   CUR_MOVES = ALL_MOVES.select { |move| %i[up down].include? move }
   attr_accessor :moved
 
-  def initialize(color,board,location=nil)
+  def initialize(color, square)
     super
     @moved = false
     @direction = @color == :white ? :up : :down
