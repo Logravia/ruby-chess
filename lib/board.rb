@@ -44,15 +44,6 @@ class Board
     @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
   end
 
-  def give_pieces_location
-    state.each_with_index do |row, row_num|
-      row.each_with_index do |piece, piece_num|
-        next if piece.nil?
-        piece.location = [piece_num, row_num]
-      end
-    end
-  end
-
   def piece_at(position)
     column, row = position
     @state[row][column]
