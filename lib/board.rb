@@ -37,12 +37,12 @@ class Board
     move_piece(starting_point, destination)
   end
 
-  def reverse_temp_move
-    # TODO: Ugly as hell, refactor
-    move_piece(@temp_move_holder[:to], @temp_move_holder[:from])
-    destroyed_piece_col, destroyed_piece_row = @temp_move_holder[:to]
-    @state[destroyed_piece_row][destroyed_piece_col] = @temp_move_holder[:destroyed_piece]
-    @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
+  def revert_temp_move
+    piece_to_restore = @move_holder[:destroyed_piece]
+    moved_piece = @move_holder[:end_square].piece
+
+    @move_holder[:end_square].set_piece(piece_to_restore)
+    @move_holder[:start_square].set_piece(moved_piece)
   end
 
   def piece_at(position)
