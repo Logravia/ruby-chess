@@ -32,11 +32,9 @@ class Board
   end
 
   # Used to help check whether a move is legal
-  def temp_move(from, to)
-    @temp_move_holder[:from] = from
-    @temp_move_holder[:to] = to
-    @temp_move_holder[:destroyed_piece] = piece_at(to)
-    move_piece(from, to)
+  def temp_move(starting_point, destination)
+    save_square_state(starting_point, destination)
+    move_piece(starting_point, destination)
   end
 
   def reverse_temp_move
