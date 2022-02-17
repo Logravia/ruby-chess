@@ -3,8 +3,9 @@
 require_relative 'rule_helper'
 require_relative 'fen_parser'
 
-# Board keeps track of pieces
-# Moves them without taking into account legality of the move
+# Board moves pieces around and reports where they are
+# TODO: Consider splitting it into two classes:
+# PieceMover and Board
 class Board
   extend RuleHelper
   include FenParser
@@ -14,7 +15,7 @@ class Board
   def initialize
     @state = make_board(RuleHelper::DEFAULT_BOARD)
     @kings = {white: @state[4][0], black: @state[4][7]}
-    @temp_move_holder = {from: nil, to: nil, destroyed_piece: nil}
+    @move_holder = {start_square: nil, end_square: nil, destroyed_piece: nil}
   end
 
   def move_piece(starting_point, destination)
@@ -22,6 +23,12 @@ class Board
     square_at(starting_point).remove_piece
     end_square = square_at(destination)
     end_square.set_piece(piece_to_move)
+  end
+
+  def save_square_state(starting_point, destination)
+    @move_holder[:start_square] = square_at(starting_point)
+    @move_holder[:end_square] = square_at(destination)
+    @move_holder[:destroyed_piece] = piece_at(destination)
   end
 
   # Used to help check whether a move is legal
