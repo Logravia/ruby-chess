@@ -38,8 +38,19 @@ module FenParser
     board_row
   end
 
+  def build_square_with_piece(location, fen_char)
+    square = build_square(location)
+    piece = build_piece(fen_char, square)
+    square.set_piece(piece)
+    square
+  end
+
   def piece_color(piece_char)
     piece_char.capitalize == piece_char ? :white : :black
+  end
+
+  def build_square(location)
+    Square.new(location, self)
   end
 
   def build_piece(piece_char, square)
