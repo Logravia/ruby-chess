@@ -6,6 +6,7 @@ require_relative 'bishop'
 require_relative 'queen'
 require_relative 'king'
 require_relative 'pawn'
+require_relative 'square'
 
 #Takes in FEN notation, spits out chess board with Pieces
 module FenParser
@@ -29,7 +30,10 @@ module FenParser
         fen_char.to_i.times {board_row << nil}
         next
       end
-      board_row << build_piece(fen_char, [row_num, col_num])
+      square = Square.new([row_num, col_num], self)
+      piece = build_piece(fen_char, square)
+      square.set_piece(piece)
+      board_row << square
     end
     board_row
   end
@@ -38,9 +42,9 @@ module FenParser
     piece_char.capitalize == piece_char ? :white : :black
   end
 
-  def build_piece(piece_char, location)
+  def build_piece(piece_char, square)
     color = piece_color(piece_char)
-    PIECE_LETTERS[piece_char.downcase.to_sym].new(color, self, location)
+    PIECE_LETTERS[piece_char.downcase.to_sym].new(color, square)
   end
 
   ## TODO: modularize and make work
