@@ -26,14 +26,12 @@ module FenParser
   def build_row(fen_row, row_num)
     board_row = []
     fen_row.chars.each_with_index do |fen_char, col_num|
+      location = [col_num, row_num]
       if fen_char[/[1-8]/]
-        fen_char.to_i.times {board_row << nil}
-        next
+        fen_char.to_i.times { |num| board_row << build_square([num, row_num])}
+      else
+      board_row << build_square_with_piece(location, fen_char)
       end
-      square = Square.new([row_num, col_num], self)
-      piece = build_piece(fen_char, square)
-      square.set_piece(piece)
-      board_row << square
     end
     board_row
   end
