@@ -1,9 +1,7 @@
-#!/usr/bin/env ruby
-
 class Square
   attr_reader :location, :board, :piece
 
-  def initialize(location, board, piece = nil)
+  def initialize(location, board)
     @location = location
     @piece = piece
     @board = board
@@ -20,7 +18,7 @@ class Square
   end
 
   def set_piece(piece_to_set)
-   piece = piece_to_set
+   @piece = piece_to_set
   end
 
   private
