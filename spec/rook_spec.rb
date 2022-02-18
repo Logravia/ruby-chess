@@ -11,9 +11,10 @@ describe Rook do
       subject(:piece) { described_class.new(:white, square) }
 
       before do
-        allow(board).to receive(:piece_at).and_return(nil)
+        allow(board).to receive(:square_at).and_return(square)
         allow(square).to receive(:location).and_return([0,0])
         allow(square).to receive(:board).and_return(board)
+        allow(square).to receive(:empty?).and_return(true)
       end
 
       it 'returns correct moves upwards' do

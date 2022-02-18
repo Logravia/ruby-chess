@@ -6,7 +6,7 @@ require_relative '../lib/square'
 
 describe Piece do
   describe '#possible_moves' do
-    context 'square a1 with empty board' do
+    context 'piece on a1 with empty board' do
       let(:board){instance_double(Board)}
       let(:square){instance_double(Square)}
       subject(:piece) { described_class.new(:white, square) }
@@ -43,7 +43,7 @@ describe Piece do
       end
     end
 
-    context 'square h8 with empty board' do
+    context 'piece on h8 with empty board' do
       let(:board){instance_double(Board)}
       let(:square){instance_double(Square)}
       subject(:piece) { described_class.new(:white, square) }

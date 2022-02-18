@@ -6,7 +6,8 @@ class Square
     @piece = piece
     @board = board
   end
-  # TODO: write test cases for under_attack?
+
+  # TODO: possible_moves can easily return a simple array at this point
   def under_attack?(by_color)
     pieces = board.pieces_of_color(by_color)
     pieces.each do |piece|
@@ -15,6 +16,10 @@ class Square
       end
     end
     false
+  end
+
+  def empty?
+    @piece.nil?
   end
 
   def set_piece(piece_to_set)
