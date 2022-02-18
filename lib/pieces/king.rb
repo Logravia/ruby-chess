@@ -7,12 +7,21 @@ require_relative 'piece'
 class King < Piece
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
 
+  def initialize(color, square)
+    super
+    @moved = false
+    @enemy_color = @color == :white ? :black : :white
+  end
+
   def possible_moves
     all_moves = super
     all_moves.each_pair do |move_name, squares|
       all_moves[move_name] = squares.first
     end
   end
-  # TODO: track whether king has moved to determine castling legality
-  # TODO: Add checked? method to king using square.under_attack?(color)
+
+  def checked?
+    square.under_attack?(@enemy_color)
+  end
+
 end
