@@ -37,7 +37,7 @@ class Piece
   end
 
   private
-  # TODO: Consider implementing attack_on_friendly? and remove_friendly_fire in Piece class
+
   def location
     square.location
   end
@@ -64,9 +64,14 @@ class Piece
   end
 
   # Reduces movement to squares that do not go past a standing piece
+  # If enemy piece allows to go on top of it
+  # If friendly pieces allows to just stop next to it
   def cut_move_line(line)
-    line.each_with_index do |point, distance|
-      return line[0..distance] if board.piece_at(point)
+    line.each_with_index do |position, distance|
+      next if board.square_at(position).empty?
+      piece_to_move_on = board.piece_at(position)
+      return line[0...distance] if piece_to_move_on.color == @color
+      return line[0..distance] if piece_to_move_on.color != @color
     end
   end
 
