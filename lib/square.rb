@@ -7,7 +7,6 @@ class Square
     @board = board
   end
 
-  # TODO: possible_moves can easily return a simple array at this point
   def under_attack?(by_color)
     pieces = board.pieces_of_color(by_color)
     pieces.each do |piece|

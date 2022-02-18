@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-# TODO: Move all pieces into Piece folder, update requires
 # lib/piece.rb
-require_relative 'rule_helper'
+require_relative '../rule_helper'
 require 'pry-byebug'
 
 # Parent class of all chess pieces.

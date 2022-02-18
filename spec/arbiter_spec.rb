@@ -1,7 +1,7 @@
 require_relative '../lib/arbiter'
 require_relative '../lib/board'
-require_relative '../lib/rook'
-require_relative '../lib/king'
+require_relative '../lib/pieces/rook'
+require_relative '../lib/pieces/king'
 
 describe Arbiter do
   describe "#legal_move?" do

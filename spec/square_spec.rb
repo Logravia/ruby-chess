@@ -1,7 +1,7 @@
 # square_spec.rb
 require_relative '../lib/square'
 require_relative '../lib/board'
-require_relative '../lib/rook'
+require_relative '../lib/pieces/rook'
 
 describe Square do
   describe '#under_attack?' do

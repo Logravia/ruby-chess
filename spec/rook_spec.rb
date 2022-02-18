@@ -1,5 +1,5 @@
 # rook_spec.rb
-require_relative '../lib/rook'
+require_relative '../lib/pieces/rook'
 require_relative '../lib/board'
 require_relative '../lib/square'
 describe Rook do
@@ -11,6 +11,7 @@ describe Rook do
       subject(:piece) { described_class.new(:white, square) }
 
       before do
+        allow(board).to receive(:square_at).and_return(square)
         allow(board).to receive(:square_at).and_return(square)
         allow(square).to receive(:location).and_return([0,0])
         allow(square).to receive(:board).and_return(board)
