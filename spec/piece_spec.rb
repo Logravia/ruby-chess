@@ -13,8 +13,10 @@ describe Piece do
 
       before do
         allow(board).to receive(:piece_at).and_return(nil)
+        allow(board).to receive(:square_at).and_return(square)
         allow(square).to receive(:location).and_return([0,0])
         allow(square).to receive(:board).and_return(board)
+        allow(square).to receive(:empty?).and_return(true)
       end
 
       it 'returns correct moves upwards' do
@@ -48,8 +50,10 @@ describe Piece do
 
       before do
         allow(board).to receive(:piece_at).and_return(nil)
+        allow(board).to receive(:square_at).and_return(square)
         allow(square).to receive(:location).and_return([7,7])
         allow(square).to receive(:board).and_return(board)
+        allow(square).to receive(:empty?).and_return(true)
       end
 
       it 'returns correct moves downwards' do
@@ -75,6 +79,67 @@ describe Piece do
         move_types = 3
         expect(all_moves.size).to eq(move_types)
       end
+    end
+
+    context 'piece on a1 with single enemy piece above' do
+      let(:board){instance_double(Board, square_at: other_squares)}
+
+      let(:my_location){[0,0]}
+      let(:my_square){instance_double(Square, location: my_location, board: board)}
+      subject(:my_piece) { described_class.new(:white, my_square) }
+
+      let(:enemy_piece){instance_double(Piece, color: :black)}
+      let(:other_squares){instance_double(Square)}
+
+
+      it 'allows to jump on enemy piece right above it, but no further' do
+        allow(other_squares).to receive(:empty?).and_return(false, true)
+        allow(board).to receive(:piece_at).and_return(enemy_piece)
+
+        correct_moves = [[0,1]]
+        moves_up = my_piece.possible_moves[:up]
+        expect(moves_up).to eq(correct_moves)
+      end
+
+      it 'allows to jump on enemy piece two squares away, but no further' do
+        allow(other_squares).to receive(:empty?).and_return(true, false)
+        allow(board).to receive(:piece_at).and_return(enemy_piece)
+
+        correct_moves = [[0,1], [0,2]]
+        moves_up = my_piece.possible_moves[:up]
+        expect(moves_up).to eq(correct_moves)
+      end
+
+  end
+
+    context 'piece on a1 with single friendly piece above' do
+      let(:board){instance_double(Board, square_at: other_squares)}
+
+      let(:my_location){[0,0]}
+      let(:my_square){instance_double(Square, location: my_location, board: board)}
+      subject(:my_piece) { described_class.new(:white, my_square) }
+
+      let(:friendly_piece){instance_double(Piece, color: :white)}
+      let(:other_squares){instance_double(Square)}
+
+
+      it 'forbids a jump on friendly piece right above it' do
+        allow(other_squares).to receive(:empty?).and_return(false, true)
+        allow(board).to receive(:piece_at).and_return(friendly_piece)
+
+        moves_up = my_piece.possible_moves[:up]
+        expect(moves_up).to be_empty
+      end
+
+      it 'forbids jump on friendly piece two squares away' do
+        allow(other_squares).to receive(:empty?).and_return(true, false)
+        allow(board).to receive(:piece_at).and_return(friendly_piece)
+
+        correct_moves = [[0,1]]
+        moves_up = my_piece.possible_moves[:up]
+        expect(moves_up).to eq(correct_moves)
+      end
+
     end
   end
 end
