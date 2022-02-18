@@ -21,4 +21,16 @@ class Pawn < Piece
     # TODO: Returned moves should include diagonal move upward/downwards if there's a piece there
     all_moves
   end
+
+  def diagonal_neighbors_in_move_direction
+    if @direction == :up
+      left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_up])
+      right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_up])
+    else
+      left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_down])
+      right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_down])
+    end
+    [board.piece_at(left_side), board.piece_at(right_side)]
+  end
+
 end
