@@ -19,6 +19,8 @@ class Board
   end
   # TODO: Test move_piece
   def move_piece(starting_point, destination)
+    save_square_state(starting_point, destination)
+
     piece_to_move = piece_at(starting_point)
     square_at(starting_point).remove_piece
     end_square = square_at(destination)
@@ -31,13 +33,7 @@ class Board
     @move_holder[:destroyed_piece] = piece_at(destination)
   end
 
-  # Used to help check whether a move is legal
-  def temp_move(starting_point, destination)
-    save_square_state(starting_point, destination)
-    move_piece(starting_point, destination)
-  end
-
-  def revert_temp_move
+  def revert_move
     piece_to_restore = @move_holder[:destroyed_piece]
     moved_piece = @move_holder[:end_square].piece
 
@@ -53,7 +49,7 @@ class Board
     column, row = position
     @state[row][column]
   end
-  # TODO: Consider having an array of all both colors
+
   def pieces_of_color(color)
     pieces = []
     state.each do |row|
