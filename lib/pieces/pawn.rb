@@ -5,21 +5,27 @@ require 'pry-byebug'
 
 class Pawn < Piece
   CUR_MOVES = ALL_MOVES.select { |move| %i[up down].include? move }
-  attr_writer :moved
+  attr_writer :available_move_distance
 
   def initialize(color, square)
     super
-    @moved = false
+    @available_move_distance = 2
     @direction = @color == :white ? :up : :down
   end
 
   def possible_moves
     all_moves = super.select { |move| move == @direction }
-    # Pawn can move one square up/down or two depending whether it had moved
-    all_moves[@direction] = @moved ? [all_moves[@direction][0]] : all_moves[@direction][0..1]
-    #TODO: forbid pawn from jumping on enemy piece or friendly piece for that matter.
     all_moves[:attack_moves] = attack_moves
     all_moves
+  end
+
+  private
+
+  def cut_move_line(line)
+    line.each_with_index do |position, distance|
+      return line[0...distance] if distance == @available_move_distance
+      return line[0...distance] if not board.square_at(position).empty?
+    end
   end
 
   def attack_moves
