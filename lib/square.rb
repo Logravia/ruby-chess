@@ -26,7 +26,9 @@ class Square
   end
 
   def remove_piece
+    removed_piece = piece
     @piece = nil
+    removed_piece
   end
 
 end
