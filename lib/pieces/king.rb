@@ -2,11 +2,7 @@
 
 require_relative 'piece'
 
-# TODO: Write tests for King, because its movements differ significantly from other classes
-# King moves just like a Queen or rather Piece except only one square in all directions
 class King < Piece
-  CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
-
   def initialize(color, square)
     super
     @moved = false
@@ -16,6 +12,7 @@ class King < Piece
   def possible_moves
     all_moves = super
     all_moves.each_pair do |move_name, squares|
+      # King moves just like a Queen except only one square in all directions
       all_moves[move_name] = squares.first
     end
   end
