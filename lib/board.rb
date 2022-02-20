@@ -4,41 +4,34 @@ require_relative 'rule_helper'
 require_relative 'fen_parser'
 
 # Board moves pieces around and reports where they are
-# TODO: Consider splitting it into two classes:
-# PieceMover and Board
 class Board
   extend RuleHelper
   include FenParser
 
-  attr_reader :state, :kings
+  attr_reader :state, :kings, :move_buffer
 
-  def initialize
-    @state = make_board(RuleHelper::DEFAULT_BOARD)
-    @kings = {white: @state[4][0], black: @state[4][7]}
-    @move_holder = {start_square: nil, end_square: nil, destroyed_piece: nil}
+  def initialize(state=make_board(RuleHelper::DEFAULT_BOARD))
+    @state = state
+    @move_buffer = {start_square: nil, end_square: nil, destroyed_piece: nil}
   end
-  # TODO: Test move_piece
+
   def move_piece(starting_point, destination)
-    save_square_state(starting_point, destination)
-
-    piece_to_move = piece_at(starting_point)
-    square_at(starting_point).remove_piece
-    end_square = square_at(destination)
-    end_square.set_piece(piece_to_move)
-  end
-  # TODO: Test temp_move and revert_temp_move
-  def save_square_state(starting_point, destination)
-    @move_holder[:start_square] = square_at(starting_point)
-    @move_holder[:end_square] = square_at(destination)
-    @move_holder[:destroyed_piece] = piece_at(destination)
+    save_move(starting_point, destination)
+    piece_to_move = square_at(starting_point).remove_piece
+    square_at(destination).set_piece(piece_to_move)
   end
 
-  def revert_move
-    piece_to_restore = @move_holder[:destroyed_piece]
-    moved_piece = @move_holder[:end_square].piece
+  def save_move(starting_point, destination)
+    @move_buffer[:start_square] = square_at(starting_point)
+    @move_buffer[:end_square] = square_at(destination)
+    @move_buffer[:destroyed_piece] = piece_at(destination)
+  end
 
-    @move_holder[:end_square].set_piece(piece_to_restore)
-    @move_holder[:start_square].set_piece(moved_piece)
+  def undo_move
+    piece_to_restore = @move_buffer[:destroyed_piece]
+    moved_piece = @move_buffer[:end_square].piece
+    @move_buffer[:end_square].set_piece(piece_to_restore)
+    @move_buffer[:start_square].set_piece(moved_piece)
   end
 
   def piece_at(position)
