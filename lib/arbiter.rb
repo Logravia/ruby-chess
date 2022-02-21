@@ -13,8 +13,24 @@ class Arbiter
 
   def initialize(board)
     @board = board
-    @state = board.state
-    @kings = board.kings
+    @kings - board.kings
+  end
+
+  def legal_move?(from, to)
+    return false if from == to
+    return false unless squares_within_board?(from, to)
+    return false if square_empty?(from)
+    return false if king_checked_after_move?(from, to)
+
+    piece = board.piece_at(from)
+
+    if piece.class == King
+      legal_for_king?(from, to, piece)
+    else
+      piece_can_move_to?(destination, piece)
+    end
+  end
+
   def squares_within_board?(from, to)
     (RuleHelper.within_board?(from) and RuleHelper.within_board?(to))
   end
