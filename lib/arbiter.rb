@@ -24,6 +24,20 @@ class Arbiter
     #   Does not go on top of a friendly piece
     #   Does not go past a piece
     #   Follows all the rules set for the pieces movements
+  def king_checked_after_move?(from, to)
+    kings_color = board.piece_at(from).color
+    board.move_piece(from, to)
+
+    if kings[kings_color].checked?
+      board.undo_move
+      false
+    else
+      board.undo_move
+      true
+    end
+
+  end
+
   end
 
 end
