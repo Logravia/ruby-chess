@@ -44,4 +44,10 @@ class Arbiter
 
   end
 
+  def castling_line_checked?(king, direction)
+    king.castling_line(direction).each do |point|
+     board.square_at(point).under_attack?
+   end
+  end
+
 end
