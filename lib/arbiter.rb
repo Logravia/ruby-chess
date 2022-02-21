@@ -19,6 +19,8 @@ class Arbiter
     (RuleHelper.within_board?(from) and RuleHelper.within_board?(to))
   end
 
+  def square_empty?(location)
+    not board.square_at(location).empty?
   end
 
   # TODO: Implement legal_move?
