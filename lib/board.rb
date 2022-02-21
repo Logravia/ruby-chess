@@ -8,11 +8,12 @@ class Board
   extend RuleHelper
   include FenParser
 
-  attr_reader :state, :kings, :move_buffer
+  attr_reader :state, :move_buffer, :kings
 
-  def initialize(state=make_board(RuleHelper::DEFAULT_BOARD))
+  def initialize(state=make_board(RuleHelper::DEFAULT_BOARD), kings = get_kings)
     @state = state
     @move_buffer = {start_square: nil, end_square: nil, destroyed_piece: nil}
+    @kings = kings
   end
 
   def move_piece(starting_point, destination)
@@ -41,6 +42,16 @@ class Board
   def square_at(position)
     column, row = position
     @state[row][column]
+  end
+
+  def get_kings
+    kings = {white: nil, black: nil}
+    @state.each do |row|
+      row.each do |square|
+        piece = square.piece
+        kings[piece.color] = piece if piece.class == King
+      end
+    end
   end
 
   def pieces_of_color(color)
