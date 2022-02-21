@@ -5,8 +5,11 @@ require_relative 'board'
 # Answers whether a move is legal, illegal
 class Arbiter
   extend RuleHelper
+  CASTLING_SQUARES = {white: {[0,2] => :left, [0,6] => :right},
+                      black: {[7,2] => :left, [7,6] => :right}}
 
   attr_reader :state, :kings, :board
+  private_constant :CASTLING_SQUARES
 
   def initialize(board)
     @board = board
