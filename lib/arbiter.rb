@@ -15,6 +15,10 @@ class Arbiter
     @board = board
     @state = board.state
     @kings = board.kings
+  def squares_within_board?(from, to)
+    (RuleHelper.within_board?(from) and RuleHelper.within_board?(to))
+  end
+
   end
 
   # TODO: Implement legal_move?
