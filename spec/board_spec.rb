@@ -9,7 +9,8 @@ describe Board do
   let(:end_square){instance_double(Square)}
 
   let(:state){[[start_square, empty_square, end_square]]}
-  subject(:board){described_class.new(state)}
+  subject(:board){described_class.new(state, nil)}
+
 
   describe '#move_piece' do
     context 'small simulated board' do
