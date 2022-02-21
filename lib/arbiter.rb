@@ -39,13 +39,6 @@ class Arbiter
     not board.square_at(location).empty?
   end
 
-  # TODO: Implement legal_move?
-  def legal_move?(from, to, color)
-    # What makes a move legal for most pieces?
-    #   Move does not leave King in check (if after move king in check, illegal)
-    #   Does not go on top of a friendly piece
-    #   Does not go past a piece
-    #   Follows all the rules set for the pieces movements
   def king_checked_after_move?(from, to)
     kings_color = board.piece_at(from).color
     board.move_piece(from, to)
