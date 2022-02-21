@@ -2,10 +2,7 @@
 
 require_relative 'rule_helper'
 require_relative 'board'
-# Answers whether a move is legal.
-# Does so by looking at the state of the board,
-# And asking the relevant piece being moved how it can move.
-# Allows castling, en passant and pawns capturing other pieces to be possible.
+# Answers whether a move is legal, illegal
 class Arbiter
   extend RuleHelper
 
