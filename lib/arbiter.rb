@@ -38,6 +38,10 @@ class Arbiter
 
   end
 
+  def piece_can_move_to?(destination, piece)
+    piece.possible_moves.values.include? destination
+  end
+
   end
 
 end
