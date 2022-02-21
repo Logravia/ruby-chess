@@ -6,7 +6,9 @@ class King < Piece
   def initialize(color, square)
     super
     @moved = false
-    @enemy_color = @color == :white ? :black : :white
+    @my_row = location[1]
+    @rook_squares = {left: board.square_at([0, @my_row]),
+                     right: board.square_at([-1, @my_row])}
   end
 
   # King moves just like a Queen except only one square in all directions
@@ -25,7 +27,7 @@ class King < Piece
   end
 
   def checked?
-    square.under_attack?(@enemy_color)
+    enemy_color = @color == :white ? :black : :white
+    square.under_attack?(enemy_color)
   end
-
 end
