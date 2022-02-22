@@ -3,6 +3,9 @@
 require_relative 'piece'
 
 class King < Piece
+
+  attr_accessor :moved
+
   def initialize(color, square)
     super
     @moved = false
