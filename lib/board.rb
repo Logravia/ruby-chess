@@ -10,23 +10,25 @@ class Board
 
   attr_reader :state, :move_buffer, :kings, :en_passant_square
 
-  def initialize(fen)
+  def initialize(fen = RuleHelper::DEFAULT_BOARD)
     @state = make_board(fen)
+    @previous_state = nil
     @move_buffer = { start_square: nil, end_square: nil, destroyed_piece: nil }
     @en_passant_square = nil
+    @previous_en_passant_square = nil
     @kings = get_kings
   end
 
   # TODO: implement moving for castling, en passant.
   def move_piece(starting_point, destination)
     # TODO: After a move, if en passant was not taken advantage of it no longer is available.
-    save_move(starting_point, destination)
+    note_move(starting_point, destination)
+    save_state
 
     piece = square_at(starting_point).remove_piece
     square_at(destination).set_piece(piece)
 
-    # When King and Rook get moved it must be noted that they've been moved.
-    # Otherwise, legality of castling can't be determined.
+    # King, Pawn and Rook require special attention after being moved.
     handle_special_pieces(piece) unless piece.nil?
   end
 
