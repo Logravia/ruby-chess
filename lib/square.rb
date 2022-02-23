@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Square
   attr_reader :location, :board, :piece
 
@@ -11,13 +13,12 @@ class Square
   end
 
   def under_attack?(by_color)
-    if not @piece.nil?
-      return true if @piece.color == by_color
-    end
+    return true if !@piece.nil? && (@piece.color == by_color)
+
     pieces = board.pieces_of_color(by_color)
     pieces.each do |piece|
       piece.possible_moves.each do |_move_name, move_group|
-        return true if move_group.include? self.location
+        return true if move_group.include? location
       end
     end
     false
@@ -28,7 +29,7 @@ class Square
   end
 
   def set_piece(piece_to_set)
-   @piece = piece_to_set
+    @piece = piece_to_set
   end
 
   def remove_piece
@@ -43,13 +44,11 @@ class Square
   end
 
   def remove_en_passant_status
-   @en_passant_square = false
-   @connected_en_passant_pawn = nil
+    @en_passant_square = false
+    @connected_en_passant_pawn = nil
   end
 
   def en_passant_square?
     @en_passant_square
   end
-
-
 end

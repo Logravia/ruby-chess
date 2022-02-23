@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # lib/piece.rb
 require_relative '../rule_helper'
 require 'pry-byebug'
@@ -48,7 +49,7 @@ class Piece
     possible_moves = {}
     self.class::CUR_MOVES.each_pair do |move_name, change|
       possible_moves[move_name] = []
-      adjacent_square = sum_coordinates(self.location, change)
+      adjacent_square = sum_coordinates(location, change)
 
       while RuleHelper.within_board?(adjacent_square)
         possible_moves[move_name] << adjacent_square
@@ -67,6 +68,7 @@ class Piece
   def cut_move_line(line)
     line.each_with_index do |position, distance|
       next if board.square_at(position).empty?
+
       piece_to_move_on = board.piece_at(position)
       return line[0...distance] if piece_to_move_on.color == @color
       return line[0..distance] if piece_to_move_on.color != @color

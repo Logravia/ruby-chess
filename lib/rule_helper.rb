@@ -11,7 +11,7 @@ module RuleHelper
   HEIGHT = 8
   WIDTH = 8
 
-  DEFAULT_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+  DEFAULT_BOARD = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
   attr_reader :X_MIN, :X_MAX, :Y_MIN, :Y_MAX, :WIDTH, :HEIGHT
 

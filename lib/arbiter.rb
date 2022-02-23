@@ -5,10 +5,11 @@ require_relative 'board'
 # Answers whether a move is legal, illegal
 class Arbiter
   extend RuleHelper
-  CASTLING_SQUARES = {white: {[0,2] => :left, [0,6] => :right},
-                      black: {[7,2] => :left, [7,6] => :right}}
+  CASTLING_SQUARES = { white: { [0, 2] => :left, [0, 6] => :right },
+                       black: { [7, 2] => :left, [7, 6] => :right } }.freeze
 
   attr_reader :state, :kings, :board
+
   private_constant :CASTLING_SQUARES
 
   def initialize(board)
@@ -36,48 +37,53 @@ class Arbiter
   end
 
   def square_empty?(location)
-    not board.square_at(location).empty?
+    !board.square_at(location).empty?
   end
 
   def king_checked_after_move?(from, to)
     kings_color = board.piece_at(from).color
     board.move_piece(from, to)
 
+    board.undo_move
     if kings[kings_color].checked?
-      board.undo_move
       false
     else
-      board.undo_move
       true
     end
   end
 
   def move_type(from, to_destination)
     piece = board.piece_at(from)
-    return :castling if piece.is_a?(King) and piece.moved == false and CASTLING_SQUARES[king.color].values.include? to_destination
+    if piece.is_a?(King) && (piece.moved == false) && CASTLING_SQUARES[king.color].values.include?(to_destination)
+      return :castling
+    end
+
     # TODO: implement en_passant move type check
     # return :en_passant if piece.is_a?(Pawn) and
-    return :normal_move
+    :normal_move
   end
 
-  def legal_castling?(from,to,king)
+  def legal_castling?(_from, to, king)
     return false if king.moved?
+
     direction = CASTLING_SQUARES[king.color][to]
     # 1. One may not castle out of, through, or into check.
     return false if king.checked?
     return false if castling_line_checked?(king, direction)
+
     # 2. Rook must be able to reach king's side without having been moved.
     rooks_square = king.rook_squares[direction]
     rook = rooks_square.piece
-    return false if rooks_square.empty? or rook.class != Rook
+    return false if rooks_square.empty? || (rook.class != Rook)
     return false if rook.moved
+
     kings_side_square = king.castling_line(direction).first
-    return rook.possible_moves[direction].include? kings_side_square
+    rook.possible_moves[direction].include? kings_side_square
   end
 
   def castling_line_checked?(king, direction)
     king.castling_line(direction).each do |point|
-     board.square_at(point).under_attack?
-   end
+      board.square_at(point).under_attack?
+    end
   end
 end

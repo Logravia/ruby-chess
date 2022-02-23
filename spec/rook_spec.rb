@@ -1,19 +1,20 @@
+# frozen_string_literal: true
+
 # rook_spec.rb
 require_relative '../lib/pieces/rook'
 require_relative '../lib/board'
 require_relative '../lib/square'
 describe Rook do
   describe '#possible_moves' do
-    context "rook on a1 square with empty board" do
-
-      let(:board){instance_double(Board)}
-      let(:square){instance_double(Square)}
+    context 'rook on a1 square with empty board' do
+      let(:board) { instance_double(Board) }
+      let(:square) { instance_double(Square) }
       subject(:piece) { described_class.new(:white, square) }
 
       before do
         allow(board).to receive(:square_at).and_return(square)
         allow(board).to receive(:square_at).and_return(square)
-        allow(square).to receive(:location).and_return([0,0])
+        allow(square).to receive(:location).and_return([0, 0])
         allow(square).to receive(:board).and_return(board)
         allow(square).to receive(:empty?).and_return(true)
       end
@@ -35,7 +36,6 @@ describe Rook do
         move_types = 2
         expect(all_moves.size).to eq(move_types)
       end
-
     end
   end
 end

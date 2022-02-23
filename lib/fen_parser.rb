@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/fen_parser.rb
 
 require_relative 'pieces/rook'
@@ -8,10 +10,10 @@ require_relative 'pieces/king'
 require_relative 'pieces/pawn'
 require_relative 'square'
 
-#Takes in FEN notation, spits out chess board with Pieces set-up
+# Takes in FEN notation, spits out chess board with Pieces set-up
 module FenParser
   ROW_SEPARATOR = '/'
-  PIECE_LETTERS = {r: Rook, n: Knight, b: Bishop, q: Queen, k: King, p: Pawn}
+  PIECE_LETTERS = { r: Rook, n: Knight, b: Bishop, q: Queen, k: King, p: Pawn }.freeze
 
   private_constant :ROW_SEPARATOR, :PIECE_LETTERS
 
@@ -29,9 +31,9 @@ module FenParser
     fen_row.chars.each_with_index do |fen_char, col_num|
       location = [col_num, row_num]
       if fen_char[/[1-8]/]
-        fen_char.to_i.times { |num| board_row << build_square([num, row_num])}
+        fen_char.to_i.times { |num| board_row << build_square([num, row_num]) }
       else
-      board_row << build_square_with_piece(location, fen_char)
+        board_row << build_square_with_piece(location, fen_char)
       end
     end
     board_row

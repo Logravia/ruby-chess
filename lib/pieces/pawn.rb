@@ -33,7 +33,7 @@ class Pawn < Piece
   def cut_move_line(line)
     line.each_with_index do |position, distance|
       return line[0...distance] if distance == @available_move_distance
-      return line[0...distance] if not board.square_at(position).empty?
+      return line[0...distance] unless board.square_at(position).empty?
     end
   end
 
@@ -43,6 +43,7 @@ class Pawn < Piece
     squares.each do |square|
       attack_moves << square.location if square.en_passant_square?
       next if square.empty?
+
       attack_moves << square.location if square.piece.color != @color
     end
     attack_moves
@@ -58,5 +59,4 @@ class Pawn < Piece
     end
     [board.square_at(left_side), board.square_at(right_side)]
   end
-
 end

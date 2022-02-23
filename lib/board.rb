@@ -8,16 +8,16 @@ class Board
   extend RuleHelper
   include FenParser
 
-  attr_reader :state, :move_buffer, :kings,  :en_passant_square
+  attr_reader :state, :move_buffer, :kings, :en_passant_square
 
   def initialize(fen)
     @state = make_board(fen)
-    @move_buffer = {start_square: nil, end_square: nil, destroyed_piece: nil}
+    @move_buffer = { start_square: nil, end_square: nil, destroyed_piece: nil }
     @en_passant_square = nil
     @kings = get_kings
   end
 
-  #TODO: implement moving for castling, en passant.
+  # TODO: implement moving for castling, en passant.
   def move_piece(starting_point, destination)
     # TODO: After a move, if en passant was not taken advantage of it no longer is available.
     # Currenly en_passan_square is there permanently.
@@ -33,13 +33,14 @@ class Board
 
     # When King and Rook get moved it must be noted that they've been moved.
     # Otherwise, legality of castling can't be determined.
-    handle_special_pieces(piece) if not piece.nil?
+    handle_special_pieces(piece) unless piece.nil?
   end
 
   def handle_special_pieces(piece)
-    if piece.is_a?(King) or piece.is_a?(Rook)
+    case piece
+    when King, Rook
       piece.moved = true
-    elsif piece.is_a?(Pawn)
+    when Pawn
       handle_pawn(piece)
     end
   end
@@ -90,11 +91,11 @@ class Board
   end
 
   def get_kings
-    kings = {white: nil, black: nil}
+    kings = { white: nil, black: nil }
     @state.each do |row|
       row.each do |square|
         piece = square.piece
-        kings[piece.color] = piece if piece.class == King
+        kings[piece.color] = piece if piece.instance_of?(King)
       end
     end
   end
@@ -104,6 +105,7 @@ class Board
     state.each do |row|
       row.each do |square|
         next if square.empty?
+
         piece = square.piece
         pieces << piece if piece.color == color
       end
