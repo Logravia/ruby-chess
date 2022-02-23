@@ -9,8 +9,6 @@ class King < Piece
     super
     @moved = false
     @my_row = location[1]
-    @rook_squares = { left: board.square_at([0, @my_row]),
-                      right: board.square_at([-1, @my_row]) }
   end
 
   # King moves just like a Queen except only one square in all directions
@@ -21,9 +19,11 @@ class King < Piece
     end
   end
 
-  def castling_line(direction)
-    return nil if moved
+  def rook_squares
+    { left: board.square_at([0, @my_row]), right: board.square_at([-1, @my_row]) }
+  end
 
+  def castling_line(direction)
     line = []
     2.times { line << sum_coordinates(location, ALL_MOVES[direction]) }
     line
