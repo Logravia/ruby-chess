@@ -50,7 +50,7 @@ class Board
   def set_en_passant_square
     pawn = @move_buffer[:end_square].piece
     square = board.square_at(pawn.square_behind)
-    square.set_up_en_passant(pawn)
+    square.en_passant(pawn)
   end
 
   def calc_y_move_distance
@@ -59,14 +59,12 @@ class Board
     move_distance = (y_start - y_end).abs
   end
 
-  def save_move(starting_point, destination)
-    # TODO: Deal with en_passant saving
-    # TODO: Deal with castling saves
   def save_state
    @previous_state = Marshal.load(Marshal.dump(@state))
    @previous_en_passant_square = @en_passant_square
   end
 
+  def note_move(starting_point, destination)
     @move_buffer[:start_square] = square_at(starting_point)
     @move_buffer[:end_square] = square_at(destination)
     @move_buffer[:destroyed_piece] = piece_at(destination)
@@ -96,6 +94,7 @@ class Board
     end
   end
 
+  # returns all black or white pieces
   def pieces_of_color(color)
     pieces = []
     state.each do |row|
