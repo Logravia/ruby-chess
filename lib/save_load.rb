@@ -5,7 +5,10 @@ module SaveLoad
    Marshal.load(Marshal.dump(a))
  end
 
- def self.save end
+ def self.save
+ end
 
- def self.load end
+ def self.load
+ end
+
 end
