@@ -4,7 +4,7 @@ require_relative 'piece'
 
 class King < Piece
 
-  attr_accessor :moved
+  attr_writer :moved
 
   def initialize(color, square)
     super
@@ -32,5 +32,9 @@ class King < Piece
   def checked?
     enemy_color = @color == :white ? :black : :white
     square.under_attack?(enemy_color)
+  end
+
+  def moved?
+    @moved
   end
 end
