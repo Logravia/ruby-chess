@@ -20,12 +20,6 @@ class Board
   # TODO: implement moving for castling, en passant.
   def move_piece(starting_point, destination)
     # TODO: After a move, if en passant was not taken advantage of it no longer is available.
-    # Currenly en_passan_square is there permanently.
-
-    # Move is saved so that it can be reverted later.
-    # Allows to determine whether the move, left King in check,
-    # which determines the move's legality.
-    # Also, helps with en passant as it regards pawn
     save_move(starting_point, destination)
 
     piece = square_at(starting_point).remove_piece
