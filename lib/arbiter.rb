@@ -53,8 +53,12 @@ class Arbiter
 
   end
 
-  def piece_can_move_to?(destination, piece)
-    piece.possible_moves.values.include? destination
+  def move_type(from, to_destination)
+    piece = board.piece_at(from)
+    return :castling if piece.is_a?(King) and piece.moved == false and CASTLING_SQUARES[king.color].values.include? to_destination
+    # TODO: implement en_passant move type check
+    # return :en_passant if piece.is_a?(Pawn) and
+    return :normal_move
   end
 
   def legal_castling?(from,to,king)
