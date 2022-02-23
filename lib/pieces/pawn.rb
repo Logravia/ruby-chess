@@ -19,6 +19,15 @@ class Pawn < Piece
     all_moves
   end
 
+  # Used to determine where the en_passant square is located
+  def square_behind
+    if @direction == :up
+      sum_coordinates(location, ALL_MOVES[:down])
+    else
+      sum_coordinates(location, ALL_MOVES[:up])
+    end
+  end
+
   private
 
   def cut_move_line(line)
