@@ -20,6 +20,30 @@ class Board
     save_move(starting_point, destination)
     piece_to_move = square_at(starting_point).remove_piece
     square_at(destination).set_piece(piece_to_move)
+  def handle_special_pieces(piece)
+    if piece.is_a?(King) or piece.is_a?(Rook)
+      piece.moved = true
+    elsif piece.is_a?(Pawn)
+      handle_pawn(piece)
+    end
+  end
+
+  def handle_pawn(pawn)
+    move_distance = calc_y_move_distance
+    set_en_passant_square if move_distance == 2
+    pawn.available_move_distance = 1
+  end
+
+  def set_en_passant_square
+    pawn = @move_buffer[:end_square].piece
+    square = board.square_at(pawn.square_behind)
+    square.set_up_en_passant(pawn)
+  end
+
+  def calc_y_move_distance
+    y_start = @move_buffer[:start_square].location[1]
+    y_end = @move_buffer[:end_square].location[1]
+    move_distance = (y_start - y_end).abs
   end
 
   def save_move(starting_point, destination)
