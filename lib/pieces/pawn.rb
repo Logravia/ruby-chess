@@ -39,14 +39,16 @@ class Pawn < Piece
 
   def attack_moves
     attack_moves = []
-    neighboring_pieces = diagonal_neighbors_in_move_direction.compact
-    neighboring_pieces.each do |piece|
-      attack_moves << piece.location if piece.color != @color
+    squares = diagonal_squares_in_move_direction
+    squares.each do |square|
+      attack_moves << square.location if square.en_passant_square?
+      next if square.empty?
+      attack_moves << square.location if square.piece.color != @color
     end
     attack_moves
   end
 
-  def diagonal_neighbors_in_move_direction
+  def diagonal_squares_in_move_direction
     if @direction == :up
       left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_up])
       right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_up])
@@ -54,7 +56,7 @@ class Pawn < Piece
       left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_down])
       right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_down])
     end
-    [board.piece_at(left_side), board.piece_at(right_side)]
+    [board.square_at(left_side), board.square_at(right_side)]
   end
 
 end
