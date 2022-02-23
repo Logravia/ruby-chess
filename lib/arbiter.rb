@@ -24,10 +24,10 @@ class Arbiter
 
     piece = board.piece_at(from)
 
-    if piece.class == King
-      legal_for_king?(from, to, piece)
+    if move_type(from, to) == :castling
+      legal_castling?(from, to, piece)
     else
-      piece_can_move_to?(destination, piece)
+      piece.possible_moves.values.include? destination
     end
   end
 
@@ -50,7 +50,6 @@ class Arbiter
       board.undo_move
       true
     end
-
   end
 
   def move_type(from, to_destination)
@@ -81,5 +80,4 @@ class Arbiter
      board.square_at(point).under_attack?
    end
   end
-
 end
