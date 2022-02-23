@@ -73,13 +73,8 @@ class Board
   end
 
   def undo_move
-    # TODO: Deal with en_passant undoing
-    # TODO: Deal with castling undoing
-    piece_to_restore = @move_buffer[:destroyed_piece]
-    moved_piece = @move_buffer[:end_square].piece
-    @move_buffer[:end_square].set_piece(piece_to_restore)
-    @move_buffer[:start_square].set_piece(moved_piece)
-    @en_passant_square = nil
+    @state = @previous_state
+    @en_passant_square = @previous_en_passant_square
   end
 
   def piece_at(position)
