@@ -8,20 +8,34 @@ class Board
   extend RuleHelper
   include FenParser
 
-  attr_reader :state, :move_buffer, :kings
+  attr_reader :state, :move_buffer, :kings,  :en_passant_square
 
-  def initialize(state=make_board(RuleHelper::DEFAULT_BOARD), kings = get_kings)
-    @state = state
+  def initialize(fen)
+    @state = make_board(fen)
     @move_buffer = {start_square: nil, end_square: nil, destroyed_piece: nil}
-    @kings = kings
+    @en_passant_square = nil
+    @kings = get_kings
   end
 
   #TODO: implement moving for castling, en passant.
   def move_piece(starting_point, destination)
     # TODO: After a move, if en passant was not taken advantage of it no longer is available.
+    # Currenly en_passan_square is there permanently.
+
+    # Move is saved so that it can be reverted later.
+    # Allows to determine whether the move, left King in check,
+    # which determines the move's legality.
+    # Also, helps with en passant as it regards pawn
     save_move(starting_point, destination)
-    piece_to_move = square_at(starting_point).remove_piece
-    square_at(destination).set_piece(piece_to_move)
+
+    piece = square_at(starting_point).remove_piece
+    square_at(destination).set_piece(piece)
+
+    # When King and Rook get moved it must be noted that they've been moved.
+    # Otherwise, legality of castling can't be determined.
+    handle_special_pieces(piece) if not piece.nil?
+  end
+
   def handle_special_pieces(piece)
     if piece.is_a?(King) or piece.is_a?(Rook)
       piece.moved = true
@@ -63,6 +77,7 @@ class Board
     moved_piece = @move_buffer[:end_square].piece
     @move_buffer[:end_square].set_piece(piece_to_restore)
     @move_buffer[:start_square].set_piece(moved_piece)
+    @en_passant_square = nil
   end
 
   def piece_at(position)
