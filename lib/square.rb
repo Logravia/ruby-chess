@@ -5,6 +5,9 @@ class Square
     @location = location
     @piece = piece
     @board = board
+
+    @en_passant_square = false
+    @connected_en_passant_pawn = nil
   end
 
   def under_attack?(by_color)
@@ -33,5 +36,20 @@ class Square
     @piece = nil
     removed_piece
   end
+
+  def set_up_en_passant(pawn)
+    @en_passant_square = true
+    @connected_en_passant_pawn = pawn
+  end
+
+  def remove_en_passant_status
+   @en_passant_square = false
+   @connected_en_passant_pawn = nil
+  end
+
+  def en_passant_square?
+    @en_passant_square
+  end
+
 
 end
