@@ -57,6 +57,19 @@ class Arbiter
     piece.possible_moves.values.include? destination
   end
 
+  def legal_castling?(from,to,king)
+    return false if king.moved?
+    direction = CASTLING_SQUARES[king.color][to]
+    # 1. One may not castle out of, through, or into check.
+    return false if king.checked?
+    return false if castling_line_checked?(king, direction)
+    # 2. Rook must be able to reach king's side without having been moved.
+    rooks_square = king.rook_squares[direction]
+    rook = rooks_square.piece
+    return false if rooks_square.empty? or rook.class != Rook
+    return false if rook.moved
+    kings_side_square = king.castling_line(direction).first
+    return rook.possible_moves[direction].include? kings_side_square
   end
 
   def castling_line_checked?(king, direction)
