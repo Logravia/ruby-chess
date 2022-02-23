@@ -38,7 +38,7 @@ class Square
     removed_piece
   end
 
-  def set_up_en_passant(pawn)
+  def en_passant(pawn)
     @en_passant_square = true
     @connected_en_passant_pawn = pawn
   end
