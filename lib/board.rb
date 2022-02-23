@@ -16,7 +16,9 @@ class Board
     @kings = kings
   end
 
+  #TODO: implement moving for castling, en passant.
   def move_piece(starting_point, destination)
+    # TODO: After a move, if en passant was not taken advantage of it no longer is available.
     save_move(starting_point, destination)
     piece_to_move = square_at(starting_point).remove_piece
     square_at(destination).set_piece(piece_to_move)
@@ -47,12 +49,16 @@ class Board
   end
 
   def save_move(starting_point, destination)
+    # TODO: Deal with en_passant saving
+    # TODO: Deal with castling saves
     @move_buffer[:start_square] = square_at(starting_point)
     @move_buffer[:end_square] = square_at(destination)
     @move_buffer[:destroyed_piece] = piece_at(destination)
   end
 
   def undo_move
+    # TODO: Deal with en_passant undoing
+    # TODO: Deal with castling undoing
     piece_to_restore = @move_buffer[:destroyed_piece]
     moved_piece = @move_buffer[:end_square].piece
     @move_buffer[:end_square].set_piece(piece_to_restore)
