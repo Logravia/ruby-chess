@@ -60,6 +60,11 @@ class Board
   def save_move(starting_point, destination)
     # TODO: Deal with en_passant saving
     # TODO: Deal with castling saves
+  def save_state
+   @previous_state = Marshal.load(Marshal.dump(@state))
+   @previous_en_passant_square = @en_passant_square
+  end
+
     @move_buffer[:start_square] = square_at(starting_point)
     @move_buffer[:end_square] = square_at(destination)
     @move_buffer[:destroyed_piece] = piece_at(destination)
