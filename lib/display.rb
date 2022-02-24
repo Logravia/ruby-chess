@@ -40,6 +40,10 @@ class Display
     print " #{pieces_symbol} "
   end
 
+  def set_background(is_black)
+    is_black ? print(BACKGROUND[:IS_BLACK]) : print(BACKGROUND[:WHITE])
+  end
+
 end
 
 b = Board.new
