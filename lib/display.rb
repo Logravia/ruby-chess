@@ -58,9 +58,7 @@ class Display
   end
 
   def show_possible_move_dot(piece, square)
-    # TODO: piece.possible_moves returns array likes this: [[[loc1],[loc2]]]
-    # Fix that
-    if piece.categorized_possible_moves.values.flatten(1).include? square.location
+    if piece.moves.include? square.location
       set_font_color(piece.color)
       print " #{POSSIBLE_MOVE_PIECES[piece.class]} "
     else
@@ -87,8 +85,3 @@ class Display
   end
 end
 
-b = Board.new
-d = Display.new
-p = b.piece_at([1, 0])
-d.focused_piece = p
-d.show_board(b.state)
