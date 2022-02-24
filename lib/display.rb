@@ -29,6 +29,11 @@ class Display
     end
   puts '   A　B　C　D　E　F　G　H'
   end
+
+  def show_square(square)
+    print " #{SYMBOLS[:Space]} "
+  end
+
 end
 
 b = Board.new
