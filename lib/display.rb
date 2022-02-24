@@ -4,14 +4,17 @@ require_relative 'board'
 
 
 class Display
-  SYMBOLS = {Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟, Queen => :♛, Rook => :♜, NilClass => '　'}
-  BACKGROUND = { RED: "\e[41m", GREEN: "\e[42m", YELLOW: "\e[43m", BLUE: "\e[44m", PURPLE: "\e[45m", CYAN: "\e[46m", BLACK: "\e[40m",
-                 WHITE: "\e[47m", RESET: "\e[0m" }.freeze
+  SYMBOLS = {Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟, Queen => :♛, Rook => :♜, Space: '　'}
+  BACKGROUND = { Red: "\e[41m", Green: "\e[42m", Yellow: "\e[43m", Blue: "\e[44m", Purple: "\e[45m", Cyan: "\e[46m", Black: "\e[40m",
+                 White: "\e[47m" }.freeze
   FONT = {Black: "\e[30m", Red: "\e[31m", Green: "\e[32m", Yellow: "\e[33m", Blue: "\e[34m", Magenta: "\e[35m", Cyan: "\e[36m", White: "\e[37m"}
+  COLUMN_LETTERS = '   A　B　C　D　E　F　G　H'
+  RESET = "\e[0m"
 
+  private_constant :SYMBOLS, :BACKGROUND, :FONT, :COLUMN_LETTERS
 
   # TODO: Seperate into more readable methods
-  def show(state)
+  def show(state, piece_to_move=nil)
     puts COLUMN_LETTERS
     is_black = true
     state.each_with_index do |row, row_index|
@@ -40,7 +43,7 @@ class Display
   end
 
   def set_background(is_black)
-    is_black ? print(BACKGROUND[:IS_BLACK]) : print(BACKGROUND[:WHITE])
+    is_black ? print(BACKGROUND[:Black]) : print(BACKGROUND[:White])
   end
 
   def line_num(row_index)
