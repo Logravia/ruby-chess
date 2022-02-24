@@ -12,22 +12,21 @@ class Display
 
   # TODO: Seperate into more readable methods
   def show(state)
-    puts '   A　B　C　D　E　F　G　H'
-    black = true
-    state.each_with_index do |row, index|
-      print "#{(index-8).abs} "
+    puts COLUMN_LETTERS
+    is_black = true
+    state.each_with_index do |row, row_index|
+      line_num(row_index)
       row.each do |square|
-        print FONT[:Blue]
-        background = black ? print(BACKGROUND[:BLACK]) : print(BACKGROUND[:WHITE])
-        print " #{SYMBOLS[square.piece.class]} "
-        print BACKGROUND[:RESET]
-        black = !black
+        set_background(is_black)
+        square.empty? ? show_square(square) : show_piece(square.piece)
+        print RESET
+        is_black = !is_black
       end
-      print " #{(index-8).abs}"
-      black = !black
+      line_num(row_index)
+      is_black = !is_black
       puts ''
     end
-  puts '   A　B　C　D　E　F　G　H'
+    puts COLUMN_LETTERS
   end
 
   def show_square(square)
