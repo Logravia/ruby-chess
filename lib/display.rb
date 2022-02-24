@@ -51,6 +51,8 @@ class Display
     end
   end
 
+  def set_font_color(color)
+    color == :white ? print(FONT[:Blue]) : (print FONT[:Red])
   end
 
   def show_piece(piece)
