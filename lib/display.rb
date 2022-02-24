@@ -34,6 +34,15 @@ class Display
   end
 
   def show_square(square, piece_to_move)
+  def show_row(row, _row_index)
+    row.each do |square|
+      @is_square_black = !@is_square_black
+      set_background(@is_square_black)
+      square.empty? ? show_square(square, focused_piece) : show_piece(square.piece)
+      print RESET
+    end
+  end
+
     # TODO: Line too long
     piece_to_move.nil? ? print(" #{SYMBOLS[:Space]} ") : show_possible_move_dot(piece_to_move, square)
   end
