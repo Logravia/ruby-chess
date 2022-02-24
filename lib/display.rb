@@ -16,20 +16,17 @@ class Display
 
   # TODO: Seperate into more readable methods
   def show(state, piece_to_move = nil)
+  def show_board(state)
     puts COLUMN_LETTERS
-    is_black = true
+
     state.each_with_index do |row, row_index|
-      line_num(row_index)
-      row.each do |square|
-        set_background(is_black)
-        square.empty? ? show_square(square, piece_to_move) : show_piece(square.piece)
-        print RESET
-        is_black = !is_black
-      end
-      line_num(row_index)
-      is_black = !is_black
+      @is_square_black = !@is_square_black
+      show_index(row_index)
+      show_row(row, row_index)
+      show_index(row_index)
       puts ''
     end
+
     puts COLUMN_LETTERS
   end
 
