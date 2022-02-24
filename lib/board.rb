@@ -60,8 +60,8 @@ class Board
   end
 
   def save_state
-   @previous_state = Marshal.load(Marshal.dump(@state))
-   @previous_en_passant_square = @en_passant_square
+    @previous_state = Marshal.load(Marshal.dump(@state))
+    @previous_en_passant_square = @en_passant_square
   end
 
   def note_move(starting_point, destination)
