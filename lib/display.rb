@@ -3,24 +3,32 @@
 
 require_relative 'board'
 
+# Prints out the state of the board
 class Display
-  SYMBOLS = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟, Queen => :♛, Rook => :♜, Space: '　', Dot: '♙' }.freeze
-  BACKGROUND = { Red: "\e[41m", Green: "\e[42m", Yellow: "\e[43m", Blue: "\e[44m", Purple: "\e[45m", Cyan: "\e[46m", Black: "\e[40m",
-                 White: "\e[47m" }.freeze
-  FONT = { Black: "\e[30m", Red: "\e[31m", Green: "\e[32m", Yellow: "\e[33m", Blue: "\e[34m", Magenta: "\e[35m",
-           Cyan: "\e[36m", White: "\e[37m" }.freeze
+  PIECES = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟,
+             Queen => :♛, Rook => :♜, Space: '　', Dot: '♙' }.freeze
+
+  POSSIBLE_MOVE_PIECES = { Bishop => :♗, King => :♕, Knight => :♘, Pawn => :♗,
+                           Queen => :♕, Rook => :♖ }.freeze
+
+  BACKGROUND = { Red: "\e[41m", Green: "\e[42m", Yellow: "\e[43m", Blue: "\e[44m",
+                 Purple: "\e[45m", Cyan: "\e[46m", Black: "\e[40m", White: "\e[47m" }.freeze
+
+  FONT = { Black: "\e[30m", Red: "\e[31m", Green: "\e[32m", Yellow: "\e[33m", Blue: "\e[34m",
+           Magenta: "\e[35m", Cyan: "\e[36m", White: "\e[37m" }.freeze
+
   COLUMN_LETTERS = '   A　B　C　D　E　F　G　H'
+
   RESET = "\e[0m"
 
-  private_constant :SYMBOLS, :BACKGROUND, :FONT, :COLUMN_LETTERS
+  private_constant :PIECES, :BACKGROUND, :FONT, :COLUMN_LETTERS
+  attr_accessor :focused_piece
 
   def initialize
     @is_square_black = false
     @focused_piece = nil
   end
 
-  # TODO: Seperate into more readable methods
-  def show(state, piece_to_move = nil)
   def show_board(state)
     puts COLUMN_LETTERS
 
@@ -35,7 +43,6 @@ class Display
     puts COLUMN_LETTERS
   end
 
-  def show_square(square, piece_to_move)
   def show_row(row, _row_index)
     row.each do |square|
       @is_square_black = !@is_square_black
@@ -45,8 +52,9 @@ class Display
     end
   end
 
+  def show_square(square, focused_piece)
     # TODO: Line too long
-    piece_to_move.nil? ? print(" #{SYMBOLS[:Space]} ") : show_possible_move_dot(piece_to_move, square)
+    focused_piece.nil? ? print(" #{PIECES[:Space]} ") : show_possible_move_dot(focused_piece, square)
   end
 
   def show_possible_move_dot(piece, square)
@@ -54,10 +62,9 @@ class Display
     # Fix that
     if piece.possible_moves.values.flatten(1).include? square.location
       set_font_color(piece.color)
-      # TODO: Print transparent piece version instead
-      print " #{SYMBOLS[:Dot]} "
+      print " #{POSSIBLE_MOVE_PIECES[piece.class]} "
     else
-      print " #{SYMBOLS[:Space]} "
+      print " #{PIECES[:Space]} "
     end
   end
 
@@ -66,7 +73,7 @@ class Display
   end
 
   def show_piece(piece)
-    pieces_symbol = SYMBOLS[piece.class]
+    pieces_symbol = PIECES[piece.class]
     set_font_color(piece.color)
     print " #{pieces_symbol} "
   end
@@ -75,10 +82,13 @@ class Display
     is_black ? print(BACKGROUND[:Black]) : print(BACKGROUND[:White])
   end
 
-  def line_num(row_index)
+  def show_index(row_index)
     print " #{(row_index - 8).abs} "
   end
 end
 
 b = Board.new
-Display.new.show(b.state, b.piece_at([1,0]))
+d = Display.new
+p = b.piece_at([1, 0])
+d.focused_piece = p
+d.show_board(b.state)
