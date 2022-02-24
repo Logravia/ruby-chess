@@ -26,7 +26,8 @@ class Piece
     @color = color
     @square = square
   end
-
+  # TODO: rename possible moves into categorized moves
+  # TODO: make moves method to return moves
   def possible_moves
     possible_moves = possible_moves_in_vacuum
     possible_moves.each do |move_name, move_line|

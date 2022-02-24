@@ -6,7 +6,7 @@ require_relative 'board'
 # Prints out the state of the board
 class Display
   PIECES = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟,
-             Queen => :♛, Rook => :♜, Space: '　', Dot: '♙' }.freeze
+             Queen => :♛, Rook => :♜, Space: '⠀'}.freeze
 
   POSSIBLE_MOVE_PIECES = { Bishop => :♗, King => :♕, Knight => :♘, Pawn => :♗,
                            Queen => :♕, Rook => :♖ }.freeze
