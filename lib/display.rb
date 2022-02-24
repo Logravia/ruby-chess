@@ -34,6 +34,12 @@ class Display
     print " #{SYMBOLS[:Space]} "
   end
 
+  def show_piece(piece)
+    pieces_symbol = SYMBOLS[piece.class]
+    piece.color == :white ? print(FONT[:Blue]) : (print FONT[:Red])
+    print " #{pieces_symbol} "
+  end
+
 end
 
 b = Board.new
