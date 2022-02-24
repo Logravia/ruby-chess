@@ -34,6 +34,23 @@ class Display
 
   def show_square(square)
     print " #{SYMBOLS[:Space]} "
+  def show_square(square, piece_to_move)
+    # TODO: Line too long
+    piece_to_move.nil? ? print(" #{SYMBOLS[:Space]} ") : show_possible_move_dot(piece_to_move, square)
+  end
+
+  def show_possible_move_dot(piece, square)
+    # TODO: piece.possible_moves returns array likes this: [[[loc1],[loc2]]]
+    # Fix that
+    if piece.possible_moves.values.flatten(1).include? square.location
+      set_font_color(piece.color)
+      # TODO: Print transparent piece version instead
+      print " #{SYMBOLS[:Dot]} "
+    else
+      print " #{SYMBOLS[:Space]} "
+    end
+  end
+
   end
 
   def show_piece(piece)
