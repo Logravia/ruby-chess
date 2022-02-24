@@ -57,7 +57,7 @@ class Display
 
   def show_piece(piece)
     pieces_symbol = SYMBOLS[piece.class]
-    piece.color == :white ? print(FONT[:Blue]) : (print FONT[:Red])
+    set_font_color(piece.color)
     print " #{pieces_symbol} "
   end
 
