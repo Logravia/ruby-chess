@@ -14,6 +14,11 @@ class Display
 
   private_constant :SYMBOLS, :BACKGROUND, :FONT, :COLUMN_LETTERS
 
+  def initialize
+    @is_square_black = false
+    @focused_piece = nil
+  end
+
   # TODO: Seperate into more readable methods
   def show(state, piece_to_move = nil)
   def show_board(state)
