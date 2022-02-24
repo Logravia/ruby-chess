@@ -7,7 +7,7 @@ require_relative '../lib/board'
 require_relative '../lib/square'
 
 describe Knight do
-  describe '#possible_moves' do
+  describe '#categorized_possible_moves' do
     let(:board) { instance_double(Board) }
     let(:square) { instance_double(Square) }
     subject(:knight) { described_class.new(:white, square) }
@@ -22,19 +22,19 @@ describe Knight do
 
       it 'returns correct moves' do
         correct_moves = [[2, 1], [1, 2]]
-        knight_jumps = knight.possible_moves[:jumps]
+        knight_jumps = knight.categorized_possible_moves[:jumps]
         expect(knight_jumps).to eq(correct_moves)
       end
 
       it 'returns only one set of moves' do
-        move_type_count = knight.possible_moves.keys.size
+        move_type_count = knight.categorized_possible_moves.keys.size
         expect(move_type_count).to eq(1)
       end
 
       it 'can make two jumps correctly' do
         correct_moves = [[0, 0], [2, 0], [3, 1], [3, 3], [2, 4], [0, 4]]
-        knight.possible_moves
-        knight_jumps = knight.possible_moves[:jumps]
+        knight.categorized_possible_moves
+        knight_jumps = knight.categorized_possible_moves[:jumps]
         expect(knight_jumps).to match_array(correct_moves)
       end
     end
@@ -57,13 +57,13 @@ describe Knight do
 
       it 'can attack enemies' do
         enemy_squares = [[3, 2], [3, 0]]
-        jumps_on_enemy = knight.possible_moves[:jumps]
+        jumps_on_enemy = knight.categorized_possible_moves[:jumps]
         expect(jumps_on_enemy).to match_array(enemy_squares)
       end
 
       it 'cannot attack friends' do
         friend_squares = [[2, 3], [0, 3]]
-        knight_jumps = knight.possible_moves[:jumps]
+        knight_jumps = knight.categorized_possible_moves[:jumps]
         expect(knight_jumps).not_to include([2, 3], [0, 3])
       end
     end

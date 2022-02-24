@@ -17,7 +17,7 @@ class Square
 
     pieces = board.pieces_of_color(by_color)
     pieces.each do |piece|
-      piece.possible_moves.each do |_move_name, move_group|
+      piece.categorized_possible_moves.each do |_move_name, move_group|
         return true if move_group.include? location
       end
     end

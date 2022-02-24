@@ -6,7 +6,7 @@ require_relative '../rule_helper'
 class Knight < Piece
   CUR_MOVES = ALL_MOVES[:jumps]
 
-  def possible_moves
+  def categorized_possible_moves
     my_location = location
     moves = {}
 

@@ -13,7 +13,7 @@ class Pawn < Piece
     @direction = @color == :white ? :up : :down
   end
 
-  def possible_moves
+  def categorized_possible_moves
     all_moves = super.select { |move| move == @direction }
     all_moves[:attack_moves] = attack_moves
     all_moves

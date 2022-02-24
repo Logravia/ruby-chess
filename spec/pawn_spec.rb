@@ -7,7 +7,7 @@ require_relative '../lib/board'
 require_relative '../lib/square'
 
 describe Pawn do
-  describe '#possible_moves' do
+  describe '#categorized_possible_moves' do
     let(:a2) { [0, 1] }
     let(:a7) { [0, 6] }
 
@@ -17,29 +17,29 @@ describe Pawn do
       subject(:pawn) { board.piece_at(a2) }
 
       it 'can move two squares upwards' do
-        pawn_moves = pawn.possible_moves[:up]
+        pawn_moves = pawn.categorized_possible_moves[:up]
         correct_moves = [[0, 2], [0, 3]]
         expect(pawn_moves).to eq(correct_moves)
       end
 
       it 'can move only one piece upwards after being moved' do
         pawn.available_move_distance = 1
-        pawn_moves = pawn.possible_moves[:up]
+        pawn_moves = pawn.categorized_possible_moves[:up]
         correct_moves = [[0, 2]]
         expect(pawn_moves).to eq(correct_moves)
       end
 
       it 'has empty attack moves' do
-        attack_moves = pawn.possible_moves[:attack_moves]
+        attack_moves = pawn.categorized_possible_moves[:attack_moves]
         expect(attack_moves).to be_empty
       end
 
       it 'cannot moves downwards' do
-        expect(pawn.possible_moves[:down]).to be_nil
+        expect(pawn.categorized_possible_moves[:down]).to be_nil
       end
 
       it 'only has two possible move types' do
-        move_type_count = pawn.possible_moves.keys.size
+        move_type_count = pawn.categorized_possible_moves.keys.size
         expect(move_type_count).to be(2)
       end
     end
@@ -50,29 +50,29 @@ describe Pawn do
       subject(:pawn) { board.piece_at(a7) }
 
       it 'can move two squares downwards' do
-        pawn_moves = pawn.possible_moves[:down]
+        pawn_moves = pawn.categorized_possible_moves[:down]
         correct_moves = [[0, 5], [0, 4]]
         expect(pawn_moves).to eq(correct_moves)
       end
 
       it 'can move only one piece downwards after being moved' do
         pawn.available_move_distance = 1
-        pawn_moves = pawn.possible_moves[:down]
+        pawn_moves = pawn.categorized_possible_moves[:down]
         correct_moves = [[0, 5]]
         expect(pawn_moves).to eq(correct_moves)
       end
 
       it 'has empty attack moves' do
-        attack_moves = pawn.possible_moves[:attack_moves]
+        attack_moves = pawn.categorized_possible_moves[:attack_moves]
         expect(attack_moves).to be_empty
       end
 
       it 'cannot moves upwards' do
-        expect(pawn.possible_moves[:up]).to be_nil
+        expect(pawn.categorized_possible_moves[:up]).to be_nil
       end
 
       it 'only has two possible move types' do
-        move_type_count = pawn.possible_moves.keys.size
+        move_type_count = pawn.categorized_possible_moves.keys.size
         expect(move_type_count).to be(2)
       end
     end
@@ -83,7 +83,7 @@ describe Pawn do
       subject(:pawn) { board.piece_at(a2) }
 
       it 'it does not allow to jump on enemy piece right above it' do
-        moves_up = pawn.possible_moves[:up]
+        moves_up = pawn.categorized_possible_moves[:up]
         expect(moves_up).to be_empty
       end
     end
@@ -95,7 +95,7 @@ describe Pawn do
 
       it 'it does not allow to jump on enemy piece two squares away from it' do
         correct_moves = [[0, 2]]
-        moves_up = pawn.possible_moves[:up]
+        moves_up = pawn.categorized_possible_moves[:up]
         expect(moves_up).to eq(correct_moves)
       end
     end
@@ -107,7 +107,7 @@ describe Pawn do
 
       it 'it does not allow to jump on enemy piece right below it' do
         correct_moves = []
-        moves_up = pawn.possible_moves[:down]
+        moves_up = pawn.categorized_possible_moves[:down]
         expect(moves_up).to eq(correct_moves)
       end
     end
@@ -119,7 +119,7 @@ describe Pawn do
 
       it 'it does not allow to jump on enemy piece two squares below it' do
         correct_moves = [[0, 5]]
-        moves_up = pawn.possible_moves[:down]
+        moves_up = pawn.categorized_possible_moves[:down]
         expect(moves_up).to eq(correct_moves)
       end
     end
@@ -130,13 +130,13 @@ describe Pawn do
       subject(:pawn) { board.piece_at(a2) }
 
       it 'include enemy pieces location in its attack_moves' do
-        attack_moves = pawn.possible_moves[:attack_moves]
+        attack_moves = pawn.categorized_possible_moves[:attack_moves]
         enemy_location = [1, 2]
         expect(attack_moves).to include(enemy_location)
       end
 
       it 'it does not include friendly piece in its attack_moves' do
-        attack_moves = pawn.possible_moves[:attack_moves]
+        attack_moves = pawn.categorized_possible_moves[:attack_moves]
         friend_location = [0, 2]
         expect(attack_moves).not_to include(friend_location)
       end

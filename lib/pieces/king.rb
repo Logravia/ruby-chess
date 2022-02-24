@@ -12,7 +12,7 @@ class King < Piece
   end
 
   # King moves just like a Queen except only one square in all directions
-  def possible_moves
+  def categorized_possible_moves
     all_moves = super
     all_moves.each_pair do |move_name, squares|
       all_moves[move_name] = squares.first

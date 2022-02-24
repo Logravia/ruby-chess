@@ -28,12 +28,12 @@ class Piece
   end
   # TODO: rename possible moves into categorized moves
   # TODO: make moves method to return moves
-  def possible_moves
-    possible_moves = possible_moves_in_vacuum
-    possible_moves.each do |move_name, move_line|
-      possible_moves[move_name] = cut_move_line(move_line)
+  def categorized_possible_moves
+    categorized_possible_moves = categorized_possible_moves_in_vacuum
+    categorized_possible_moves.each do |move_name, move_line|
+      categorized_possible_moves[move_name] = cut_move_line(move_line)
     end
-    possible_moves
+    categorized_possible_moves
   end
 
   def location
@@ -46,21 +46,21 @@ class Piece
     square.board
   end
 
-  def possible_moves_in_vacuum
-    possible_moves = {}
+  def categorized_possible_moves_in_vacuum
+    categorized_possible_moves = {}
     self.class::CUR_MOVES.each_pair do |move_name, change|
-      possible_moves[move_name] = []
+      categorized_possible_moves[move_name] = []
       adjacent_square = sum_coordinates(location, change)
 
       while RuleHelper.within_board?(adjacent_square)
-        possible_moves[move_name] << adjacent_square
-        adjacent_square = sum_coordinates(possible_moves[move_name].last, change)
+        categorized_possible_moves[move_name] << adjacent_square
+        adjacent_square = sum_coordinates(categorized_possible_moves[move_name].last, change)
       end
 
-      possible_moves.delete(move_name) if possible_moves[move_name].empty?
+      categorized_possible_moves.delete(move_name) if categorized_possible_moves[move_name].empty?
     end
 
-    possible_moves
+    categorized_possible_moves
   end
 
   # Reduces movement to squares that do not go past a standing piece

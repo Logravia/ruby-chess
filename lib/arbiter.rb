@@ -28,7 +28,7 @@ class Arbiter
     if move_type(from, to) == :castling
       legal_castling?(from, to, piece)
     else
-      piece.possible_moves.values.include? destination
+      piece.categorized_possible_moves.values.include? destination
     end
   end
 
@@ -78,7 +78,7 @@ class Arbiter
     return false if rook.moved
 
     kings_side_square = king.castling_line(direction).first
-    rook.possible_moves[direction].include? kings_side_square
+    rook.categorized_possible_moves[direction].include? kings_side_square
   end
 
   def castling_line_checked?(king, direction)
