@@ -44,6 +44,10 @@ class Display
     is_black ? print(BACKGROUND[:IS_BLACK]) : print(BACKGROUND[:WHITE])
   end
 
+  def line_num(row_index)
+    print " #{(row_index-8).abs} "
+  end
+
 end
 
 b = Board.new
