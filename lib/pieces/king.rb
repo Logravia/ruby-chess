@@ -20,7 +20,7 @@ class King < Piece
   end
 
   def rook_squares
-    { left: board.square_at([0, @my_row]), right: board.square_at([-1, @my_row]) }
+    { left: [0, @my_row], right: [7, @my_row] }
   end
 
   def castling_line(direction)
