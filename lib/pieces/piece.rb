@@ -21,6 +21,7 @@ class Piece
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
 
   attr_reader :color, :square, :ALL_MOVES, :CUR_MOVES
+  attr_writer :square
 
   def initialize(color, square)
     @color = color

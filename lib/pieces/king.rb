@@ -24,9 +24,14 @@ class King < Piece
   end
 
   def castling_line(direction)
-    line = []
-    2.times { line << sum_coordinates(location, ALL_MOVES[direction]) }
-    line
+    Piece.instance_method(:categorized_possible_moves).bind(self).call[direction][0..1]
+  end
+
+  def castling_squares
+    castling_squares = []
+    castling_squares << castling_line(:left).last
+    castling_squares << castling_line(:right).last
+    castling_squares
   end
 
   def checked?
