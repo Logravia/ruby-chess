@@ -19,11 +19,21 @@ class Board
     @kings = get_kings
   end
 
-  # TODO: implement moving for castling, en passant.
-  def move_piece(starting_point, destination)
-    # TODO: After a move, if en passant was not taken advantage of it no longer is available.
-    note_move(starting_point, destination)
+  def move(start, target)
+    move_type = RuleHelper.move_type(start, target, self)
+
+    note_move(start, target)
     save_state
+    move_piece(start, target)
+
+    if move_type == :castling
+      castle(start, target)
+    elsif move_type == :en_passant
+      en_passant_square.remove_piece
+    end
+
+  end
+
   def castle(start, target)
     # Castling left means target is [y,2], right [y,6] kings start on [y,4]
     castling_direction = target.sum > start.sum ? :right : :left
