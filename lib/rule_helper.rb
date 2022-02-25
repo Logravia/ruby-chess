@@ -17,13 +17,17 @@ module RuleHelper
   end
 
   def self.move_type(from, to, board)
+  def self.move_type(from, destination, board)
     piece = board.piece_at(from)
-    color = piece.color
 
     if piece.is_a?(King)
-      if piece.unmoved? && CASTLING_SQUARES[color].keys.include?(to)
-        return :castling
+      if piece.unmoved? and piece.castling_squares.include? destination
+        :castling
       end
+    elsif piece.is_a?(Pawn) and board.square_at(destination).en_passant_square?
+      :en_passant
+    else
+      :normal_move
     end
 
     # TODO: implement en_passant move type check
