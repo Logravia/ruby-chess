@@ -15,5 +15,19 @@ module RuleHelper
   def self.within_board?(coordinates)
     coordinates[0].between?(X[:min], X[:max]) and coordinates[1].between?(Y[:min], Y[:max])
   end
+
+  def self.move_type(from, to, board)
+    piece = board.piece_at(from)
+    color = piece.color
+
+    if piece.is_a?(King)
+      if piece.unmoved? && CASTLING_SQUARES[color].keys.include?(to)
+        return :castling
+      end
+    end
+
+    # TODO: implement en_passant move type check
+    # return :en_passant if piece.is_a?(Pawn) and
+    :normal_move
   end
 end
