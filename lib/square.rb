@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Square
-  attr_reader :location, :board, :piece
+  attr_reader :location, :board, :piece, :connected_en_passant_pawn
 
   def initialize(location, board)
     @location = location

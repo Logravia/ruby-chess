@@ -41,6 +41,7 @@ class Pawn < Piece
     attack_moves = []
     squares = diagonal_squares_in_move_direction
     squares.each do |square|
+      # TODO: it is possible for me to attack myself.
       attack_moves << square.location if square.en_passant_square?
       next if square.empty?
 

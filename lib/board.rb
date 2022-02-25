@@ -14,6 +14,7 @@ class Board
     @state = make_board(fen)
     @previous_state = nil
     @move_buffer = { start_square: nil, end_square: nil, destroyed_piece: nil }
+    @remove_en_passant_this_turn = false
     @en_passant_square = nil
     @previous_en_passant_square = nil
     @kings = get_kings
@@ -29,7 +30,15 @@ class Board
     if move_type == :castling
       castle(start, target)
     elsif move_type == :en_passant
-      en_passant_square.remove_piece
+      pawn_to_remove = @en_passant_square.connected_en_passant_pawn
+      pawn_to_remove.square.remove_piece
+    end
+
+    if @remove_en_passant_this_turn
+     @en_passant_square.remove_en_passant_status if @en_passant_square
+     @en_passant_square = nil
+    else
+      @remove_en_passant_this_turn = true
     end
 
   end
@@ -47,10 +56,13 @@ class Board
     move_piece(rooks_location, kings_side)
   end
 
-    piece = square_at(starting_point).remove_piece
-    square_at(destination).set_piece(piece)
+  def move_piece(start, target)
+    piece = square_at(start).remove_piece
+    end_square = square_at(target)
 
-    # King, Pawn and Rook require special attention after being moved.
+    end_square.set_piece(piece)
+    piece.square = end_square
+    # King, Pawn and Rook require special attention.
     handle_special_pieces(piece) unless piece.nil?
   end
 
@@ -71,8 +83,10 @@ class Board
 
   def set_en_passant_square
     pawn = @move_buffer[:end_square].piece
-    square = board.square_at(pawn.square_behind)
+    square = square_at(pawn.square_behind)
     square.en_passant(pawn)
+    @en_passant_square = square
+    @remove_en_passant_this_turn = false
   end
 
   def calc_y_move_distance
@@ -86,10 +100,10 @@ class Board
     @previous_en_passant_square = @en_passant_square
   end
 
-  def note_move(starting_point, destination)
-    @move_buffer[:start_square] = square_at(starting_point)
-    @move_buffer[:end_square] = square_at(destination)
-    @move_buffer[:destroyed_piece] = piece_at(destination)
+  def note_move(start, target)
+    @move_buffer[:start_square] = square_at(start)
+    @move_buffer[:end_square] = square_at(target)
+    @move_buffer[:destroyed_piece] = piece_at(target)
   end
 
   def undo_move
@@ -102,6 +116,7 @@ class Board
   end
 
   def square_at(position)
+    # TODO: It is possible to try to access column of non-existant row,
     column, row = position
     @state[row][column]
   end

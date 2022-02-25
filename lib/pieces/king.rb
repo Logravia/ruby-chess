@@ -42,4 +42,9 @@ class King < Piece
   def moved?
     @moved
   end
+
+  def unmoved?
+    not @moved
+  end
+
 end

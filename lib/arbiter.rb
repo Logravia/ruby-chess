@@ -5,12 +5,8 @@ require_relative 'board'
 # Answers whether a move is legal, illegal
 class Arbiter
   extend RuleHelper
-  CASTLING_SQUARES = { white: { [0, 2] => :left, [0, 6] => :right },
-                       black: { [7, 2] => :left, [7, 6] => :right } }.freeze
 
   attr_reader :state, :kings, :board
-
-  private_constant :CASTLING_SQUARES
 
   def initialize(board)
     @board = board
@@ -52,21 +48,10 @@ class Arbiter
     end
   end
 
-  def move_type(from, to_destination)
-    piece = board.piece_at(from)
-    if piece.is_a?(King) && (piece.moved == false) && CASTLING_SQUARES[king.color].values.include?(to_destination)
-      return :castling
-    end
-
-    # TODO: implement en_passant move type check
-    # return :en_passant if piece.is_a?(Pawn) and
-    :normal_move
-  end
-
   def legal_castling?(_from, to, king)
     return false if king.moved?
 
-    direction = CASTLING_SQUARES[king.color][to]
+    #direction = CASTLING_SQUARES[king.color][to]
     # 1. One may not castle out of, through, or into check.
     return false if king.checked?
     return false if castling_line_checked?(king, direction)
