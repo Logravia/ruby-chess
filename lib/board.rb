@@ -24,6 +24,18 @@ class Board
     # TODO: After a move, if en passant was not taken advantage of it no longer is available.
     note_move(starting_point, destination)
     save_state
+  def castle(start, target)
+    # Castling left means target is [y,2], right [y,6] kings start on [y,4]
+    castling_direction = target.sum > start.sum ? :right : :left
+    # Rook must be placed on Kings right or left side depending on castling direction
+    correct_side = castling_direction == :left ? :right : :left
+
+    king = piece_at(target)
+    kings_side = king.categorized_possible_moves[correct_side]
+    rooks_location = king.rook_squares[castling_direction]
+
+    move_piece(rooks_location, kings_side)
+  end
 
     piece = square_at(starting_point).remove_piece
     square_at(destination).set_piece(piece)
