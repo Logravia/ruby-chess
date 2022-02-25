@@ -13,4 +13,13 @@ class Rook < Piece
     super
     @moved = false
   end
+
+  def moved?
+    @moved
+  end
+
+  def unmoved?
+    not @moved
+  end
+
 end
