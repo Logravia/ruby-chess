@@ -30,6 +30,7 @@ class Display
   end
 
   def show_board(state)
+    puts ''
     puts COLUMN_LETTERS
 
     state.each_with_index do |row, row_index|
