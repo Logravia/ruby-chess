@@ -3,19 +3,17 @@
 # lib/rule_helper.rb
 
 module RuleHelper
-  X_MIN = 0
-  X_MAX = 7
-  Y_MIN = 0
-  Y_MAX = 7
 
-  HEIGHT = 8
-  WIDTH = 8
+  X = {min: 0, max: 7}
+  Y = {min: 0, max: 7}
 
   DEFAULT_BOARD = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
-  attr_reader :X_MIN, :X_MAX, :Y_MIN, :Y_MAX, :WIDTH, :HEIGHT
+  CASTLING_SQUARES = { white: { [2, 0] => :left, [6, 0] => :right },
+                       black: { [2, 7] => :left, [6, 7] => :right } }.freeze
 
   def self.within_board?(coordinates)
-    coordinates[0].between?(X_MIN, X_MAX) and coordinates[1].between?(Y_MIN, Y_MAX)
+    coordinates[0].between?(X[:min], X[:max]) and coordinates[1].between?(Y[:min], Y[:max])
+  end
   end
 end
