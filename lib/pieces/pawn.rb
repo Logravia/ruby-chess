@@ -10,7 +10,7 @@ class Pawn < Piece
   def initialize(color, square)
     super
     @available_move_distance = 2
-    @direction = @color == :white ? :up : :down
+    @direction = @color == :white ? :down : :up
   end
 
   def categorized_possible_moves
