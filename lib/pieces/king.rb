@@ -34,8 +34,11 @@ class King < Piece
     castling_squares
   end
 
+  def enemy_color
+    @color == :white ? :black : :white
+  end
+
   def checked?
-    enemy_color = @color == :white ? :black : :white
     square.under_attack?(enemy_color)
   end
 

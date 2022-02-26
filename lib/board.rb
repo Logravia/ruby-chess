@@ -129,6 +129,7 @@ class Board
         kings[piece.color] = piece if piece.instance_of?(King)
       end
     end
+    kings
   end
 
   # returns all black or white pieces
