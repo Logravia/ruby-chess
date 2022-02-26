@@ -145,5 +145,58 @@ describe Arbiter do
 
       end
     end
+
+    context 'plain movement on empty board' do
+            let(:fen_string) { 'rnbqkbnr/8/8/8/8/8/8/8/' }
+            let(:board) { Board.new(fen_string) }
+
+            it 'is legal to move rook up' do
+              rook_square = [0,0]
+              upper_square = [0,7]
+              legality = arbiter.legal_move?(rook_square, upper_square)
+              expect(legality).to be true
+            end
+
+            it 'is legal to move bishop diagonally' do
+              bishop_square = [2,0]
+              diagonal_end = [7,5]
+              legality = arbiter.legal_move?(bishop_square, diagonal_end)
+              expect(legality).to be true
+            end
+
+            it 'is legal to move knight ' do
+              knight_square = [1,0]
+              jump = [2,2]
+              legality = arbiter.legal_move?(knight_square, jump)
+              expect(legality).to be true
+            end
+    end
+
+    context 'movement on friendly pieces' do
+            let(:fen_string) { 'rnbqkbnr/pppppppp/8/8/8/8/8/8/' }
+            let(:board) { Board.new(fen_string) }
+
+            it 'is illegal to move rook on friendly pawn' do
+              rook_square = [0,0]
+              pawn_square = [0,1]
+              legality = arbiter.legal_move?(rook_square, pawn_square)
+              expect(legality).to be false
+            end
+
+            it 'is illegal to move bishop on friendly pawn' do
+              bishop_square = [2,0]
+              pawn_square = [3,1]
+              legality = arbiter.legal_move?(bishop_square, pawn_square)
+              expect(legality).to be false
+            end
+
+            it 'is illegal to jump on friendly pawn ' do
+              knight_square = [1,0]
+              pawn_square = [3,1]
+              legality = arbiter.legal_move?(knight_square, pawn_square)
+              expect(legality).to be false
+            end
+    end
+
   end
 end
