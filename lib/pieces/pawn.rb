@@ -58,6 +58,8 @@ class Pawn < Piece
       left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_down])
       right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_down])
     end
-    [board.square_at(left_side), board.square_at(right_side)]
+    # if Pawn is at the start or end of the board it could access square outside of bounds
+    # If it did it would get back nil and that can just be compacted
+    [board.square_at(left_side), board.square_at(right_side)].compact
   end
 end
