@@ -198,5 +198,32 @@ describe Arbiter do
             end
     end
 
+    context 'attack on enemy pieces' do
+      let(:fen_string) { 'rnbqkbnr/8/PPPPNPPP/8/8/8/8/8/' }
+      let(:board) { Board.new(fen_string) }
+
+      it 'it is legal to attack enemy pawn' do
+        rook_square = [0,0]
+        enemy_square = [0,2]
+        legality = arbiter.legal_move?(rook_square, enemy_square)
+        expect(legality).to be true
+      end
+
+      it 'is legal to jump on enemy pawn' do
+        knight_square = [1,0]
+        enemy_square = [0,2]
+        legality = arbiter.legal_move?(knight_square, enemy_square)
+        expect(legality).to be true
+      end
+
+      it 'is legal to attack enemy queen' do
+        bishop_square = [2,0]
+        enemy_square = [3,1]
+        legality = arbiter.legal_move?(bishop_square, enemy_square)
+        expect(legality).to be true
+      end
+
+    end
+
   end
 end
