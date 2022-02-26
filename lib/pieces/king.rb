@@ -15,7 +15,7 @@ class King < Piece
   def categorized_possible_moves
     all_moves = super
     all_moves.each_pair do |move_name, squares|
-      all_moves[move_name] = squares.first
+      all_moves[move_name] = [squares.first]
     end
   end
 
