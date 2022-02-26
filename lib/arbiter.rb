@@ -23,7 +23,7 @@ class Arbiter
     if RuleHelper.move_type(from, to, board) == :castling
       legal_castling?(to, piece)
     else
-      piece.categorized_possible_moves.values.include? to
+      piece.moves.include? to
     end
   end
 
