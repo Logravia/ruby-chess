@@ -112,11 +112,12 @@ class Board
   end
 
   def piece_at(position)
+    return nil if !RuleHelper.within_board?(position)
     square_at(position).piece
   end
 
   def square_at(position)
-    # TODO: It is possible to try to access column of non-existant row,
+    return nil if !RuleHelper.within_board?(position)
     column, row = position
     @state[row][column]
   end
