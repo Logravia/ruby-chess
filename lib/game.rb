@@ -7,6 +7,15 @@ require_relative 'input'
 
 class Game
 
+  def choose_piece
+    loop do
+      choice = input.choice
+      # TODO: deal with trying to move piece from empty square
+      return choice if board.piece_at(choice).moves.size > 0
+      puts 'No legal moves are available from that square.'
+    end
+  end
+
   def choose_destination_for(chosen_piece)
     loop do
       destination = input.choice
