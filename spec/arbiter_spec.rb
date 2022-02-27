@@ -284,6 +284,39 @@ describe Arbiter do
       end
 
     end
+  end
+
+  describe '#any_legal_moves_for?' do
+    subject(:arbiter){described_class.new(board)}
+
+    context 'many legal moves, default set-up' do
+      let(:board){Board.new}
+
+      it 'returns true for both sides' do
+        expect(arbiter.any_legal_moves_for?(:white)).to be true
+        expect(arbiter.any_legal_moves_for?(:black)).to be true
+      end
+
+    end
+
+    context 'few legal moves' do
+      let(:fen_string) { 'K7/1r6/8/8/8/8/8/7k/' }
+      let(:board){Board.new(fen_string)}
+
+      it 'returns true for both sides' do
+        expect(arbiter.any_legal_moves_for?(:white)).to be true
+        expect(arbiter.any_legal_moves_for?(:black)).to be true
+      end
+    end
+
+    context 'no legal moves for white' do
+      let(:fen_string) { 'Kr6/rr6/8/8/8/8/8/7k/' }
+      let(:board){Board.new(fen_string)}
+      it 'returns false for white' do
+        Display.new.show_board(board.state)
+        expect(arbiter.any_legal_moves_for?(:white)).to be false
+      end
+    end
 
   end
 end
