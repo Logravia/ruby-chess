@@ -109,6 +109,7 @@ class Board
   def undo_move
     @state = @previous_state
     @en_passant_square = @previous_en_passant_square
+    @kings = get_kings
   end
 
   def piece_at(position)

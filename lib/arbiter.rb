@@ -10,7 +10,7 @@ class Arbiter
 
   def initialize(board)
     @board = board
-    @kings = board.kings
+  end
 
   def any_legal_moves_for?(color)
     board.pieces_of_color(color).each do |piece|
@@ -53,8 +53,7 @@ class Arbiter
   def king_checked_after_move?(from, to)
     kings_color = board.piece_at(from).color
     board.move(from, to)
-
-    if kings[kings_color].checked?
+    if board.kings[kings_color].checked?
       board.undo_move
       true
     else
