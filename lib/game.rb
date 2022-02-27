@@ -7,6 +7,13 @@ require_relative 'input'
 
 class Game
 
+  def handle_special_input(input)
+    case input
+    when 'q'
+      exit
+    end
+  end
+
   def update_screen
     display.clear_screen
     display.show_board(board.state)
