@@ -225,5 +225,65 @@ describe Arbiter do
 
     end
 
+    context 'en passant' do
+      let(:fen_string) { 'p7/8/1P6/8/8/K7/8/7k/' }
+      subject(:board) { Board.new(fen_string) }
+
+      it 'is legal for pawn to move on enemy en passant square' do
+        black_pawn = [0,0]
+        white_pawn = [1,2]
+        two_squares_down = [0,2]
+        en_passant_square = [0,1]
+
+        board.move(black_pawn, two_squares_down)
+        legality = arbiter.legal_move?(white_pawn, en_passant_square)
+        expect(legality).to be true
+      end
+
+      it 'it is illegal for pawn to move diagonally without en passant square or enemy' do
+        black_pawn = [0,0]
+        white_pawn = [1,2]
+        diagonal_move = [0,1]
+
+        legality = arbiter.legal_move?(white_pawn, diagonal_move)
+        expect(legality).to be false
+      end
+
+    end
+
+    context 'movement when king checked' do
+      let(:fen_string) { 'k7/7r/R7/8/8/8/8/7K/' }
+      subject(:board) { Board.new(fen_string) }
+
+      it 'is legal for king to escape check' do
+        kings_square = [0,0]
+        kings_escape = [1,0]
+        legality = arbiter.legal_move?(kings_square, kings_escape)
+        expect(legality).to be true
+      end
+
+      it 'is illegal for king to remain in check' do
+        kings_square = [0,0]
+        kings_demise = [0,1]
+        legality = arbiter.legal_move?(kings_square, kings_demise)
+        expect(legality).to be false
+      end
+
+      it 'is legal to save king from check' do
+        rooks_square = [7,1]
+        rooks_rescue = [0,1]
+        legality = arbiter.legal_move?(rooks_square, rooks_rescue)
+        expect(legality).to be true
+      end
+
+      it 'is illegal not to save king from check' do
+        rooks_square = [7,1]
+        rooks_miss = [5,1]
+        legality = arbiter.legal_move?(rooks_square, rooks_miss)
+        expect(legality).to be false
+      end
+
+    end
+
   end
 end
