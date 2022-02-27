@@ -6,4 +6,12 @@ require_relative 'arbiter'
 require_relative 'input'
 
 class Game
+  def focus_piece(piece)
+    display.focused_piece = board.piece_at(piece)
+  end
+
+  def unfocus_piece
+    display.focused_piece = nil
+  end
+
 end
