@@ -16,6 +16,17 @@ class Game
     end
   end
 
+  def make_turn
+      piece = choose_piece
+      focus_piece(piece)
+      update_screen
+
+      destination = choose_destination_for(piece)
+
+      board.move(piece, destination)
+      unfocus_piece
+  end
+
   def choose_destination_for(chosen_piece)
     loop do
       destination = input.choice
