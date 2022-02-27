@@ -50,7 +50,7 @@ class Board
     correct_side = castling_direction == :left ? :right : :left
 
     king = piece_at(target)
-    kings_side = king.categorized_possible_moves[correct_side].first
+    kings_side = king.side(correct_side)
     rooks_location = king.rook_squares[castling_direction]
 
     move_piece(rooks_location, kings_side)
