@@ -11,6 +11,14 @@ class Arbiter
   def initialize(board)
     @board = board
     @kings = board.kings
+
+  def any_legal_moves_for?(color)
+    board.pieces_of_color(color).each do |piece|
+      return true if piece_has_legal_moves?(piece)
+    end
+    return false
+  end
+
   def piece_has_legal_moves?(piece)
     location = piece.location
     moves = piece.moves
