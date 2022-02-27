@@ -67,9 +67,8 @@ class Piece
     categorized_possible_moves
   end
 
-  # Reduces movement to squares that do not go past a standing piece
-  # If enemy piece allows to go on top of it
-  # If friendly pieces allows to just stop next to it
+  # Forbid move line going past pieces
+  # Allow jumping on enemy pieces, but not friend pieces
   def cut_move_line(line)
     line.each_with_index do |position, distance|
       next if board.square_at(position).empty?
