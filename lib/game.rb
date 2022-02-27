@@ -7,6 +7,22 @@ require_relative 'input'
 
 class Game
 
+  attr_reader :board, :input, :display, :arbiter
+
+  def initialize
+    @board = Board.new
+    @display = Display.new
+    @arbiter = Arbiter.new(@board)
+    @input = Input.new(self)
+  end
+
+  def play
+    loop do
+      update_screen
+      make_turn
+    end
+  end
+
   def choose_piece
     loop do
       choice = input.choice
