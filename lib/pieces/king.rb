@@ -35,10 +35,7 @@ class King < Piece
   end
 
   def castling_squares
-    castling_squares = []
-    castling_squares << castling_line(:left).last
-    castling_squares << castling_line(:right).last
-    castling_squares
+    [[6, @my_row],[2, @my_row]]
   end
 
   def enemy_color
