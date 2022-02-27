@@ -84,5 +84,9 @@ class Display
   def show_index(row_index)
     print " #{(row_index - 8).abs} "
   end
+
+  def clear_screen
+    puts "\e[H\e[2J"
+  end
 end
 
