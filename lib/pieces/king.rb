@@ -24,7 +24,14 @@ class King < Piece
   end
 
   def castling_line(direction)
-    Piece.instance_method(:categorized_possible_moves).bind(self).call[direction][0..1]
+    moves = Piece.instance_method(:categorized_possible_moves).bind(self).call
+
+    if moves[direction].nil?
+      return []
+    else
+      moves[direction][0..1]
+    end
+
   end
 
   def castling_squares
