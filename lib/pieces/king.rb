@@ -19,6 +19,10 @@ class King < Piece
     end
   end
 
+  def side(direction)
+    sum_coordinates(location, ALL_MOVES[direction])
+  end
+
   def rook_squares
     { left: [0, @my_row], right: [7, @my_row] }
   end
