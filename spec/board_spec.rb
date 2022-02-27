@@ -106,7 +106,6 @@ describe Board do
         board.move(black_pawn, two_squares_down)
         board.move(white_bishop, en_passant_location)
         expect(board.square_at(two_squares_down)).not_to be_empty
-        Display.new.show_board(board.state)
 
         end
       end
