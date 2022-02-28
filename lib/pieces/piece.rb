@@ -62,9 +62,17 @@ class Piece
       end
 
       categorized_possible_moves.delete(move_name) if categorized_possible_moves[move_name].empty?
+  def possible_moves_in(direction)
+    start = Coords.new(location)
+
+    return [] if not start.coords_to(direction).within_board?
+    moves = [start.coords_to(direction)]
+
+    while moves.last.coords_to(direction).within_board?
+      moves << moves.last.coords_to(direction)
     end
 
-    categorized_possible_moves
+    moves.map{ |coords| coords.plain_arr }
   end
 
   # Forbid move line going past pieces
