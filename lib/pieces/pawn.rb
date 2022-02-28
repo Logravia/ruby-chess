@@ -51,13 +51,9 @@ class Pawn < Piece
   end
 
   def diagonal_squares_in_move_direction
-    if @direction == :up
-      left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_up])
-      right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_up])
-    else
-      left_side = sum_coordinates(location, ALL_MOVES[:diagonal_l_down])
-      right_side = sum_coordinates(location, ALL_MOVES[:diagonal_r_down])
-    end
+    coords = Coords.new(location)
+    left_side = coords.coords_to(@direction).coords_to(:left).plain_arr
+    right_side = coords.coords_to(@direction).coords_to(:right).plain_arr
     # if Pawn is at the start or end of the board it could access square outside of bounds
     # If it did it would get back nil and that can just be compacted
     [board.square_at(left_side), board.square_at(right_side)].compact
