@@ -19,6 +19,8 @@ class Piece
                 jumps: [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [-1, 2], [1, -2], [-1, -2]] }.freeze
 
   CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
+  MOVES = [:up, :down, :left, :right,
+           :up_left, :up_right, :left_down, :right_down].freeze
 
   attr_reader :color, :square, :ALL_MOVES, :CUR_MOVES
   attr_writer :square
