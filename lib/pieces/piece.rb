@@ -53,15 +53,15 @@ class Piece
   end
 
   def categorized_possible_moves_in_vacuum
-    categorized_possible_moves = {}
-    self.class::CUR_MOVES.each_pair do |move_name, change|
-      categorized_possible_moves[move_name] = []
-      adjacent_square = sum_coordinates(location, change)
+    categorized_moves = {}
 
-      while RuleHelper.within_board?(adjacent_square)
-        categorized_possible_moves[move_name] << adjacent_square
-        adjacent_square = sum_coordinates(categorized_possible_moves[move_name].last, change)
-      end
+    self.class::MOVES.each do |direction|
+      moves = possible_moves_in(direction)
+      categorized_moves[direction] = moves if not moves.empty?
+    end
+
+    categorized_moves
+  end
 
       categorized_possible_moves.delete(move_name) if categorized_possible_moves[move_name].empty?
   def possible_moves_in(direction)
