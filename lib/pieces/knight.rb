@@ -4,7 +4,8 @@ require_relative 'piece'
 require_relative '../rule_helper'
 
 class Knight < Piece
-  CUR_MOVES = ALL_MOVES[:jumps]
+  JUMPS = [[2, 1], [2, -1], [-2, 1], [-2, -1],
+           [1, 2], [-1, 2], [1, -2], [-1, -2]].freeze
 
   def categorized_possible_moves
     my_location = location
@@ -31,4 +32,11 @@ class Knight < Piece
     end
     good_jumps
   end
+  def make_jumps
+    jumps = []
+    start = location
+    JUMPS.each { |jump| jumps << [jump, start].transpose.map(&:sum) }
+    jumps
+  end
+
 end
