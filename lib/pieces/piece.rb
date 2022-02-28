@@ -35,11 +35,11 @@ class Piece
   end
 
   def categorized_possible_moves
-    categorized_possible_moves = categorized_possible_moves_in_vacuum
-    categorized_possible_moves.each do |move_name, move_line|
-      categorized_possible_moves[move_name] = cut_move_line(move_line)
+    moves = categorized_possible_moves_in_vacuum
+    moves.each do |move_name, move_line|
+      moves[move_name] = cut_move_line(move_line)
     end
-    categorized_possible_moves
+    moves
   end
 
   def location
