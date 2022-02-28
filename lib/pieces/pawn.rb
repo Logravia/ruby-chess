@@ -4,7 +4,7 @@ require_relative 'piece'
 require 'pry-byebug'
 
 class Pawn < Piece
-  CUR_MOVES = ALL_MOVES.select { |move| %i[up down].include? move }
+  MOVES = [:up, :down]
   attr_writer :available_move_distance
 
   def initialize(color, square)
