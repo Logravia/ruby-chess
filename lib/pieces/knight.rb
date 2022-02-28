@@ -32,6 +32,11 @@ class Knight < Piece
     end
     good_jumps
   end
+
+  def rm_outside_board(jumps)
+    jumps.select { |jump| RuleHelper.within_board?(jump) }
+  end
+
   def make_jumps
     jumps = []
     start = location
