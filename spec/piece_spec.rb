@@ -32,7 +32,7 @@ describe Piece do
 
       it 'returns correct moves diagonally right-upwards' do
         correct_moves = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7]]
-        received_moves = piece.categorized_possible_moves[:diagonal_r_up]
+        received_moves = piece.categorized_possible_moves[:up_right]
         expect(received_moves).to eq(correct_moves)
       end
 
@@ -70,7 +70,7 @@ describe Piece do
 
       it 'returns correct moves diagonally left and down' do
         correct_moves_diagonally = [[6, 6], [5, 5], [4, 4], [3, 3], [2, 2], [1, 1], [0, 0]]
-        moves_received = piece.categorized_possible_moves[:diagonal_l_down]
+        moves_received = piece.categorized_possible_moves[:left_down]
         expect(moves_received).to eq(correct_moves_diagonally)
       end
 
