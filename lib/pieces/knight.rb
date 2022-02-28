@@ -8,15 +8,7 @@ class Knight < Piece
            [1, 2], [-1, 2], [1, -2], [-1, -2]].freeze
 
   def categorized_possible_moves
-    my_location = location
-    moves = {}
-
-    possible_jumps = CUR_MOVES.map(&:clone)
-    possible_jumps.map! { |jump_by| sum_coordinates(my_location, jump_by) }
-    possible_jumps.select! { |squares| RuleHelper.within_board?(squares) }
-
-    moves[:jumps] = rm_friendly_attacks(possible_jumps)
-    moves
+    { jumps: rm_friendly_attacks(rm_outside_board(make_jumps)) }
   end
 
   private
