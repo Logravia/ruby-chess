@@ -22,15 +22,10 @@ class Knight < Piece
   private
 
   def rm_friendly_attacks(jumps)
-    good_jumps = []
-    jumps.each do |jump|
-      if board.square_at(jump).empty?
-        (good_jumps << jump
-         next)
-      end
-      good_jumps << jump if board.piece_at(jump).color != @color
+    jumps.select do |jump|
+      board.square_at(jump).empty? ||
+        board.piece_at(jump).color != @color
     end
-    good_jumps
   end
 
   def rm_outside_board(jumps)
