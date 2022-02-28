@@ -20,7 +20,7 @@ class King < Piece
   end
 
   def side(direction)
-    sum_coordinates(location, ALL_MOVES[direction])
+    Coords.new(location).coords_to(direction).plain_arr
   end
 
   def rook_squares
@@ -35,7 +35,6 @@ class King < Piece
     else
       moves[direction][0..1]
     end
-
   end
 
   def castling_squares
