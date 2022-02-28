@@ -35,4 +35,8 @@ class Coords
     coords[0].between?(X[:min], X[:max]) &&
       coords[1].between?(Y[:min], Y[:max])
   end
+
+  def plain_arr
+    coords
+  end
 end
