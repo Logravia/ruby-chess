@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # lib/piece.rb
-require_relative '../rule_helper'
 require 'pry-byebug'
+require 'location'
 
 # Parent class of all chess pieces.
 # As a it only knows where it can be moved to - possible_moves(from)
@@ -12,13 +12,6 @@ require 'pry-byebug'
 # Implementation of child classes: Pawn, King and Knight require modifying possible_moves method.
 # The aforementioned pieces have a different movement pattern unlike Queen, Rook, Bishop.
 class Piece
-  extend RuleHelper
-  ALL_MOVES = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0],
-                diagonal_l_up: [-1, 1], diagonal_r_up: [1, 1],
-                diagonal_l_down: [-1, -1], diagonal_r_down: [1, -1],
-                jumps: [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [-1, 2], [1, -2], [-1, -2]] }.freeze
-
-  CUR_MOVES = ALL_MOVES.reject { |move, _v| move == :jumps }
   MOVES = [:up, :down, :left, :right,
            :up_left, :up_right, :left_down, :right_down].freeze
 
@@ -63,7 +56,6 @@ class Piece
     categorized_moves
   end
 
-      categorized_possible_moves.delete(move_name) if categorized_possible_moves[move_name].empty?
   def possible_moves_in(direction)
     start = Coords.new(location)
 
