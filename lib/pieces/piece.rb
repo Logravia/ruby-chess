@@ -87,7 +87,4 @@ class Piece
     end
   end
 
-  def sum_coordinates(coord1, coord2)
-    [coord1, coord2].transpose.map(&:sum)
-  end
 end
