@@ -21,11 +21,7 @@ class Pawn < Piece
 
   # Used to determine where the en_passant square is located
   def square_behind
-    if @direction == :up
-      sum_coordinates(location, ALL_MOVES[:down])
-    else
-      sum_coordinates(location, ALL_MOVES[:up])
-    end
+    Coords.new(location).coords_to(@direction == :up ? :down : :up).plain_arr
   end
 
   private
