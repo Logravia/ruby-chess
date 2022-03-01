@@ -13,10 +13,9 @@ class Board
   def initialize(fen = RuleHelper::DEFAULT_BOARD)
     @state = make_board(fen)
     @previous_state = nil
-    @move_buffer = { start_square: nil, end_square: nil, destroyed_piece: nil }
+    @move_buffer = { start_square: nil, end_square: nil }
     @remove_en_passant_this_turn = false
     @en_passant_square = nil
-    @previous_en_passant_square = nil
     @kings = get_kings
   end
 
@@ -103,12 +102,11 @@ class Board
   def note_move(start, target)
     @move_buffer[:start_square] = square_at(start)
     @move_buffer[:end_square] = square_at(target)
-    @move_buffer[:destroyed_piece] = piece_at(target)
   end
 
   def undo_move
     @state = @previous_state
-    @en_passant_square = @previous_en_passant_square
+    @en_passant_square = find_en_passant_square
     @kings = get_kings
   end
 
