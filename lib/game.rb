@@ -27,7 +27,9 @@ class Game
     loop do
       choice = input.choice
       # TODO: deal with trying to move piece from empty square
-      return choice if board.piece_at(choice).moves.size > 0
+      return choice if !board.square_at(choice).empty? &&
+                       !board.piece_at(choice).moves.empty?
+      update_screen
       puts 'No legal moves are available from that square.'
     end
   end
