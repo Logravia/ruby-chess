@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative 'board'
-
 # Prints out the state of the board
 class Display
   PIECES = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟,
@@ -22,7 +20,7 @@ class Display
   RESET = "\e[0m"
 
   private_constant :PIECES, :BACKGROUND, :FONT, :COLUMN_LETTERS
-  attr_accessor :focused_piece
+  attr_reader :focused_piece
 
   def initialize
     @is_square_black = false
@@ -36,7 +34,7 @@ class Display
     state.each_with_index do |row, row_index|
       @is_square_black = !@is_square_black
       show_index(row_index)
-      show_row(row, row_index)
+      show_row(row)
       show_index(row_index)
       puts ''
     end
@@ -44,24 +42,33 @@ class Display
     puts COLUMN_LETTERS
   end
 
-  def show_row(row, _row_index)
+  def show_row(row)
     row.each do |square|
-      @is_square_black = !@is_square_black
+      @is_square_black = !@is_square_black # Changes color after every square shown
       set_background(@is_square_black)
-      square.empty? ? show_square(square, focused_piece) : show_piece(square.piece)
+      square.empty? ? show_empty(square) : show_piece(square.piece)
       print RESET
     end
   end
 
-  def show_square(square, focused_piece)
-    # TODO: Line too long
-    focused_piece.nil? ? print(" #{PIECES[:Space]} ") : show_possible_move_dot(focused_piece, square)
+  def show_empty(square)
+    if focused_piece.nil?
+      print(" #{PIECES[:Space]} ")
+    else
+      show_possible_move_dot(square)
+    end
   end
 
-  def show_possible_move_dot(piece, square)
-    if piece.moves.include? square.location
-      set_font_color(piece.color)
-      print " #{POSSIBLE_MOVE_PIECES[piece.class]} "
+  def show_piece(piece)
+    pieces_symbol = PIECES[piece.class]
+    set_font_color(piece.color)
+    print " #{pieces_symbol} "
+  end
+
+  def show_possible_move_dot(square)
+    if focused_piece.moves.include? square.location
+      set_font_color(focused_piece.color)
+      print " #{POSSIBLE_MOVE_PIECES[focused_piece.class]} "
     else
       print " #{PIECES[:Space]} "
     end
@@ -69,12 +76,6 @@ class Display
 
   def set_font_color(color)
     color == :white ? print(FONT[:Blue]) : (print FONT[:Red])
-  end
-
-  def show_piece(piece)
-    pieces_symbol = PIECES[piece.class]
-    set_font_color(piece.color)
-    print " #{pieces_symbol} "
   end
 
   def set_background(is_black)
@@ -88,5 +89,16 @@ class Display
   def clear_screen
     puts "\e[H\e[2J"
   end
+
+  def focus_piece(piece)
+    @focused_piece = piece
+    self
+  end
+
+  def unfocus_piece
+    @focused_piece = nil
+    self
+  end
+
 end
 

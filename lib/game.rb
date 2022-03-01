@@ -36,13 +36,13 @@ class Game
 
   def make_turn
       piece = choose_piece
-      focus_piece(piece)
+      display.focus_piece(board.piece_at(piece))
       update_screen
 
       destination = choose_destination_for(piece)
 
       board.move(piece, destination)
-      unfocus_piece
+      display.unfocus_piece
   end
 
   def choose_destination_for(chosen_piece)
@@ -57,6 +57,12 @@ class Game
     case input
     when 'q'
       exit
+    when 's'
+      save_state
+    when 'l'
+      load_state
+    when 'h'
+      show_help
     end
   end
 
@@ -64,13 +70,6 @@ class Game
     display.clear_screen
     display.show_board(board.state)
   end
-
-  def focus_piece(piece)
-    display.focused_piece = board.piece_at(piece)
-  end
-
-  def unfocus_piece
-    display.focused_piece = nil
-  end
-
 end
+
+Game.new.play
