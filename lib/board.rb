@@ -134,6 +134,15 @@ class Board
     kings
   end
 
+  def find_en_passant_square
+    state.each do |row|
+      row.each do |square|
+        return square if square.en_passant_square?
+      end
+    end
+    nil
+  end
+
   # returns all black or white pieces
   def pieces_of_color(color)
     pieces = []
