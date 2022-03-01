@@ -6,6 +6,7 @@
 class Input
   LEGIT_COORDINATE_INPUT = /^[A-Za-z][0-9]$/.freeze
   SPECIAL_INPUT = /^[qhs]$/.freeze
+  PROMPT = "\n> "
 
   def initialize(game)
     @game = game
@@ -19,6 +20,7 @@ class Input
 
   def algrabeic_coordinates
     loop do
+      print PROMPT
       input = gets.chomp
       special_input_sender(input)
       return input if input.match?(LEGIT_COORDINATE_INPUT)
