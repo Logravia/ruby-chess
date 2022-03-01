@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 # lib/piece.rb
-require 'pry-byebug'
-require 'location'
+require_relative '../coords'
 
 # Parent class of all chess pieces.
 # As a it only knows where it can be moved to - possible_moves(from)
@@ -80,5 +79,4 @@ class Piece
       return line[0..distance] if piece_to_move_on.color != @color
     end
   end
-
 end
