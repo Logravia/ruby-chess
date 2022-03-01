@@ -4,10 +4,12 @@ require_relative 'board'
 require_relative 'display'
 require_relative 'arbiter'
 require_relative 'input'
+require_relative 'messages'
 
 class Game
 
   attr_reader :board, :input, :display, :arbiter
+  extend Msg
 
   def initialize
     @board = Board.new
@@ -30,7 +32,7 @@ class Game
       return choice if !board.square_at(choice).empty? &&
                        !board.piece_at(choice).moves.empty?
       update_screen
-      puts 'No legal moves are available from that square.'
+      puts Msg::NO_LEGAL_MOVES
     end
   end
 
@@ -63,6 +65,8 @@ class Game
       load_state
     when 'h'
       show_help
+    when 'c'
+      cancel_choice
     end
   end
 
