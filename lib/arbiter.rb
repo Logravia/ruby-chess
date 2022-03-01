@@ -12,6 +12,10 @@ class Arbiter
     @board = board
   end
 
+  def no_legal_moves?(color)
+    !any_legal_moves_for?(color)
+  end
+
   def any_legal_moves_for?(color)
     board.pieces_of_color(color).each do |piece|
       return true if piece_has_legal_moves?(piece)
