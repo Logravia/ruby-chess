@@ -26,6 +26,11 @@ class Game
   end
 
   def choose_piece
+  def victory
+    update_screen
+    puts CLI::UI.fmt "{{bold:CHECK MATE! #{@players.first.capitalize} #{Msg::VICTORY}}}"
+  end
+
     loop do
       choice = input.choice
       # TODO: deal with trying to move piece from empty square
