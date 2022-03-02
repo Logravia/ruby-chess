@@ -9,19 +9,21 @@ class AI
   end
 
   def choice
-   if piece_choice
-     piece_choice = false
-     do loop
-       piece = random_piece
-       # TODO: Possible error site
-       location = piece.location
-       return location if game.arbiter.piece_has_legal_moves?(piece)
-     end
-   else
-     piece_choice = true
-     destination = random_square
-     return destination if game.arbiter.legal_move?(piece_location, destination)
-   end
+    sleep(0.2)
+    if @piece_choice
+      @piece_choice = false
+      loop do
+        piece = random_piece
+        @piece_location = piece.location.dup
+        return @piece_location if @game.arbiter.piece_has_legal_moves?(piece)
+      end
+    else
+      loop do
+        @piece_choice = true
+        destination = random_square
+        return destination if @game.arbiter.legal_move?(@piece_location, destination)
+      end
+    end
   end
 
   private
