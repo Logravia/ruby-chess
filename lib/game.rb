@@ -16,6 +16,9 @@ class Game
     @display = Display.new
     @arbiter = Arbiter.new(@board)
     @input = Input.new(self)
+    @players = [:black, :white]
+  end
+
   def start
     input.main_menu
   end
@@ -28,15 +31,14 @@ class Game
     victory
   end
 
-  def choose_piece
   def victory
     update_screen
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{@players.first.capitalize} #{Msg::VICTORY}}}"
   end
 
+  def choose_square
     loop do
       choice = input.choice
-      # TODO: deal with trying to move piece from empty square
       return choice if !board.square_at(choice).empty? &&
                        !board.piece_at(choice).moves.empty?
       update_screen
@@ -44,9 +46,6 @@ class Game
     end
   end
 
-  def make_turn
-      piece = choose_piece
-      display.focus_piece(board.piece_at(piece))
     def get_pieces_loc_of(color)
       loop do
         pieces_location = choose_square
@@ -105,7 +104,8 @@ class Game
   def update_screen
     display.clear_screen
     display.show_board(board.state)
+    display.show_turn(@players.first)
   end
 end
 
-Game.new.play
+Game.new.start
