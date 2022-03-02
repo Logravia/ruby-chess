@@ -89,13 +89,14 @@ class Game
   def handle_special_input(input)
     case input
     when 'q'
+      display.clear_screen
+      puts CLI::UI.fmt "{{green:Game has exited sucessfully!}}"
       exit
     when 's'
-      save_state
-    when 'l'
-      load_state
+      save
+      puts CLI::UI.fmt "{{green:Game has been saved!}}"
     when 'h'
-      show_help
+      display.show_help
     when 'c'
       cancel_choice
     end
