@@ -6,6 +6,8 @@ require_relative 'arbiter'
 require_relative 'input'
 require_relative 'messages'
 require_relative 'save_load'
+require_relative 'human'
+require_relative 'ai'
 
 class Game
 
@@ -15,21 +17,22 @@ class Game
 
   def initialize(board = Board.new)
     @board = board
-    @display = Display.new
+    @display = Display.new(self)
     @arbiter = Arbiter.new(@board)
-    @input = Input.new(self)
-    @players = [:white, :black]
     @turn = 0
+    @players = [Human.new(:white, self), Human.new(:black, self)]
+    @cur_player = nil
   end
 
   def start
-    input.main_menu
+    display.main_menu
   end
 
   def play
-    until arbiter.no_legal_moves_for?(@players[@turn%2])
-      make_turn(@players[@turn%2])
+    until arbiter.no_legal_moves_for?(@cur_player.color)
+      make_turn(@cur_player.color)
       @turn += 1
+      @cur_player = @players[@turn%2]
     end
 
     victory
@@ -37,12 +40,12 @@ class Game
 
   def victory
     update_screen
-    puts CLI::UI.fmt "{{bold:CHECK MATE! #{@players.first.capitalize} #{Msg::VICTORY}}}"
+    puts CLI::UI.fmt "{{bold:CHECK MATE! #{@cur_player.color} #{Msg::VICTORY}}}"
   end
 
   def choose_square
     loop do
-      choice = input.choice
+      choice = @cur_player.choice
       return choice if !board.square_at(choice).empty? &&
                        !board.piece_at(choice).moves.empty?
       update_screen
@@ -76,7 +79,7 @@ class Game
 
   def choose_destination_for(chosen_start)
     loop do
-      destination = input.choice
+      destination = @cur_player.choice
       return destination if arbiter.legal_move?(chosen_start, destination)
       update_screen
       puts CLI::UI.fmt "{{red:Sorry, that is an illegal move.}}"
@@ -105,11 +108,17 @@ class Game
     end
   end
 
+  def ai_v_ai
+    @players = [AI.new(:white, self), AI.new(:black, self)]
+    @cur_player = @players.first
+    play
+  end
+
   def update_screen
     display.clear_screen
-    display.show_board(board.state)
-    display.show_turn(@players[@turn%2])
+    display.show_board
+    display.show_turn(@players[@turn%2].color)
   end
 end
 
-Game.new.start
+Game.new.ai_v_ai
