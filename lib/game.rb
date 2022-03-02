@@ -13,6 +13,8 @@ class Game
 
   def initialize
     @board = Board.new
+  def initialize(board = Board.new)
+    @board = board
     @display = Display.new
     @arbiter = Arbiter.new(@board)
     @input = Input.new(self)
