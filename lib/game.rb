@@ -5,18 +5,21 @@ require_relative 'display'
 require_relative 'arbiter'
 require_relative 'input'
 require_relative 'messages'
+require_relative 'save_load'
 
 class Game
 
   attr_reader :board, :input, :display, :arbiter
   extend Msg
+  include SaveLoad
 
   def initialize(board = Board.new)
     @board = board
     @display = Display.new
     @arbiter = Arbiter.new(@board)
     @input = Input.new(self)
-    @players = [:black, :white]
+    @players = [:white, :black]
+    @turn = 0
   end
 
   def start
@@ -24,8 +27,9 @@ class Game
   end
 
   def play
-    until arbiter.no_legal_moves_for?(@players.last)
-      make_turn(@players.rotate![0])
+    until arbiter.no_legal_moves_for?(@players[@turn%2])
+      make_turn(@players[@turn%2])
+      @turn += 1
     end
 
     victory
@@ -81,7 +85,6 @@ class Game
 
   def cancel_choice
     display.unfocus_piece
-    @players.rotate!
     update_screen
     play
   end
@@ -105,7 +108,7 @@ class Game
   def update_screen
     display.clear_screen
     display.show_board(board.state)
-    display.show_turn(@players.first)
+    display.show_turn(@players[@turn%2])
   end
 end
 
