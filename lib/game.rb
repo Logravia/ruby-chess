@@ -11,8 +11,6 @@ class Game
   attr_reader :board, :input, :display, :arbiter
   extend Msg
 
-  def initialize
-    @board = Board.new
   def initialize(board = Board.new)
     @board = board
     @display = Display.new
@@ -23,10 +21,11 @@ class Game
   end
 
   def play
-    loop do
-      update_screen
-      make_turn
+    until arbiter.no_legal_moves_for?(@players.last)
+      make_turn(@players.rotate![0])
     end
+
+    victory
   end
 
   def choose_piece
