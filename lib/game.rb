@@ -55,6 +55,13 @@ class Game
     end
   end
 
+  def cancel_choice
+    display.unfocus_piece
+    @players.rotate!
+    update_screen
+    play
+  end
+
   def handle_special_input(input)
     case input
     when 'q'
