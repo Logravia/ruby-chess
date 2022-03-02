@@ -23,7 +23,7 @@ class Piece
   end
 
   def moves
-    categorized_possible_moves.values.flatten(1)
+    categorized_possible_moves.values.flatten(1).compact
   end
 
   def categorized_possible_moves
