@@ -141,6 +141,21 @@ class Board
     nil
   end
 
+  def each_square
+    @state.each do |row|
+      row.each do |square|
+        yield(square)
+      end
+    end
+  end
+
+  def each_piece
+    each_square do |sq|
+      yield(sq.piece) if not sq.empty?
+    end
+    nil
+  end
+
   # returns all black or white pieces
   def pieces_of_color(color)
     pieces = []
