@@ -7,7 +7,7 @@ require 'cli/ui'
 # In case of special input, e.g. q or h or s, lets the game handle that.
 class Input
   LEGIT_COORDINATE_INPUT = /^[A-Za-z][0-9]$/.freeze
-  SPECIAL_INPUT = /^[qslhc]$/.freeze
+  SPECIAL_INPUT = /^[qshc]$/.freeze
   PROMPT = "\n> "
 
   def initialize(game)
@@ -29,7 +29,6 @@ class Input
       handler.option('Check rules')   { |selection| show_rules }
       handler.option('Quit') { |_s| exit }
     end
-end
   end
 
   def list_file_options
@@ -71,7 +70,7 @@ end
   def to_numeric_coordinates(algrabeic_coords)
     letter, str_number = algrabeic_coords.split('')
     x_coord = letter.upcase.codepoints.pop % 65
-    # y_coord must be flipped as a1 must mean [0,7]
+    # y_coord must be flipped as a1 in the array is actually [0,7]
     # The white pieces are at the bottom of the array, not the start.
     y_coord = (str_number.to_i - 8).abs
     [x_coord, y_coord]
