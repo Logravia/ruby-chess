@@ -30,6 +30,11 @@ class Input
       handler.option('Quit') { |_s| exit }
     end
 end
+  def savefile_list
+    file_list = Dir.glob(File.join('saves', "*"))
+    file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
+  end
+
 
   private
 
