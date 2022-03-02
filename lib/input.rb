@@ -7,7 +7,7 @@ require 'cli/ui'
 # In case of special input, e.g. q or h or s, lets the game handle that.
 class Input
   LEGIT_COORDINATE_INPUT = /^[A-Za-z][0-9]$/.freeze
-  SPECIAL_INPUT = /^[qhs]$/.freeze
+  SPECIAL_INPUT = /^[qslhc]$/.freeze
   PROMPT = "\n> "
 
   def initialize(game)
