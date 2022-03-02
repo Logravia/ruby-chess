@@ -114,6 +114,12 @@ class Game
     play
   end
 
+  def pvp
+    @players = [Human.new(:white, self), Human.new(:black, self)]
+    @cur_player = @players.first
+    play
+  end
+
   def update_screen
     display.clear_screen
     display.show_board
