@@ -47,6 +47,15 @@ class Game
   def make_turn
       piece = choose_piece
       display.focus_piece(board.piece_at(piece))
+    def get_pieces_loc_of(color)
+      loop do
+        pieces_location = choose_square
+        return pieces_location if board.piece_at(pieces_location).color == color
+        update_screen
+        puts CLI::UI.fmt "{{red:Can't move enemy's piece!}}"
+      end
+    end
+
       update_screen
 
       destination = choose_destination_for(piece)
