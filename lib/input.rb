@@ -42,6 +42,11 @@ end
     file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
   end
 
+  def show_rules
+    puts "These are the rules. Press enter to return"
+    gets
+    main_menu
+  end
 
   private
 
