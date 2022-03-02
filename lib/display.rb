@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'cli/ui'
+
 # Prints out the state of the board
 class Display
   PIECES = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟,
@@ -15,7 +17,7 @@ class Display
   FONT = { Black: "\e[30m", Red: "\e[31m", Green: "\e[32m", Yellow: "\e[33m", Blue: "\e[34m",
            Magenta: "\e[35m", Cyan: "\e[36m", White: "\e[37m" }.freeze
 
-  COLUMN_LETTERS = '   A　B　C　D　E　F　G　H'
+  COLUMN_LETTERS = '    A　B　C　D　E　F　G　H'
 
   RESET = "\e[0m"
 
@@ -41,15 +43,12 @@ class Display
         puts ''
       end
 
-    state.each_with_index do |row, row_index|
-      @is_square_black = !@is_square_black
-      show_index(row_index)
-      show_row(row)
-      show_index(row_index)
+      puts COLUMN_LETTERS
       puts ''
     end
+    puts ''
+  end
 
-    puts COLUMN_LETTERS
   def show_turn(color)
     CLI::UI::Frame.open('Current turn for:  ', timing: false, color: :bold) do
       puts CLI::UI.fmt "{{bold:* #{color} *}}"
