@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'cli/ui'
+
 # Asks player for input in algabraic notion ('a2') and returns it in numeric [7,1]
 # In case of special input, e.g. q or h or s, lets the game handle that.
 class Input
@@ -15,6 +17,16 @@ class Input
   def choice
     to_numeric_coordinates(algrabeic_coordinates)
   end
+
+  def main_menu
+    CLI::UI::Prompt.ask('What would you like to do?') do |handler|
+      handler.option('Game against computer')  { |selection| selection }
+      handler.option('Two player game')     { |selection| @game.play }
+      handler.option('Load game')   { |selection| selection }
+      handler.option('Check rules')   { |selection| selection }
+      handler.option('Quit') { |_s| exit }
+    end
+end
 
   private
 
