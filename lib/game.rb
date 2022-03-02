@@ -56,19 +56,27 @@ class Game
       end
     end
 
+  def make_turn(color)
+      update_screen
+      puts CLI::UI.fmt "{{info:Choose a piece.}}"
+      pieces_loc = get_pieces_loc_of(color)
+
+      display.focus_piece(board.piece_at(pieces_loc))
       update_screen
 
-      destination = choose_destination_for(piece)
+      puts CLI::UI.fmt '{{info:Choose destination or press c to cancel selection.}}'
+      destination = choose_destination_for(pieces_loc)
 
-      board.move(piece, destination)
+      board.move(pieces_loc, destination)
       display.unfocus_piece
   end
 
-  def choose_destination_for(chosen_piece)
+  def choose_destination_for(chosen_start)
     loop do
       destination = input.choice
-      return destination if arbiter.legal_move?(chosen_piece, destination)
-      puts "Sorry, that is an illegal move."
+      return destination if arbiter.legal_move?(chosen_start, destination)
+      update_screen
+      puts CLI::UI.fmt "{{red:Sorry, that is an illegal move.}}"
     end
   end
 
