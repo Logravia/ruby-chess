@@ -6,8 +6,6 @@ require_relative '../lib/board'
 require_relative '../lib/square'
 require_relative '../lib/display'
 
-# TODO: Add tests
-
 describe Board do
 
   describe '#move' do

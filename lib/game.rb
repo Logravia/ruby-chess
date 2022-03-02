@@ -8,7 +8,7 @@ require_relative 'messages'
 require_relative 'save_load'
 require_relative 'human'
 require_relative 'ai'
-
+# TODO: Add draw condition
 class Game
 
   attr_reader :board, :input, :display, :arbiter
@@ -40,6 +40,7 @@ class Game
 
   def victory
     update_screen
+    # BUG: Incorrect player declared victorious
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{@cur_player.color} #{Msg::VICTORY}}}"
   end
 

@@ -11,6 +11,12 @@ class King < Piece
     @my_row = location[1]
   end
 
+  def moves
+    # TODO: consider rewriting moves method for King
+    # unmoved? ? super + castling_squares : super
+    super
+  end
+
   # King moves just like a Queen except only one square in all directions
   def categorized_possible_moves
     all_moves = super
