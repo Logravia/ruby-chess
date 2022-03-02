@@ -19,11 +19,14 @@ class Input
   end
 
   def main_menu
+    puts Msg::TITLE
+
     CLI::UI::Prompt.ask('What would you like to do?') do |handler|
-      handler.option('Game against computer')  { |selection| selection }
-      handler.option('Two player game')     { |selection| @game.play }
-      handler.option('Load game')   { |selection| selection }
-      handler.option('Check rules')   { |selection| selection }
+      handler.option('Play against a computer')  { |selection| selection }
+      handler.option('Play against a player')     { |selection| @game.play }
+      handler.option('Watch AI vs AI')     { |selection| @game.play }
+      handler.option('Load game')   { |selection|  list_file_options}
+      handler.option('Check rules')   { |selection| show_rules }
       handler.option('Quit') { |_s| exit }
     end
 end
