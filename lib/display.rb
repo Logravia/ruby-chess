@@ -28,8 +28,18 @@ class Display
   end
 
   def show_board(state)
-    puts ''
-    puts COLUMN_LETTERS
+    CLI::UI::StdoutRouter.enable
+    CLI::UI::Frame.open('{{*}} {{bold:ruby-chess}} {{*}}', timing: false, color: :bold) do
+      puts ''
+      puts COLUMN_LETTERS
+
+      state.each_with_index do |row, row_index|
+        @is_square_black = !@is_square_black
+        show_index(row_index)
+        show_row(row)
+        show_index(row_index)
+        puts ''
+      end
 
     state.each_with_index do |row, row_index|
       @is_square_black = !@is_square_black
