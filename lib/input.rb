@@ -30,6 +30,13 @@ class Input
       handler.option('Quit') { |_s| exit }
     end
 end
+  end
+
+  def list_file_options
+    choice = CLI::UI::Prompt.ask('Which file would you like to load?', options: savefile_list)
+    @game.load(choice)
+  end
+
   def savefile_list
     file_list = Dir.glob(File.join('saves', "*"))
     file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
