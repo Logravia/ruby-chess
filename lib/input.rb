@@ -49,10 +49,10 @@ end
     loop do
       print CLI::UI.fmt '{{bold:~> }}'
       input = gets.chomp
-      special_input_sender(input)
+      was_special_input = special_input_sender(input)
       return input if input.match?(LEGIT_COORDINATE_INPUT)
 
-      puts 'Sorry incorrect input. Try again.'
+      puts 'Sorry incorrect input. Try again.' unless was_special_input
     end
   end
 
