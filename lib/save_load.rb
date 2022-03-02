@@ -9,5 +9,14 @@ module SaveLoad
     File.write(file_name, data)
   end
 
-  def self.load; end
+  def load(file_name)
+    if file_name[-1] == '!'
+      input.main_menu
+    end
+    data = Marshal.load(File.open(file_name).read)
+    @players = data[:players]
+    @board = data[:board]
+    @turn = data[:turn]
+    play
+  end
 end
