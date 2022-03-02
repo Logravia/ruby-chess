@@ -32,7 +32,7 @@ end
 
   def algrabeic_coordinates
     loop do
-      print PROMPT
+      print CLI::UI.fmt '{{bold:~> }}'
       input = gets.chomp
       special_input_sender(input)
       return input if input.match?(LEGIT_COORDINATE_INPUT)
