@@ -22,20 +22,20 @@ class Display
   RESET = "\e[0m"
 
   private_constant :PIECES, :BACKGROUND, :FONT, :COLUMN_LETTERS
-  attr_reader :focused_piece
 
-  def initialize
+  def initialize(game)
     @is_square_black = false
     @focused_piece = nil
+    @game = game
   end
 
-  def show_board(state)
+  def show_board
     CLI::UI::StdoutRouter.enable
     CLI::UI::Frame.open('{{*}} {{bold:ruby-chess}} {{*}}', timing: false, color: :bold) do
       puts ''
       puts COLUMN_LETTERS
 
-      state.each_with_index do |row, row_index|
+      @game.board.state.each_with_index do |row, row_index|
         @is_square_black = !@is_square_black
         show_index(row_index)
         show_row(row)
@@ -66,7 +66,7 @@ class Display
   end
 
   def show_empty(square)
-    if focused_piece.nil?
+    if @focused_piece.nil?
       print(" #{PIECES[:Space]} ")
     else
       show_possible_move_dot(square)
@@ -80,12 +80,41 @@ class Display
   end
 
   def show_possible_move_dot(square)
-    if focused_piece.moves.include? square.location
-      set_font_color(focused_piece.color)
-      print " #{POSSIBLE_MOVE_PIECES[focused_piece.class]} "
+    if @focused_piece.moves.include? square.location
+      set_font_color(@focused_piece.color)
+      print " #{POSSIBLE_MOVE_PIECES[@focused_piece.class]} "
     else
       print " #{PIECES[:Space]} "
     end
+  end
+
+  def main_menu
+    puts Msg::TITLE
+
+    CLI::UI::Prompt.ask('What would you like to do?') do |handler|
+      handler.option('Play against a computer')  { |selection| selection }
+      handler.option('Play against a player')     { |selection| @game.play }
+      handler.option('Watch AI vs AI')     { |selection| @game.play }
+      handler.option('Load game')   { |selection|  list_file_options}
+      handler.option('Check rules')   { |selection| show_rules }
+      handler.option('Quit') { |_s| exit }
+    end
+  end
+
+  def list_file_options
+    choice = CLI::UI::Prompt.ask('Which file would you like to load?', options: savefile_list)
+    @game.load(choice)
+  end
+
+  def savefile_list
+    file_list = Dir.glob(File.join('saves', "*"))
+    file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
+  end
+
+  def show_rules
+    puts "These are the rules. Press enter to return"
+    gets
+    main_menu
   end
 
   def set_font_color(color)
