@@ -47,7 +47,7 @@ end
   def special_input_sender(input)
     if input.match?(SPECIAL_INPUT)
       @game.handle_special_input(input)
-      return
+      return true
     end
   end
 
