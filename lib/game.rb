@@ -16,6 +16,8 @@ class Game
     @display = Display.new
     @arbiter = Arbiter.new(@board)
     @input = Input.new(self)
+  def start
+    input.main_menu
   end
 
   def play
