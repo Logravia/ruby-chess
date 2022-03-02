@@ -1,9 +1,10 @@
 # lib/ai.rb
 require_relative 'player'
 
-class AI
+class AI < Player
 
-  def initialize
+  def initialize(color, game)
+    super
     @piece_choice = true
     @piece_location = nil
   end
@@ -26,16 +27,11 @@ class AI
     end
   end
 
-  private
-  attr_reader :game, :piece_choice, :piece_location
-
   def random_square
     [rand(0..7), rand(0..7)]
   end
 
   def random_piece
-    pieces = game.board.pieces_of_color(color)
-    pieces[rand(0..piece.size)]
+    @game.board.pieces_of_color(color).sample
   end
-
 end
