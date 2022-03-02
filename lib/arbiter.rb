@@ -12,7 +12,7 @@ class Arbiter
     @board = board
   end
 
-  def no_legal_moves?(color)
+  def no_legal_moves_for?(color)
     !any_legal_moves_for?(color)
   end
 
