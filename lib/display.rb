@@ -50,6 +50,11 @@ class Display
     end
 
     puts COLUMN_LETTERS
+  def show_turn(color)
+    CLI::UI::Frame.open('Current turn for:  ', timing: false, color: :bold) do
+      puts CLI::UI.fmt "{{bold:* #{color} *}}"
+    end
+    puts ''
   end
 
   def show_row(row)
