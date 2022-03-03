@@ -77,6 +77,12 @@ class Game
 
       board.move(pieces_loc, destination)
       display.unfocus_piece
+
+      if arbiter.pawn_promotion?(destination)
+        update_screen
+        promotion = @cur_player.promotion
+        board.promote_piece(destination, promotion)
+      end
   end
 
   def choose_destination_for(chosen_start)
