@@ -49,14 +49,6 @@ class Arbiter
     true
   end
 
-  def squares_within_board?(from, to)
-    (RuleHelper.within_board?(from) and RuleHelper.within_board?(to))
-  end
-
-  def square_empty?(location)
-    board.square_at(location).empty?
-  end
-
   def king_checked_after_move?(from, to)
     kings_color = board.piece_at(from).color
     board.move(from, to)
