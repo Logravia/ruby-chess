@@ -16,18 +16,6 @@ class King < Piece
     unmoved? ? super + castling_squares_as_moves : super
   end
 
-  # TODO: refactor
-  def castling_squares_as_moves
-    moves = []
-    if  castling_line(:left).size == 2 &&
-        not board.square_at(rook_squares[:left]).empty? &&
-        board.piece_at(rook_squares[:left]).unmoved?
-      moves << castling_squares.first
-    end
-    if castling_line(:right).size == 2 &&
-      not board.square_at(rook_squares[:right]).empty? &&
-       board.piece_at(rook_squares[:right]).unmoved?
-      moves << castling_squares.last
   def possible_castling_squares
     squares = []
     rooks = board.get_rooks(@color)
