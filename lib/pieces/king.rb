@@ -28,8 +28,20 @@ class King < Piece
       not board.square_at(rook_squares[:right]).empty? &&
        board.piece_at(rook_squares[:right]).unmoved?
       moves << castling_squares.last
+  def possible_castling_squares
+    squares = []
+    rooks = board.get_rooks(@color)
+    return squares if self.moved? || rooks.empty?
+
+    rooks.each do |rook|
+      next if rook.moved?
+
+      line = rook.line_towards_king
+      kings_side_square = self.side(rook.side)
+      squares << castling_squares[rook.side] if line.include? kings_side_square # If rooks can reach king's side
     end
-    moves
+
+    squares
   end
 
   # King moves just like a Queen except only one square in all directions
