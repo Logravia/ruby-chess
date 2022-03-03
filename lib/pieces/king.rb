@@ -12,8 +12,7 @@ class King < Piece
   end
 
   def moves
-    # King can move to castling squares if it hasn't been moved
-    unmoved? ? super + castling_squares_as_moves : super
+    unmoved? ? super + possible_castling_squares : super
   end
 
   def possible_castling_squares
