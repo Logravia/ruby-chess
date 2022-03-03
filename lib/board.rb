@@ -133,11 +133,6 @@ class Board
     kings
   end
 
-  def find_en_passant_square
-    state.each do |row|
-      row.each do |square|
-        return square if square.en_passant_square?
-      end
   def get_rooks(color)
     rooks = []
     each_piece do |piece|
