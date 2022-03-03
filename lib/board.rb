@@ -147,6 +147,8 @@ class Board
     rooks
   end
 
+  def find_en_passant_square
+    each_square { |sq| return sq if sq.en_passant_square? }
     nil
   end
 
