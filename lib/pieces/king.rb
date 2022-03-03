@@ -59,7 +59,11 @@ class King < Piece
   end
 
   def castling_squares
-    [[2, @my_row], [6, @my_row]]
+    {left: [2, @my_row], right: [6, @my_row]}
+  end
+
+  def rook_squares
+    { left: [0, @my_row], right: [7, @my_row] }
   end
 
   def enemy_color
