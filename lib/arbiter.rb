@@ -33,24 +33,14 @@ class Arbiter
   end
 
   def legal_move?(from, to)
-
-    # BUG: Ductape fix to pawn declaring backwards square be outside of board
-    piece = board.piece_at(from)
-    if !piece.is_a?(King) && !piece.moves.include?(to)
-      return false
-    end
-
-    return false if from == to
-    return false unless squares_within_board?(from, to)
-    return false if square_empty?(from)
+    return false unless board.piece_at(from).moves.include? to
     return false if king_checked_after_move?(from, to)
-    piece = board.piece_at(from)
 
     if RuleHelper.move_type(from, to, board) == :castling
-      legal_castling?(to, piece)
-    else
-      piece.moves.include? to
+      return legal_castling?(from, to)
     end
+
+    true
   end
 
   def squares_within_board?(from, to)
