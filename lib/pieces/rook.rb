@@ -20,4 +20,13 @@ class Rook < Piece
     not @moved
   end
 
+  def side
+    location[0] > 4 ? :right : :left
+  end
+
+  def line_towards_king
+   towards_king = side == :left ? :right : :left
+   categorized_possible_moves[towards_king]
+  end
+
 end
