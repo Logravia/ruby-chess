@@ -1,5 +1,9 @@
 # lib/ai.rb
 require_relative 'player'
+require_relative 'pieces/king'
+require_relative 'pieces/queen'
+require_relative 'pieces/rook'
+require_relative 'pieces/bishop'
 
 class AI < Player
 
@@ -10,6 +14,7 @@ class AI < Player
   end
 
   def choice
+    sleep(0.08)
     if @piece_choice
       @piece_choice = false
       loop do
@@ -32,5 +37,9 @@ class AI < Player
 
   def random_piece
     @game.board.pieces_of_color(color).sample
+  end
+
+  def promotion
+    [Bishop, Knight, Rook, Queen].sample
   end
 end
