@@ -63,23 +63,14 @@ class Arbiter
     end
   end
 
-  def legal_castling?(destination, king)
-    return false if king.moved?
-
+  def legal_castling?(from, destination)
+    # King may not castle out of, through, or into check.
+    # (Last already check before calling this method)
+    king = board.piece_at(from)
     direction = destination.sum > king.location.sum ? :right : :left
-    # 1. One may not castle out of, through, or into check.
     return false if king.checked?
     return false if castling_line_checked?(king, direction)
-
-    # 2. Rook must be able to reach king's side without having been moved.
-    rooks_square = board.square_at(king.rook_squares[direction])
-    rook = rooks_square.piece
-    return false if rooks_square.empty? || (rook.class != Rook)
-    return false if rook.moved
-    kings_side_square = king.castling_line(direction).first
-
-    towards_king = direction == :left ? :right : :left
-    rook.categorized_possible_moves[towards_king].include? kings_side_square
+    true
   end
 
   def castling_line_checked?(king, direction)
