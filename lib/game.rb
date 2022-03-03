@@ -140,5 +140,3 @@ class Game
     display.show_turn(@players[@turn%2].color)
   end
 end
-
-Game.new.ai_v_ai
