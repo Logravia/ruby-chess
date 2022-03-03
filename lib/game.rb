@@ -40,7 +40,7 @@ class Game
 
   def victory
     update_screen
-    victorious_color = @players[@turn % 1].color.capitalize
+    victorious_color = @cur_player.color == :white ? 'Black' : 'White'
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{victorious_color} #{Msg::VICTORY}}}"
   end
 

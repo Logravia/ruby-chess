@@ -52,7 +52,6 @@ class Board
     kings_side = king.side(correct_side)
     rooks_location = king.rook_squares[castling_direction]
 
-    # BUG: NilClass during certain castling conditions
     move_piece(rooks_location, kings_side)
   end
 

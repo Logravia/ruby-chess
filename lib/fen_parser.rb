@@ -17,7 +17,6 @@ module FenParser
 
   private_constant :ROW_SEPARATOR, :PIECE_LETTERS
 
-  # TODO: Write tests for make_board
   def make_board(fen)
     board = []
     fen.split(ROW_SEPARATOR).each_with_index do |fen_row, row_num|

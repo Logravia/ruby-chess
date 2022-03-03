@@ -19,7 +19,6 @@ class AI < Player
       end
     else
       loop do
-        # TODO: I could just sample random move from the piece
         @piece_choice = true
         destination = random_square
         return destination if @game.arbiter.legal_move?(@piece_location, destination)
