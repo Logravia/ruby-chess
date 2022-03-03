@@ -138,7 +138,15 @@ class Board
       row.each do |square|
         return square if square.en_passant_square?
       end
+  def get_rooks(color)
+    rooks = []
+    each_piece do |piece|
+      rooks << piece if piece.is_a?(Rook) &&
+                        piece.color == color
     end
+    rooks
+  end
+
     nil
   end
 
