@@ -31,7 +31,7 @@ class King < Piece
     squares
   end
 
-  # King moves just like a Queen except only one square in all directions
+  # King moves just like a Queen except only one square at a time
   def categorized_possible_moves
     all_moves = super
     all_moves.each_pair do |move_name, squares|
@@ -41,10 +41,6 @@ class King < Piece
 
   def side(direction)
     Coords.new(location).coords_to(direction).plain_arr
-  end
-
-  def rook_squares
-    { left: [0, @my_row], right: [7, @my_row] }
   end
 
   def castling_line(direction)
