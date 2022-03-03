@@ -143,6 +143,7 @@ class Game
 
   def update_screen
     display.clear_screen
+    display.show_controls
     display.show_board
     display.show_turn(@players[@turn%2].color)
   end
