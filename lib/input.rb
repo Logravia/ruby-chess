@@ -18,6 +18,15 @@ class Input
     to_numeric_coordinates(algrabeic_coordinates)
   end
 
+  def promotion_menu
+    CLI::UI::Prompt.ask('To what would you like to promote your piece?') do |handler|
+      handler.option('Queen') { |_s| Queen}
+      handler.option('Knight'){ |_s| Knight }
+      handler.option('Bishop'){ |_s| Bishop }
+      handler.option('Rook'){   |_s| Rook}
+    end
+  end
+
   def main_menu
     puts Msg::TITLE
 
@@ -44,6 +53,7 @@ class Input
   def show_rules
     puts "These are the rules. Press enter to return"
     gets
+    @game.display.clear_screen
     main_menu
   end
 
