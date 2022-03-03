@@ -119,8 +119,10 @@ class Display
   end
 
   def show_rules
-    puts "These are the rules. Press enter to return"
+    clear_screen
+    puts CLI::UI.fmt "{{info:These are the rules. Press enter when you are done.}}"
     gets
+    clear_screen
     main_menu
   end
 
