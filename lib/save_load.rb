@@ -11,6 +11,7 @@ module SaveLoad
 
   def load(file_name)
     if file_name[-1] == '!'
+      display.clear_screen
       display.main_menu
     end
     data = Marshal.load(File.open(file_name).read)
