@@ -4,6 +4,7 @@
 
 module SaveLoad
   def save
+    Dir.mkdir('saves') unless File.directory?('saves')
     file_name = Time.now.strftime("saves/save_%d-%m-%Y-%H-%M-%S")
     data = Marshal.dump({players: @players, board: @board, turn: @turn})
     File.write(file_name, data)
