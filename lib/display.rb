@@ -92,9 +92,9 @@ class Display
     puts Msg::TITLE
 
     CLI::UI::Prompt.ask('What would you like to do?') do |handler|
-      handler.option('Play against a computer')  { |selection| selection }
-      handler.option('Play against a player')     { |selection| @game.play }
-      handler.option('Watch AI vs AI')     { |selection| @game.play }
+      handler.option('Play against a computer')  { |selection| @game.p_v_ai }
+      handler.option('Play against a player')     { |selection| @game.pvp }
+      handler.option('Watch AI vs AI')     { |selection| @game.ai_v_ai }
       handler.option('Load game')   { |selection|  list_file_options}
       handler.option('Check rules')   { |selection| show_rules }
       handler.option('Quit') { |_s| exit }

@@ -109,6 +109,12 @@ class Game
     end
   end
 
+  def p_v_ai
+    @players = [Human.new(:white, self), AI.new(:black, self)]
+    @cur_player = @players.first
+    play
+  end
+
   def ai_v_ai
     @players = [AI.new(:white, self), AI.new(:black, self)]
     @cur_player = @players.first
