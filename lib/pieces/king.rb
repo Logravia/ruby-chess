@@ -12,9 +12,24 @@ class King < Piece
   end
 
   def moves
-    # TODO: consider rewriting moves method for King
-    # unmoved? ? super + castling_squares : super
-    super
+    # King can move to castling squares if it hasn't been moved
+    unmoved? ? super + castling_squares_as_moves : super
+  end
+
+  # TODO: refactor
+  def castling_squares_as_moves
+    moves = []
+    if  castling_line(:left).size == 2 &&
+        not board.square_at(rook_squares[:left]).empty? &&
+        board.piece_at(rook_squares[:left]).unmoved?
+      moves << castling_squares.first
+    end
+    if castling_line(:right).size == 2 &&
+      not board.square_at(rook_squares[:right]).empty? &&
+       board.piece_at(rook_squares[:right]).unmoved?
+      moves << castling_squares.last
+    end
+    moves
   end
 
   # King moves just like a Queen except only one square in all directions
@@ -44,7 +59,7 @@ class King < Piece
   end
 
   def castling_squares
-    [[6, @my_row],[2, @my_row]]
+    [[2, @my_row], [6, @my_row]]
   end
 
   def enemy_color
