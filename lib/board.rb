@@ -141,6 +141,14 @@ class Board
     rooks
   end
 
+  def promote_piece(location, piece_to_make)
+    square = square_at(location)
+    color = square.piece.color
+
+    piece = piece_to_make.new(color, square)
+    square.set_piece(piece)
+  end
+
   def find_en_passant_square
     each_square { |sq| return sq if sq.en_passant_square? }
     nil
