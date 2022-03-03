@@ -165,14 +165,7 @@ class Board
   # returns all black or white pieces
   def pieces_of_color(color)
     pieces = []
-    state.each do |row|
-      row.each do |square|
-        next if square.empty?
-
-        piece = square.piece
-        pieces << piece if piece.color == color
-      end
-    end
+    each_piece { |piece| pieces << piece if piece.color == color  }
     pieces
   end
 end
