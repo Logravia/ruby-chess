@@ -12,6 +12,12 @@ class Arbiter
     @board = board
   end
 
+  def pawn_promotion?(destination)
+    if board.piece_at(destination).is_a?(Pawn)
+      return true if destination[1]%7 == 0
+    end
+  end
+
   def no_legal_moves_for?(color)
     !any_legal_moves_for?(color)
   end
