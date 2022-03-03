@@ -5,6 +5,8 @@ class Player
     @color = color
     @game = game
   end
-  def choice
-  end
+
+  def choice; end
+
+  def promotion; end
 end

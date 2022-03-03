@@ -15,4 +15,8 @@ class Human < Player
   def choice
     @input.choice
   end
+
+  def promotion
+    @input.promotion_menu
+  end
 end
