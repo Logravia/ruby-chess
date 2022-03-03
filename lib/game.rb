@@ -110,9 +110,14 @@ class Game
       save
       puts CLI::UI.fmt "{{green:Game has been saved!}}"
     when 'h'
-      display.show_help
+      display.show_rule
     when 'c'
       cancel_choice
+    when 'm'
+      display.clear_screen
+      display.main_menu
+    when 'r'
+      reset
     end
   end
 

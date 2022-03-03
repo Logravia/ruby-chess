@@ -7,7 +7,7 @@ require 'cli/ui'
 # In case of special input, e.g. q or h or s, lets the game handle that.
 class Input
   LEGIT_COORDINATE_INPUT = /^[A-Za-z][0-9]$/.freeze
-  SPECIAL_INPUT = /^[qshc]$/.freeze
+  SPECIAL_INPUT = /^[qshcmr]$/.freeze
   PROMPT = "\n> "
 
   def initialize(game)
@@ -65,8 +65,7 @@ class Input
       input = gets.chomp
       was_special_input = special_input_sender(input)
       return input if input.match?(LEGIT_COORDINATE_INPUT)
-
-      puts 'Sorry incorrect input. Try again.' unless was_special_input
+      puts CLI::UI.fmt "{{red:Incorrect input!}}" unless was_special_input
     end
   end
 
