@@ -40,8 +40,8 @@ class Game
 
   def victory
     update_screen
-    # BUG: Incorrect player declared victorious
-    puts CLI::UI.fmt "{{bold:CHECK MATE! #{@cur_player.color} #{Msg::VICTORY}}}"
+    victorious_color = @players[@turn % 1].color.capitalize
+    puts CLI::UI.fmt "{{bold:CHECK MATE! #{victorious_color} #{Msg::VICTORY}}}"
   end
 
   def choose_square
