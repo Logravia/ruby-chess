@@ -116,6 +116,13 @@ class Game
     end
   end
 
+  def reset
+    @board = Board.new
+    @arbiter = Arbiter.new(@board)
+    @turn = 0
+    update_screen
+  end
+
   def p_v_ai
     @players = [Human.new(:white, self), AI.new(:black, self)]
     @cur_player = @players.first
