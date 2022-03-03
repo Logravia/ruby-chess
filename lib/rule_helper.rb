@@ -17,7 +17,7 @@ module RuleHelper
     piece = board.piece_at(from)
 
     if piece.is_a?(King)
-      if piece.unmoved? and piece.castling_squares.include? destination
+      if piece.unmoved? and piece.castling_squares.values.include? destination
         :castling
       end
     elsif piece.is_a?(Pawn) and board.square_at(destination).en_passant_square?
