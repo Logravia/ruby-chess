@@ -56,6 +56,13 @@ class Display
     puts ''
   end
 
+  def show_controls
+    CLI::UI::Frame.open('Controls: ', timing: false, color: :bold) do
+      puts CLI::UI.fmt "{{bold: q: quit, r: reset, h: help, m: menu, s: save, c: cancel}"
+    end
+    puts ''
+  end
+
   def show_row(row)
     row.each do |square|
       @is_square_black = !@is_square_black # Changes color after every square shown
