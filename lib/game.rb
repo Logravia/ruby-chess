@@ -25,6 +25,7 @@ class Game
   end
 
   def start
+    display.clear_screen
     display.main_menu
   end
 
