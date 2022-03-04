@@ -2,7 +2,6 @@
 
 require_relative 'piece'
 require 'pry-byebug'
-# TODO: Add Pawn promotion, probably from a different class
 class Pawn < Piece
   MOVES = [:up, :down]
   attr_writer :available_move_distance

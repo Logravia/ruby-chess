@@ -80,9 +80,14 @@ class Display
     end
   end
 
+  def highlight_square
+    print BACKGROUND[:Purple]
+  end
+
   def show_piece(piece)
     pieces_symbol = PIECES[piece.class]
     set_font_color(piece.color)
+    highlight_square if @focused_piece && @focused_piece.moves.include?(piece.location)
     print " #{pieces_symbol} "
   end
 
