@@ -36,13 +36,18 @@ class Game
       @cur_player = @players[@turn%2]
     end
 
-    victory
+    arbiter.stalemate?(@cur_player.color) ? stalemate : victory
   end
 
   def victory
     update_screen
     victorious_color = @cur_player.color == :white ? 'Black' : 'White'
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{victorious_color} #{Msg::VICTORY}}}"
+  end
+
+  def stalemate
+    update_screen
+    puts CLI::UI.fmt "{{bold: DRAW! It is a stalemate! }}"
   end
 
   def choose_square
