@@ -58,7 +58,7 @@ class Display
 
   def show_controls
     CLI::UI::Frame.open('Controls: ', timing: false, color: :bold) do
-      puts CLI::UI.fmt "{{bold: q: quit, r: reset, h: help, m: menu, s: save, c: cancel}"
+      puts CLI::UI.fmt "{{bold: q: quit, r: reset, h: help, m: menu, s: save, c: cancel}}"
     end
     puts ''
   end

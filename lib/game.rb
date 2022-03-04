@@ -31,6 +31,7 @@ class Game
 
   def play
     until arbiter.no_legal_moves_for?(@cur_player.color)
+      puts CLI::UI.fmt "{{bold: YOUR KING IS CHECKED! }}" if @board.kings[@cur_player.color].checked?
       draw if arbiter.dead_position?
       make_turn(@cur_player.color)
       @turn += 1
