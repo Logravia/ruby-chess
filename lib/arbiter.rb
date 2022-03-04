@@ -16,6 +16,12 @@ class Arbiter
     no_legal_moves_for?(color) and !@board.kings[color].checked?
   end
 
+  def dead_position?
+    piece_count = 0
+    @board.each_piece { |p_| piece_count += 1 }
+    piece_count < 4
+  end
+
   def pawn_promotion?(destination)
     if board.piece_at(destination).is_a?(Pawn)
       return true if destination[1]%7 == 0

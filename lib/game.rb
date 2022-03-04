@@ -31,22 +31,28 @@ class Game
 
   def play
     until arbiter.no_legal_moves_for?(@cur_player.color)
+      draw if arbiter.dead_position?
       make_turn(@cur_player.color)
       @turn += 1
       @cur_player = @players[@turn%2]
     end
 
+    update_screen
     arbiter.stalemate?(@cur_player.color) ? stalemate : victory
   end
 
-  def victory
+  def draw
     update_screen
+    puts CLI::UI.fmt "{{bold: DRAW! It is impossible to win this game! }}"
+    exit
+  end
+
+  def victory
     victorious_color = @cur_player.color == :white ? 'Black' : 'White'
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{victorious_color} #{Msg::VICTORY}}}"
   end
 
   def stalemate
-    update_screen
     puts CLI::UI.fmt "{{bold: DRAW! It is a stalemate! }}"
   end
 
