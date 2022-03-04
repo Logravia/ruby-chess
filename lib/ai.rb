@@ -14,7 +14,6 @@ class AI < Player
   end
 
   def choice
-    sleep(0.08)
     if @piece_choice
       @piece_choice = false
       loop do
