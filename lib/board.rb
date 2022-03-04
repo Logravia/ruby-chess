@@ -16,7 +16,7 @@ class Board
     @move_buffer = { start_square: nil, end_square: nil }
     @remove_en_passant_this_turn = false
     @en_passant_square = nil
-    @kings = get_kings
+    @kings = kings
   end
 
   def move(start, target)
@@ -107,7 +107,7 @@ class Board
   def undo_move
     @state = @previous_state
     @en_passant_square = find_en_passant_square
-    @kings = get_kings
+    @kings = kings
   end
 
   def piece_at(position)
@@ -121,7 +121,7 @@ class Board
     @state[row][column]
   end
 
-  def get_kings
+  def kings
     kings = { white: nil, black: nil }
     @state.each do |row|
       row.each do |square|
