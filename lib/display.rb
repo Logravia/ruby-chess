@@ -125,7 +125,13 @@ class Display
 
   def show_rules
     clear_screen
-    puts CLI::UI.fmt "{{info:These are the rules. Press enter when you are done.}}"
+    puts CLI::UI.fmt "{{info:INFO\n\n\
+* All standard rules of chess apply. \n
+* To move a piece select it by entering its location (a2 would select white pawn, for example)\n
+* If you're certain in your selection, type in destination and press enter. \n
+* If you made a mistake in your selection press c and you'll be able to select a new piece. \n
+* All useful command hints are available at the top of the screen once in you are in the game. \n
+* Press enter to return to the main menu.}}"
     gets
     clear_screen
     main_menu
