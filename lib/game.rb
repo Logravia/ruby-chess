@@ -18,7 +18,7 @@ class Game
   def initialize(board = Board.new)
     @board = board
     @display = Display.new(self)
-    @arbiter = Arbiter.new(@board)
+    @arbiter = Arbiter.new(self)
     @turn = 0
     @players = [Human.new(:white, self), Human.new(:black, self)]
     @cur_player = nil
@@ -42,19 +42,27 @@ class Game
     arbiter.stalemate?(@cur_player.color) ? stalemate : victory
   end
 
+  def start_again
+    puts CLI::UI.fmt "{{info:\n\n Press enter to return to main menu. }}"
+    gets
+    start
+  end
+
   def draw
     update_screen
     puts CLI::UI.fmt "{{bold: DRAW! It is impossible to win this game! }}"
-    exit
+    start_again
   end
 
   def victory
     victorious_color = @cur_player.color == :white ? 'Black' : 'White'
     puts CLI::UI.fmt "{{bold:CHECK MATE! #{victorious_color} #{Msg::VICTORY}}}"
+    start_again
   end
 
   def stalemate
     puts CLI::UI.fmt "{{bold: DRAW! It is a stalemate! }}"
+    start_again
   end
 
   def choose_square
@@ -135,24 +143,27 @@ class Game
 
   def reset
     @board = Board.new
-    @arbiter = Arbiter.new(@board)
+    @arbiter = Arbiter.new(self)
     @turn = 0
     update_screen
   end
 
   def p_v_ai
+    reset
     @players = [Human.new(:white, self), AI.new(:black, self)]
     @cur_player = @players.first
     play
   end
 
   def ai_v_ai
+    reset
     @players = [AI.new(:white, self), AI.new(:black, self)]
     @cur_player = @players.first
     play
   end
 
   def pvp
+    reset
     @players = [Human.new(:white, self), Human.new(:black, self)]
     @cur_player = @players.first
     play

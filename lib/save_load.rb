@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require_relative 'arbiter'
 # lib/save_load.rb
 
 module SaveLoad

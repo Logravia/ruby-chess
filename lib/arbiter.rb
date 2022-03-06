@@ -8,17 +8,21 @@ class Arbiter
 
   attr_reader :state, :board
 
-  def initialize(board)
-    @board = board
+  def initialize(game)
+    @game = game
+  end
+
+  def board
+    @game.board
   end
 
   def stalemate?(color)
-    no_legal_moves_for?(color) and !@board.kings[color].checked?
+    no_legal_moves_for?(color) and !board.kings[color].checked?
   end
 
   def dead_position?
     piece_count = 0
-    @board.each_piece { |p_| piece_count += 1 }
+    board.each_piece { |p_| piece_count += 1 }
     piece_count < 4
   end
 
