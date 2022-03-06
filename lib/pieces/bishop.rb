@@ -3,5 +3,5 @@
 require_relative 'piece'
 
 class Bishop < Piece
-  MOVES = [:up_left, :up_right, :left_down, :right_down]
+  MOVES = %i[up_left up_right left_down right_down].freeze
 end

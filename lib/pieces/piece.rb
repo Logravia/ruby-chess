@@ -11,11 +11,11 @@ require_relative '../coords'
 # Implementation of child classes: Pawn, King and Knight require modifying possible_moves method.
 # The aforementioned pieces have a different movement pattern unlike Queen, Rook, Bishop.
 class Piece
-  MOVES = [:up, :down, :left, :right,
-           :up_left, :up_right, :left_down, :right_down].freeze
+  MOVES = %i[up down left right
+             up_left up_right left_down right_down].freeze
 
-  attr_reader :color, :square, :ALL_MOVES, :CUR_MOVES
-  attr_writer :square
+  attr_accessor :square
+  attr_reader :color, :ALL_MOVES, :CUR_MOVES
 
   def initialize(color, square)
     @color = color
@@ -49,7 +49,7 @@ class Piece
 
     self.class::MOVES.each do |direction|
       moves = possible_moves_in(direction)
-      categorized_moves[direction] = moves if not moves.empty?
+      categorized_moves[direction] = moves unless moves.empty?
     end
 
     categorized_moves
@@ -58,14 +58,13 @@ class Piece
   def possible_moves_in(direction)
     start = Coords.new(location)
 
-    return [] if not start.coords_to(direction).within_board?
+    return [] unless start.coords_to(direction).within_board?
+
     moves = [start.coords_to(direction)]
 
-    while moves.last.coords_to(direction).within_board?
-      moves << moves.last.coords_to(direction)
-    end
+    moves << moves.last.coords_to(direction) while moves.last.coords_to(direction).within_board?
 
-    moves.map{ |coords| coords.plain_arr }
+    moves.map(&:plain_arr)
   end
 
   # Forbid move line going past pieces

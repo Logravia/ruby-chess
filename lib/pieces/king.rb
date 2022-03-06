@@ -18,13 +18,13 @@ class King < Piece
   def possible_castling_squares
     squares = []
     rooks = board.get_rooks(@color)
-    return squares if self.moved? || rooks.empty?
+    return squares if moved? || rooks.empty?
 
     rooks.each do |rook|
       next if rook.moved?
 
       line = rook.line_towards_king
-      kings_side_square = self.side(rook.side)
+      kings_side_square = side(rook.side)
       squares << castling_squares[rook.side] if line.include? kings_side_square # If rooks can reach king's side
     end
 
@@ -47,14 +47,14 @@ class King < Piece
     moves = Piece.instance_method(:categorized_possible_moves).bind(self).call
 
     if moves[direction].nil?
-      return []
+      []
     else
       moves[direction][0..1]
     end
   end
 
   def castling_squares
-    {left: [2, @my_row], right: [6, @my_row]}
+    { left: [2, @my_row], right: [6, @my_row] }
   end
 
   def rook_squares
@@ -74,7 +74,6 @@ class King < Piece
   end
 
   def unmoved?
-    not @moved
+    !@moved
   end
-
 end

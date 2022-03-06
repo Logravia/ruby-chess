@@ -3,7 +3,7 @@
 require_relative 'piece'
 
 class Rook < Piece
-  MOVES = [:up, :down, :left, :right].freeze
+  MOVES = %i[up down left right].freeze
 
   attr_accessor :moved
 
@@ -17,7 +17,7 @@ class Rook < Piece
   end
 
   def unmoved?
-    not @moved
+    !@moved
   end
 
   def side
@@ -25,8 +25,7 @@ class Rook < Piece
   end
 
   def line_towards_king
-   towards_king = side == :left ? :right : :left
-   categorized_possible_moves[towards_king]
+    towards_king = side == :left ? :right : :left
+    categorized_possible_moves[towards_king]
   end
-
 end

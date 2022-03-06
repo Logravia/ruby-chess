@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/human.rb
 
 require_relative 'input'

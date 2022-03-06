@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/ai.rb
 require_relative 'player'
 require_relative 'pieces/king'
@@ -6,7 +8,6 @@ require_relative 'pieces/rook'
 require_relative 'pieces/bishop'
 
 class AI < Player
-
   def initialize(color, game)
     super
     @piece_choice = true

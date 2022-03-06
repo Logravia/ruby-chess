@@ -30,5 +30,4 @@ class Knight < Piece
     JUMPS.each { |jump| jumps << [jump, start].transpose.map(&:sum) }
     jumps
   end
-
 end

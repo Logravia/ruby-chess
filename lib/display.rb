@@ -6,7 +6,7 @@ require 'cli/ui'
 # Prints out the state of the board
 class Display
   PIECES = { Bishop => :♝, King => :♚, Knight => :♞, Pawn => :♟,
-             Queen => :♛, Rook => :♜, Space: '⠀'}.freeze
+             Queen => :♛, Rook => :♜, Space: '⠀' }.freeze
 
   POSSIBLE_MOVE_PIECES = { Bishop => :♗, King => :♕, Knight => :♘, Pawn => :♗,
                            Queen => :♕, Rook => :♖ }.freeze
@@ -58,7 +58,7 @@ class Display
 
   def show_controls
     CLI::UI::Frame.open('Controls: ', timing: false, color: :bold) do
-      puts CLI::UI.fmt "{{bold: q: quit, r: reset, h: help, m: menu, s: save, c: cancel}}"
+      puts CLI::UI.fmt '{{bold: q: quit, r: reset, h: help, m: menu, s: save, c: cancel}}'
     end
     puts ''
   end
@@ -87,7 +87,7 @@ class Display
   def show_piece(piece)
     pieces_symbol = PIECES[piece.class]
     set_font_color(piece.color)
-    highlight_square if @focused_piece && @focused_piece.moves.include?(piece.location)
+    highlight_square if @focused_piece&.moves&.include?(piece.location)
     print " #{pieces_symbol} "
   end
 
@@ -104,11 +104,11 @@ class Display
     puts Msg::TITLE
 
     CLI::UI::Prompt.ask('What would you like to do?') do |handler|
-      handler.option('Play against a computer')  { |selection| @game.p_v_ai }
-      handler.option('Play against a player')     { |selection| @game.pvp }
-      handler.option('Watch AI vs AI')     { |selection| @game.ai_v_ai }
-      handler.option('Load game')   { |selection|  list_file_options}
-      handler.option('Check rules')   { |selection| show_rules }
+      handler.option('Play against a computer') { |_selection| @game.p_v_ai }
+      handler.option('Play against a player') { |_selection| @game.pvp }
+      handler.option('Watch AI vs AI') { |_selection| @game.ai_v_ai }
+      handler.option('Load game') { |_selection| list_file_options }
+      handler.option('Check rules') { |_selection| show_rules }
       handler.option('Quit') { |_s| exit }
     end
   end
@@ -119,8 +119,8 @@ class Display
   end
 
   def savefile_list
-    file_list = Dir.glob(File.join('saves', "*"))
-    file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
+    file_list = Dir.glob(File.join('saves', '*'))
+    file_list.empty? ? ['No files to load! Press enter to continue!'] : file_list.unshift('CANCEL!')
   end
 
   def show_rules
@@ -162,6 +162,4 @@ class Display
     @focused_piece = nil
     self
   end
-
 end
-

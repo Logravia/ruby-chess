@@ -3,9 +3,8 @@
 # lib/rule_helper.rb
 
 module RuleHelper
-
-  X = {min: 0, max: 7}
-  Y = {min: 0, max: 7}
+  X = { min: 0, max: 7 }.freeze
+  Y = { min: 0, max: 7 }.freeze
 
   DEFAULT_BOARD = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
@@ -17,14 +16,11 @@ module RuleHelper
     piece = board.piece_at(from)
 
     if piece.is_a?(King)
-      if piece.unmoved? and piece.castling_squares.values.include? destination
-        :castling
-      end
-    elsif piece.is_a?(Pawn) and board.square_at(destination).en_passant_square?
+      :castling if piece.unmoved? && piece.castling_squares.values.include?(destination)
+    elsif piece.is_a?(Pawn) && board.square_at(destination).en_passant_square?
       :en_passant
     else
       :normal_move
     end
-
   end
 end

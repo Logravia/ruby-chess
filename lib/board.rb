@@ -26,20 +26,20 @@ class Board
     save_state
     move_piece(start, target)
 
-    if move_type == :castling
+    case move_type
+    when :castling
       castle(start, target)
-    elsif move_type == :en_passant
+    when :en_passant
       pawn_to_remove = @en_passant_square.connected_en_passant_pawn
       pawn_to_remove.square.remove_piece
     end
 
     if @remove_en_passant_this_turn
-     @en_passant_square.remove_en_passant_status if @en_passant_square
-     @en_passant_square = nil
+      @en_passant_square&.remove_en_passant_status
+      @en_passant_square = nil
     else
       @remove_en_passant_this_turn = true
     end
-
   end
 
   def castle(start, target)
@@ -111,12 +111,14 @@ class Board
   end
 
   def piece_at(position)
-    return nil if !RuleHelper.within_board?(position)
+    return nil unless RuleHelper.within_board?(position)
+
     square_at(position).piece
   end
 
   def square_at(position)
-    return nil if !RuleHelper.within_board?(position)
+    return nil unless RuleHelper.within_board?(position)
+
     column, row = position
     @state[row][column]
   end
@@ -154,17 +156,15 @@ class Board
     nil
   end
 
-  def each_square
+  def each_square(&block)
     @state.each do |row|
-      row.each do |square|
-        yield(square)
-      end
+      row.each(&block)
     end
   end
 
   def each_piece
     each_square do |sq|
-      yield(sq.piece) if not sq.empty?
+      yield(sq.piece) unless sq.empty?
     end
     nil
   end
@@ -172,7 +172,7 @@ class Board
   # returns all black or white pieces
   def pieces_of_color(color)
     pieces = []
-    each_piece { |piece| pieces << piece if piece.color == color  }
+    each_piece { |piece| pieces << piece if piece.color == color }
     pieces
   end
 end

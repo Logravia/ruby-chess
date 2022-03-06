@@ -1,12 +1,13 @@
 # frozen_string_literal: true
+
 require_relative 'arbiter'
 # lib/save_load.rb
 
 module SaveLoad
   def save
     Dir.mkdir('saves') unless File.directory?('saves')
-    file_name = Time.now.strftime("saves/save_%d-%m-%Y-%H-%M-%S")
-    data = Marshal.dump({players: @players, board: @board, turn: @turn})
+    file_name = Time.now.strftime('saves/save_%d-%m-%Y-%H-%M-%S')
+    data = Marshal.dump({ players: @players, board: @board, turn: @turn })
     File.write(file_name, data)
   end
 
@@ -19,7 +20,7 @@ module SaveLoad
     @players = data[:players]
     @board = data[:board]
     @turn = data[:turn]
-    @cur_player = @players[@turn%2]
+    @cur_player = @players[@turn % 2]
     play
   end
 end

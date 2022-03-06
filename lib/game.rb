@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/game.rb
 
 require_relative 'board'
@@ -10,8 +12,8 @@ require_relative 'human'
 require_relative 'ai'
 # TODO: Add draw condition
 class Game
-
   attr_reader :board, :input, :display, :arbiter
+
   extend Msg
   include SaveLoad
 
@@ -31,11 +33,11 @@ class Game
 
   def play
     until arbiter.no_legal_moves_for?(@cur_player.color)
-      puts CLI::UI.fmt "{{bold: YOUR KING IS CHECKED! }}" if @board.kings[@cur_player.color].checked?
+      puts CLI::UI.fmt '{{bold: YOUR KING IS CHECKED! }}' if @board.kings[@cur_player.color].checked?
       draw if arbiter.dead_position?
       make_turn(@cur_player.color)
       @turn += 1
-      @cur_player = @players[@turn%2]
+      @cur_player = @players[@turn % 2]
     end
 
     update_screen
@@ -50,7 +52,7 @@ class Game
 
   def draw
     update_screen
-    puts CLI::UI.fmt "{{bold: DRAW! It is impossible to win this game! }}"
+    puts CLI::UI.fmt '{{bold: DRAW! It is impossible to win this game! }}'
     start_again
   end
 
@@ -61,7 +63,7 @@ class Game
   end
 
   def stalemate
-    puts CLI::UI.fmt "{{bold: DRAW! It is a stalemate! }}"
+    puts CLI::UI.fmt '{{bold: DRAW! It is a stalemate! }}'
     start_again
   end
 
@@ -70,47 +72,50 @@ class Game
       choice = @cur_player.choice
       return choice if !board.square_at(choice).empty? &&
                        !board.piece_at(choice).moves.empty?
+
       update_screen
       puts Msg::NO_LEGAL_MOVES
     end
   end
 
-    def get_pieces_loc_of(color)
-      loop do
-        pieces_location = choose_square
-        return pieces_location if board.piece_at(pieces_location).color == color
-        update_screen
-        puts CLI::UI.fmt "{{red:Can't move enemy's piece!}}"
-      end
+  def get_pieces_loc_of(color)
+    loop do
+      pieces_location = choose_square
+      return pieces_location if board.piece_at(pieces_location).color == color
+
+      update_screen
+      puts CLI::UI.fmt "{{red:Can't move enemy's piece!}}"
     end
+  end
 
   def make_turn(color)
+    update_screen
+    puts CLI::UI.fmt '{{info:Choose a piece.}}'
+    pieces_loc = get_pieces_loc_of(color)
+
+    display.focus_piece(board.piece_at(pieces_loc))
+    update_screen
+
+    puts CLI::UI.fmt '{{info:Choose destination or press c to cancel selection.}}'
+    destination = choose_destination_for(pieces_loc)
+
+    board.move(pieces_loc, destination)
+    display.unfocus_piece
+
+    if arbiter.pawn_promotion?(destination)
       update_screen
-      puts CLI::UI.fmt "{{info:Choose a piece.}}"
-      pieces_loc = get_pieces_loc_of(color)
-
-      display.focus_piece(board.piece_at(pieces_loc))
-      update_screen
-
-      puts CLI::UI.fmt '{{info:Choose destination or press c to cancel selection.}}'
-      destination = choose_destination_for(pieces_loc)
-
-      board.move(pieces_loc, destination)
-      display.unfocus_piece
-
-      if arbiter.pawn_promotion?(destination)
-        update_screen
-        promotion = @cur_player.promotion
-        board.promote_piece(destination, promotion)
-      end
+      promotion = @cur_player.promotion
+      board.promote_piece(destination, promotion)
+    end
   end
 
   def choose_destination_for(chosen_start)
     loop do
       destination = @cur_player.choice
       return destination if arbiter.legal_move?(chosen_start, destination)
+
       update_screen
-      puts CLI::UI.fmt "{{red:Sorry, that is an illegal move.}}"
+      puts CLI::UI.fmt '{{red:Sorry, that is an illegal move.}}'
     end
   end
 
@@ -124,11 +129,11 @@ class Game
     case input
     when 'q'
       display.clear_screen
-      puts CLI::UI.fmt "{{green:Game has exited sucessfully!}}"
+      puts CLI::UI.fmt '{{green:Game has exited sucessfully!}}'
       exit
     when 's'
       save
-      puts CLI::UI.fmt "{{green:Game has been saved!}}"
+      puts CLI::UI.fmt '{{green:Game has been saved!}}'
     when 'h'
       display.show_rule
     when 'c'
@@ -173,6 +178,6 @@ class Game
     display.clear_screen
     display.show_controls
     display.show_board
-    display.show_turn(@players[@turn%2].color)
+    display.show_turn(@players[@turn % 2].color)
   end
 end

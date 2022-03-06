@@ -20,10 +20,10 @@ class Input
 
   def promotion_menu
     CLI::UI::Prompt.ask('To what would you like to promote your piece?') do |handler|
-      handler.option('Queen') { |_s| Queen}
-      handler.option('Knight'){ |_s| Knight }
-      handler.option('Bishop'){ |_s| Bishop }
-      handler.option('Rook'){   |_s| Rook}
+      handler.option('Queen') { |_s| Queen }
+      handler.option('Knight') { |_s| Knight }
+      handler.option('Bishop') { |_s| Bishop }
+      handler.option('Rook') {   |_s| Rook }
     end
   end
 
@@ -31,11 +31,11 @@ class Input
     puts Msg::TITLE
 
     CLI::UI::Prompt.ask('What would you like to do?') do |handler|
-      handler.option('Play against a computer')  { |selection| selection }
-      handler.option('Play against a player')     { |selection| @game.play }
-      handler.option('Watch AI vs AI')     { |selection| @game.play }
-      handler.option('Load game')   { |selection|  list_file_options}
-      handler.option('Check rules')   { |selection| show_rules }
+      handler.option('Play against a computer') { |selection| selection }
+      handler.option('Play against a player') { |_selection| @game.play }
+      handler.option('Watch AI vs AI') { |_selection| @game.play }
+      handler.option('Load game') { |_selection| list_file_options }
+      handler.option('Check rules') { |_selection| show_rules }
       handler.option('Quit') { |_s| exit }
     end
   end
@@ -46,12 +46,12 @@ class Input
   end
 
   def savefile_list
-    file_list = Dir.glob(File.join('saves', "*"))
-    file_list.empty? ? ["No files to load! Press enter to continue!"] : file_list.unshift("CANCEL!")
+    file_list = Dir.glob(File.join('saves', '*'))
+    file_list.empty? ? ['No files to load! Press enter to continue!'] : file_list.unshift('CANCEL!')
   end
 
   def show_rules
-    puts "These are the rules. Press enter to return"
+    puts 'These are the rules. Press enter to return'
     gets
     @game.display.clear_screen
     main_menu
@@ -65,14 +65,15 @@ class Input
       input = gets.chomp
       was_special_input = special_input_sender(input)
       return input if input.match?(LEGIT_COORDINATE_INPUT)
-      puts CLI::UI.fmt "{{red:Incorrect input!}}" unless was_special_input
+
+      puts CLI::UI.fmt '{{red:Incorrect input!}}' unless was_special_input
     end
   end
 
   def special_input_sender(input)
     if input.match?(SPECIAL_INPUT)
       @game.handle_special_input(input)
-      return true
+      true
     end
   end
 
@@ -84,5 +85,4 @@ class Input
     y_coord = (str_number.to_i - 8).abs
     [x_coord, y_coord]
   end
-
 end

@@ -29,7 +29,7 @@ module FenParser
     row = []
     fen_row.chars.each do |fen_char|
       if fen_char[/[1-8]/]
-        fen_char.to_i.times { |num| row << build_square([row.size, row_num]) }
+        fen_char.to_i.times { |_num| row << build_square([row.size, row_num]) }
       else
         row << build_square_with_piece([row.size, row_num], fen_char)
       end

@@ -3,7 +3,7 @@
 require_relative 'piece'
 require 'pry-byebug'
 class Pawn < Piece
-  MOVES = [:up, :down]
+  MOVES = %i[up down].freeze
   attr_writer :available_move_distance
 
   def initialize(color, square)

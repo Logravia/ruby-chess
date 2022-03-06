@@ -22,14 +22,12 @@ class Arbiter
 
   def dead_position?
     piece_count = 0
-    board.each_piece { |p_| piece_count += 1 }
+    board.each_piece { |_p_| piece_count += 1 }
     piece_count < 4
   end
 
   def pawn_promotion?(destination)
-    if board.piece_at(destination).is_a?(Pawn)
-      return true if destination[1]%7 == 0
-    end
+    return true if board.piece_at(destination).is_a?(Pawn) && (destination[1] % 7).zero?
   end
 
   def no_legal_moves_for?(color)
@@ -40,7 +38,7 @@ class Arbiter
     board.pieces_of_color(color).each do |piece|
       return true if piece_has_legal_moves?(piece)
     end
-    return false
+    false
   end
 
   def piece_has_legal_moves?(piece)
@@ -56,9 +54,7 @@ class Arbiter
     return false unless board.piece_at(from).moves.include? to
     return false if king_checked_after_move?(from, to)
 
-    if RuleHelper.move_type(from, to, board) == :castling
-      return legal_castling?(from, to)
-    end
+    return legal_castling?(from, to) if RuleHelper.move_type(from, to, board) == :castling
 
     true
   end
@@ -82,6 +78,7 @@ class Arbiter
     direction = destination.sum > king.location.sum ? :right : :left
     return false if king.checked?
     return false if castling_line_checked?(king, direction)
+
     true
   end
 
